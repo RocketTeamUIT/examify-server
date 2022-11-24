@@ -2,7 +2,7 @@ const express = require('express');
 const pool = require('../config/db');
 const router = express.Router();
 
-// [GET] /course/:id -> get a course
+// [GET] /courses/:id -> get a course
 router.get('/:id', async (req, res) => {
   try {
     const { id } = req.params;
@@ -14,7 +14,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// [GET] /course -> get all courses
+// [GET] /courses -> get all courses
 router.get('/', async (req, res) => {
   try {
     const allCourses = await pool.query('SELECT * FROM course');
@@ -24,7 +24,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// [POST] /course -> create new course
+// [POST] /courses -> create new course
 router.post('/', async (req, res) => {
   try {
     const { name, description, participants } = req.body;
@@ -40,7 +40,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-// [DELETE] /course/:id -> delete a course
+// [DELETE] /courses/:id -> delete a course
 router.delete('/:id', async (req, res) => {
   try {
     const { id } = req.params;
@@ -51,7 +51,7 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
-// [UPDATE] /course/:id -> update a course
+// [UPDATE] /courses/:id -> update a course
 router.put('/:id', async (req, res) => {
   try {
     const { id } = req.params;

@@ -5,3 +5,20 @@ GET http://localhost:5000/course
 
 ###
 GET http://localhost:5000/courses
+
+
+###s
+
+POST http://localhost:5000/users/register
+Content-Type: application/json
+
+{
+    "email": "20522122@gm.uit.edu.vn",
+    "firstname": "tuan",
+    "lastname": "nguyen",
+    "password": "tuannt02",
+    "passwordConfirmation": "tuannt02"
+}
+
+###
+GET http://localhost:5000/users
