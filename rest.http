@@ -1,0 +1,7 @@
+# rest.http the same postman
+# install REST Client VSC Extension to Send Request
+GET http://localhost:5000/course
+
+
+###
+GET http://localhost:5000/courses
