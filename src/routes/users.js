@@ -2,6 +2,7 @@ const express = require('express');
 const pool = require('../config/db');
 const router = express.Router();
 const createError = require('http-errors');
+const { userValidate } = require('../utils/validation');
 
 // [POST] /users/register -> create new user
 router.post('/register', async (req, res, next) => {
@@ -10,6 +11,11 @@ router.post('/register', async (req, res, next) => {
     const { email, firstname, lastname, password, passwordConfirmation } = req.body;
 
     // Validate fields
+    const { error } = userValidate(req.body);
+    if (error) {
+      throw createError(error.details[0].message);
+    }
+
     // Check email exits
     const isExist = await pool.query('SELECT * FROM users WHERE mail = $1', [email]);
     if (isExist.rows.length > 0) {
