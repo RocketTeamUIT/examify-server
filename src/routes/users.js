@@ -3,6 +3,7 @@ const pool = require('../config/db');
 const router = express.Router();
 const createError = require('http-errors');
 const { userValidate } = require('../utils/validation');
+const bcrypt = require('bcrypt');
 
 // [POST] /users/register -> create new user
 router.post('/register', async (req, res, next) => {
@@ -22,10 +23,14 @@ router.post('/register', async (req, res, next) => {
       throw createError.Conflict('This email is registered');
     }
 
+    // Hash password
+    const salt = await bcrypt.genSalt(10);
+    const hashPassword = await bcrypt.hash(password, salt);
+
     // Create new user
     const newUser = await pool.query(
       'INSERT INTO users (mail, password, first_name, last_name) VALUES($1, $2, $3, $4) RETURNING *',
-      [email, password, firstname, lastname],
+      [email, hashPassword, firstname, lastname],
     );
 
     return res.json({
@@ -35,6 +40,26 @@ router.post('/register', async (req, res, next) => {
   } catch (err) {
     next(err);
   }
+});
+
+// [POST] /users/login -> User login
+router.post('/login', async (req, res, next) => {
+  // try {
+
+  // } catch (err) {
+  //     next(err)
+  // }
+  res.json('Login function');
+});
+
+// [POST] /users/logout
+router.post('/logout', async (req, res, next) => {
+  res.json('Logout function');
+});
+
+// [POST] /users/refresh-token
+router.post('/refresh-token', async (req, res, next) => {
+  res.json('Refresh token function');
 });
 
 // [GET] /users -> get all user
