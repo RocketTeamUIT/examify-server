@@ -1,5 +1,6 @@
 const JWT = require('jsonwebtoken');
 const createError = require('http-errors');
+const pool = require('../config/db');
 
 const signAccessToken = async (userId) => {
   return new Promise((resolve, reject) => {
@@ -66,6 +67,14 @@ const signRefreshToken = async (userId) => {
     // Sign
     JWT.sign(payload, secret, options, (err, token) => {
       if (err) reject(err);
+
+      // Save refresh token to DB
+      pool.query('UPDATE users SET refresh_token = $1 WHERE user_id = $2', [token, userId], (err, result) => {
+        if (err) {
+          return reject(createError.InternalServerError());
+        }
+      });
+
       resolve(token);
     });
   });
@@ -77,7 +86,17 @@ const verifyRefreshToken = async (refreshToken) => {
       if (err) {
         return reject(err);
       }
-      resolve(payload);
+
+      // Get refresh token from db
+      pool.query('SELECT refresh_token FROM users WHERE user_id = $1', [payload.userId], (err, result) => {
+        if (err) reject(createError.InternalServerError());
+
+        if (refreshToken === result.rows[0].refresh_token) {
+          resolve(payload);
+        }
+
+        return reject(createError.Unauthorized());
+      });
     });
   });
 };
