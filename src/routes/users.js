@@ -4,6 +4,7 @@ const router = express.Router();
 const createError = require('http-errors');
 const { registerValidate, loginValidate } = require('../utils/validation');
 const bcrypt = require('bcrypt');
+const { signAccessToken } = require('../utils/jwt_service');
 
 // [POST] /users/register -> create new user
 router.post('/register', async (req, res, next) => {
@@ -68,7 +69,11 @@ router.post('/login', async (req, res, next) => {
       throw createError.Unauthorized();
     }
 
-    res.send(isExist.rows[0]);
+    const accessToken = await signAccessToken(isExist.rows[0].user_id);
+
+    res.json({
+      accessToken,
+    });
   } catch (err) {
     next(err);
   }
