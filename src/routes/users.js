@@ -4,7 +4,7 @@ const router = express.Router();
 const createError = require('http-errors');
 const { registerValidate, loginValidate } = require('../utils/validation');
 const bcrypt = require('bcrypt');
-const { signAccessToken, verifyAccessToken, signRefreshToken } = require('../utils/jwt_service');
+const { signAccessToken, verifyAccessToken, signRefreshToken, verifyRefreshToken } = require('../utils/jwt_service');
 
 // [POST] /users/register -> create new user
 router.post('/register', async (req, res, next) => {
@@ -88,7 +88,21 @@ router.post('/logout', async (req, res, next) => {
 
 // [POST] /users/refresh-token
 router.post('/refresh-token', async (req, res, next) => {
-  res.json('Refresh token function');
+  try {
+    const { refreshToken } = req.body;
+    if (!refreshToken) throw createError.BadRequest();
+
+    const { userId } = await verifyRefreshToken(refreshToken);
+    const accessToken = await signAccessToken(userId);
+    const refToken = await signRefreshToken(userId);
+
+    res.json({
+      accessToken,
+      refreshToken: refToken,
+    });
+  } catch (error) {
+    next(error);
+  }
 });
 
 // [GET] /users -> get all user

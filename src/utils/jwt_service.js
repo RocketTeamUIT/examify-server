@@ -13,7 +13,7 @@ const signAccessToken = async (userId) => {
 
     // Options
     const options = {
-      expiresIn: '10s',
+      expiresIn: '1h',
     };
 
     // Sign
@@ -38,7 +38,10 @@ const verifyAccessToken = (req, res, next) => {
   // start verify token
   JWT.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, payload) => {
     if (err) {
-      return next(createError.Unauthorized());
+      if (err.name === 'JsonWebTokenError') {
+        return next(createError.Unauthorized());
+      }
+      return next(createError.Unauthorized(err.message));
     }
     req.payload = payload;
     next();
@@ -68,8 +71,20 @@ const signRefreshToken = async (userId) => {
   });
 };
 
+const verifyRefreshToken = async (refreshToken) => {
+  return new Promise((resolve, reject) => {
+    JWT.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, payload) => {
+      if (err) {
+        return reject(err);
+      }
+      resolve(payload);
+    });
+  });
+};
+
 module.exports = {
   signAccessToken,
   verifyAccessToken,
   signRefreshToken,
+  verifyRefreshToken,
 };

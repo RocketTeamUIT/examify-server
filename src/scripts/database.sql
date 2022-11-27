@@ -47,6 +47,7 @@ create table users (
 	description TEXT,
 	rank_id INTEGER REFERENCES rank(rank_id) DEFAULT 1,
 	accumulated_point INTEGER DEFAULT 0,
+	refresh_token TEXT DEFAULT ''
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

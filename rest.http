@@ -36,4 +36,12 @@ Content-Type: application/json
 
 ### Get list
 GET http://localhost:5000/users/getlist
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTY2OTUzNjc2MywiZXhwIjoxNjY5NTM2NzczfQ.BUaani5lGMGm79x3CUb23ppLfNO3ESzkGAiGyEUUdV8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTY2OTU1NTY0MSwiZXhwIjoxNjY5NTU5MjQxfQ.UDeTlKkUSZf7LA7uuqAL_-AZEEty9EV7eckBbMPiNVg
+
+### Refresh token
+POST http://localhost:5000/users/refresh-token
+Content-Type: application/json
+
+{
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTY2OTU1NDExMSwiZXhwIjoxNzAxMTExNzExfQ.QKvyAHan54DUMbToN6PcuSfZ9_jDf-0SfmeIYouPygU"
+}
