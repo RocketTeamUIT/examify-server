@@ -4,7 +4,7 @@ const router = express.Router();
 const createError = require('http-errors');
 const { registerValidate, loginValidate } = require('../utils/validation');
 const bcrypt = require('bcrypt');
-const { signAccessToken } = require('../utils/jwt_service');
+const { signAccessToken, verifyAccessToken } = require('../utils/jwt_service');
 
 // [POST] /users/register -> create new user
 router.post('/register', async (req, res, next) => {
@@ -97,6 +97,25 @@ router.get('/', async (req, res) => {
   } catch (err) {
     console.log(err.message);
   }
+});
+
+// [GET] /users/getlists || Test API
+router.get('/getlist', verifyAccessToken, (req, res, next) => {
+  console.log(req.headers);
+
+  const userList = [
+    {
+      emai: 'tuannt02@gmail.com',
+    },
+    {
+      email: 'bladehotboy@gmail.com',
+    },
+    {
+      email: '20522122@gm.uit.edu.vn',
+    },
+  ];
+
+  res.json(userList);
 });
 
 module.exports = router;

@@ -33,3 +33,7 @@ Content-Type: application/json
     "email": "20522122@gm.uit.edu.vn",
     "password": "tuannt02"
 }
+
+### Get list
+GET http://localhost:5000/users/getlist
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTY2OTUzNjc2MywiZXhwIjoxNjY5NTM2NzczfQ.BUaani5lGMGm79x3CUb23ppLfNO3ESzkGAiGyEUUdV8
