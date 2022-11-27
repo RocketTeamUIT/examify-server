@@ -1,14 +1,15 @@
 # rest.http the same postman
 # install REST Client VSC Extension to Send Request
+
+### Check invalid route
 GET http://localhost:5000/course
 
 
-###
+### Get all courses
 GET http://localhost:5000/courses
 
 
-###s
-
+### Register
 POST http://localhost:5000/users/register
 Content-Type: application/json
 
@@ -20,9 +21,15 @@ Content-Type: application/json
     "passwordConfirmation": "tuannt02"
 }
 
-###
+### Get all user
 GET http://localhost:5000/users
 
 
-###
+### Login
 POST http://localhost:5000/users/login
+Content-Type: application/json
+
+{
+    "email": "20522122@gm.uit.edu.vn",
+    "password": "tuannt02"
+}

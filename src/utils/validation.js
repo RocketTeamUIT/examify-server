@@ -1,6 +1,6 @@
 const Joi = require('joi');
 
-const userValidate = (data) => {
+const registerValidate = (data) => {
   const userSchema = Joi.object({
     email: Joi.string().trim().email().lowercase().required(),
     firstname: Joi.string().trim().required(),
@@ -12,6 +12,16 @@ const userValidate = (data) => {
   return userSchema.validate(data);
 };
 
+const loginValidate = (data) => {
+  const userSchema = Joi.object({
+    email: Joi.string().trim().email().lowercase().required(),
+    password: Joi.string().trim().min(8).max(100).required(),
+  });
+
+  return userSchema.validate(data);
+};
+
 module.exports = {
-  userValidate,
+  registerValidate,
+  loginValidate,
 };

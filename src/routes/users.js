@@ -2,7 +2,7 @@ const express = require('express');
 const pool = require('../config/db');
 const router = express.Router();
 const createError = require('http-errors');
-const { userValidate } = require('../utils/validation');
+const { registerValidate, loginValidate } = require('../utils/validation');
 const bcrypt = require('bcrypt');
 
 // [POST] /users/register -> create new user
@@ -12,7 +12,7 @@ router.post('/register', async (req, res, next) => {
     const { email, firstname, lastname, password, passwordConfirmation } = req.body;
 
     // Validate fields
-    const { error } = userValidate(req.body);
+    const { error } = registerValidate(req.body);
     if (error) {
       throw createError(error.details[0].message);
     }
@@ -44,12 +44,34 @@ router.post('/register', async (req, res, next) => {
 
 // [POST] /users/login -> User login
 router.post('/login', async (req, res, next) => {
-  // try {
+  try {
+    console.log('function login');
+    const { email, password } = req.body;
 
-  // } catch (err) {
-  //     next(err)
-  // }
-  res.json('Login function');
+    // Validate fields
+    const { error } = loginValidate(req.body);
+    if (error) {
+      throw createError(error.details[0].message);
+    }
+
+    // Check email exits
+    const isExist = await pool.query('SELECT * FROM users WHERE mail = $1', [email]);
+    if (isExist.rows.length === 0) {
+      throw createError.NotFound('User not register');
+    }
+
+    // Unhash & check password
+    const passwordFromDb = await pool.query('SELECT password FROM users WHERE mail = $1', [email]);
+    const hashPassword = passwordFromDb.rows[0].password;
+    const isValid = await bcrypt.compare(password, hashPassword);
+    if (!isValid) {
+      throw createError.Unauthorized();
+    }
+
+    res.send(isExist.rows[0]);
+  } catch (err) {
+    next(err);
+  }
 });
 
 // [POST] /users/logout
