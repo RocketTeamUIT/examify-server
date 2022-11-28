@@ -1,6 +1,6 @@
-const usersRouter = require('./users');
+const usersRouter = require('./users.route');
 const coursesRouter = require('./courses');
-const testRouter = require('./test');
+const testRouter = require('./test.route');
 
 function route(app) {
   app.use('/users', usersRouter);
