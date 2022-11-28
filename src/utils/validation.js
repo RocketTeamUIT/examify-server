@@ -6,7 +6,7 @@ const registerValidate = (data) => {
     firstname: Joi.string().trim().required(),
     lastname: Joi.string().trim().required(),
     password: Joi.string().trim().min(8).max(100).required(),
-    passwordConfirmation: Joi.string().trim().min(8).max(100).required(),
+    passwordConfirmation: Joi.ref('password'),
   });
 
   return userSchema.validate(data);

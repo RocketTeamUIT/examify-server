@@ -91,6 +91,7 @@ const verifyRefreshToken = async (refreshToken) => {
       pool.query('SELECT refresh_token FROM users WHERE user_id = $1', [payload.userId], (err, result) => {
         if (err) reject(createError.InternalServerError());
 
+        // Check if the RF sent by user matches the RF that exists in the db?
         if (refreshToken === result.rows[0].refresh_token) {
           resolve(payload);
         }

@@ -9,8 +9,8 @@ const { signAccessToken, verifyAccessToken, signRefreshToken, verifyRefreshToken
 // [POST] /users/register -> create new user
 router.post('/register', async (req, res, next) => {
   try {
-    console.log('register function');
-    const { email, firstname, lastname, password, passwordConfirmation } = req.body;
+    const email = req.body.email.toLowerCase(); // email lowercase
+    const { firstname, lastname, password, passwordConfirmation } = req.body;
 
     // Validate fields
     const { error } = registerValidate(req.body);
@@ -29,14 +29,15 @@ router.post('/register', async (req, res, next) => {
     const hashPassword = await bcrypt.hash(password, salt);
 
     // Create new user
-    const newUser = await pool.query(
+    const createUserFromQuery = await pool.query(
       'INSERT INTO users (mail, password, first_name, last_name) VALUES($1, $2, $3, $4) RETURNING *',
       [email, hashPassword, firstname, lastname],
     );
+    const newUser = createUserFromQuery.rows[0];
 
     return res.json({
       status: 200,
-      elements: newUser.rows[0],
+      elements: newUser,
     });
   } catch (err) {
     next(err);
@@ -46,8 +47,8 @@ router.post('/register', async (req, res, next) => {
 // [POST] /users/login -> User login
 router.post('/login', async (req, res, next) => {
   try {
-    console.log('function login');
-    const { email, password } = req.body;
+    const email = req.body.email.toLowerCase(); // email lowercase
+    const password = req.body.password;
 
     // Validate fields
     const { error } = loginValidate(req.body);
@@ -66,9 +67,10 @@ router.post('/login', async (req, res, next) => {
     const hashPassword = passwordFromDb.rows[0].password;
     const isValid = await bcrypt.compare(password, hashPassword);
     if (!isValid) {
-      throw createError.Unauthorized();
+      throw createError.Unauthorized('Wrong password');
     }
 
+    // Create access token & refresh token
     const accessToken = await signAccessToken(isExist.rows[0].user_id);
     const refreshToken = await signRefreshToken(isExist.rows[0].user_id);
 
@@ -82,17 +84,44 @@ router.post('/login', async (req, res, next) => {
 });
 
 // [POST] /users/logout
-router.post('/logout', async (req, res, next) => {
-  res.json('Logout function');
+router.delete('/logout', async (req, res, next) => {
+  try {
+    const { refreshToken } = req.body;
+
+    // Check refresh token exists
+    if (!refreshToken) {
+      throw createError.BadRequest();
+    }
+
+    // Verify refresh token & remove refresh token in DB
+    const { userId } = await verifyRefreshToken(refreshToken);
+    pool.query('UPDATE users SET refresh_token = $1 WHERE user_id = $2', ['', userId], (err, result) => {
+      if (err) {
+        throw createError.InternalServerError();
+      }
+
+      res.json({
+        status: 200,
+        message: 'Logout!',
+      });
+    });
+  } catch (error) {
+    next(error);
+  }
 });
 
 // [POST] /users/refresh-token
 router.post('/refresh-token', async (req, res, next) => {
   try {
     const { refreshToken } = req.body;
+
+    // Check refresh token exists
     if (!refreshToken) throw createError.BadRequest();
 
+    // Check proper user
     const { userId } = await verifyRefreshToken(refreshToken);
+
+    // Create new access token & refresh token, then send it to user
     const accessToken = await signAccessToken(userId);
     const refToken = await signRefreshToken(userId);
 
@@ -117,8 +146,6 @@ router.get('/', async (req, res) => {
 
 // [GET] /users/getlists || Test API
 router.get('/getlist', verifyAccessToken, (req, res, next) => {
-  console.log(req.headers);
-
   const userList = [
     {
       emai: 'tuannt02@gmail.com',
