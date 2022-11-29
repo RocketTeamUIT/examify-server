@@ -45,3 +45,6 @@ Content-Type: application/json
 {
     "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY2OTU2MjEwOCwiZXhwIjoxNzAxMTE5NzA4fQ.F7TKLeOMkN_zQ4-yD127ttOC1hHxdja4rPvvQQq8Qv8"
 }
+
+### Get lesson learned in week
+GET http://localhost:5000/courses/4/learned-in-week/4

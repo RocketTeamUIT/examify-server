@@ -2,6 +2,54 @@ const express = require('express');
 const pool = require('../config/db');
 const router = express.Router();
 
+// [GET] /courses/:id/learned-in-week
+router.get('/:id/learned-in-week/:uid', async (req, res) => {
+  try {
+    const { id, uid } = req.params;
+    const learned = {
+      videoLessonQnt: 0,
+      textLessonQnt: 0,
+      flashcardLessonQnt: 0,
+    };
+
+    const data = await pool.query(
+      `
+      SELECT type, COUNT (*)
+      FROM join_lesson AS JLS LEFT JOIN lesson
+      ON JLS.lesson_id = lesson.lesson_id
+      WHERE JLS.student_id = $1 
+      AND JLS.created_at >= NOW() - INTERVAL '7 day'
+      AND JLS.lesson_id IN(
+        SELECT lesson_id
+        FROM lesson
+        WHERE lesson.unit_id IN(
+          SELECT unit_id
+          FROM unit
+          WHERE unit.chapter_id IN(
+            SELECT chapter_id
+            FROM chapter
+            WHERE course_id = $2 )))
+      GROUP BY type;
+      `,
+      [uid, id],
+    );
+
+    data.rows.map((data) => {
+      if (data.type === 1) {
+        learned.videoLessonQnt = data.count;
+      } else if (data.type === 2) {
+        learned.textLessonQnt = data.count;
+      } else if (data.type === 3) {
+        learned.flashcardLessonQnt = data.count;
+      }
+    });
+
+    res.json(learned);
+  } catch (err) {
+    console.log(err.message);
+  }
+});
+
 // [GET] /courses/:id -> get a course
 router.get('/:id', async (req, res) => {
   try {
