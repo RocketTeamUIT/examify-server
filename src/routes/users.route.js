@@ -10,7 +10,7 @@ router.post('/register', userController.register);
 router.post('/login', userController.login);
 
 // [DELETE] /users/logout
-router.delete('/logout', userController.logout);
+router.delete('/logout', verifyAccessToken, userController.logout);
 
 // [POST] /users/refresh-token
 router.post('/refresh-token', userController.refreshToken);

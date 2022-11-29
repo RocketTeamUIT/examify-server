@@ -8,7 +8,7 @@ module.exports = {
   register: async (req, res, next) => {
     try {
       const email = req.body.email.toLowerCase(); // email lowercase
-      const { firstname, lastname, password, passwordConfirmation } = req.body;
+      const { firstname, lastname, password } = req.body;
 
       // Validate fields
       const { error } = registerValidate(req.body);
@@ -70,7 +70,15 @@ module.exports = {
       const accessToken = await signAccessToken(isExist.rows[0].user_id);
       const refreshToken = await signRefreshToken(isExist.rows[0].user_id);
 
-      res.json({
+      // Store refresh token in cookie
+      res.cookie('refreshToken', refreshToken, {
+        httpOnly: true,
+        secure: false,
+        path: '/',
+        sameSite: 'strict',
+      });
+
+      res.status(200).json({
         status: 200,
         user: {
           userId: isExist.rows[0].user_id,
@@ -79,7 +87,6 @@ module.exports = {
           lastName: isExist.rows[0].last_name,
         },
         accessToken,
-        refreshToken,
       });
     } catch (err) {
       next(err);
@@ -87,7 +94,8 @@ module.exports = {
   },
   logout: async (req, res, next) => {
     try {
-      const { refreshToken } = req.body;
+      // Take refresh token from cookie of user
+      const { refreshToken } = req.cookies;
 
       // Check refresh token exists
       if (!refreshToken) {
@@ -101,6 +109,9 @@ module.exports = {
           throw createError.InternalServerError("Maybe there's something wrong with our server");
         }
 
+        // Clear cookie
+        res.clearCookie('refreshToken');
+
         res.status(200).json({
           status: 200,
           message: 'Logout!',
@@ -112,7 +123,8 @@ module.exports = {
   },
   refreshToken: async (req, res, next) => {
     try {
-      const { refreshToken } = req.body;
+      // Take refresh token from cookie of user
+      const { refreshToken } = req.cookies;
 
       // Check refresh token exists
       if (!refreshToken) throw createError.BadRequest('No refresh token in cookies');
@@ -124,7 +136,15 @@ module.exports = {
       const accessToken = await signAccessToken(userId);
       const refToken = await signRefreshToken(userId);
 
-      res.status.json({
+      // Store refresh token in cookie
+      res.cookie('refreshToken', refreshToken, {
+        httpOnly: true,
+        secure: false,
+        path: '/',
+        sameSite: 'strict',
+      });
+
+      res.status(200).json({
         status: 200,
         accessToken,
         refreshToken: refToken,

@@ -1,13 +1,14 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 const route = require('./src/routes');
 const createError = require('http-errors');
-const { urlencoded } = require('express');
 
 // Apply middleware
 app.use(cors());
 app.use(express.json()); // req.body
+app.use(cookieParser()); // Allow server read cookie
 app.use(express.urlencoded({ extended: true }));
 
 // Routes sẽ lọt vào đây
