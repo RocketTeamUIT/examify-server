@@ -21,6 +21,7 @@ Content-Type: application/json
     "passwordConfirmation": "tuannt02"
 }
 
+
 ### Get all user
 GET http://localhost:5000/users
 
@@ -34,9 +35,11 @@ Content-Type: application/json
     "password": "tuannt02"
 }
 
+
 ### Get list
 GET http://localhost:5000/users/getlist
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY2OTU2MjEwOCwiZXhwIjoxNjY5NTY1NzA4fQ.Yi_kKvtmY2WaIlhT4u9Hg_Rj7LNSXCkQaK1PooXaGwU
+
 
 ### Refresh token
 POST http://localhost:5000/users/refresh-token
@@ -44,6 +47,16 @@ Content-Type: application/json
 
 {
     "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY2OTU2MjEwOCwiZXhwIjoxNzAxMTE5NzA4fQ.F7TKLeOMkN_zQ4-yD127ttOC1hHxdja4rPvvQQq8Qv8"
+}
+
+
+### Logout
+DELETE http://localhost:5000/users/logout
+Content-Type: application/json
+
+
+{
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY2OTU2MzMyNiwiZXhwIjoxNzAxMTIwOTI2fQ.Jj7E7XXSKX1IUFs4v1_5XC2pAIMqLYa0gf_xHiA42nQ"
 }
 
 ### Get lesson learned in week

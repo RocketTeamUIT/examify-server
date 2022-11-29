@@ -1,13 +1,14 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 const route = require('./src/routes');
 const createError = require('http-errors');
-const { urlencoded } = require('express');
 
 // Apply middleware
 app.use(cors());
 app.use(express.json()); // req.body
+app.use(cookieParser()); // Allow server read cookie
 app.use(express.urlencoded({ extended: true }));
 
 // Routes sẽ lọt vào đây
@@ -19,8 +20,9 @@ app.use((req, res, next) => {
 });
 
 app.use((err, req, res, next) => {
-  res.json({
+  res.status(err.status || 500).json({
     status: err.status || 500,
+    error: createError[err.status || 500].name,
     message: err.message,
   });
 });
