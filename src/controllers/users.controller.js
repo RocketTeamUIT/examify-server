@@ -33,7 +33,7 @@ module.exports = {
       );
       const newUser = createUserFromQuery.rows[0];
 
-      return res.json({
+      return res.status(200).json({
         status: 200,
         elements: newUser,
       });
@@ -71,6 +71,13 @@ module.exports = {
       const refreshToken = await signRefreshToken(isExist.rows[0].user_id);
 
       res.json({
+        status: 200,
+        user: {
+          userId: isExist.rows[0].user_id,
+          email: isExist.rows[0].mail,
+          firstName: isExist.rows[0].first_name,
+          lastName: isExist.rows[0].last_name,
+        },
         accessToken,
         refreshToken,
       });
@@ -84,17 +91,17 @@ module.exports = {
 
       // Check refresh token exists
       if (!refreshToken) {
-        throw createError.BadRequest();
+        throw createError.BadRequest('No refresh token in cookies');
       }
 
       // Verify refresh token & remove refresh token in DB
       const { userId } = await verifyRefreshToken(refreshToken);
       pool.query('UPDATE users SET refresh_token = $1 WHERE user_id = $2', ['', userId], (err, result) => {
         if (err) {
-          throw createError.InternalServerError();
+          throw createError.InternalServerError("Maybe there's something wrong with our server");
         }
 
-        res.json({
+        res.status(200).json({
           status: 200,
           message: 'Logout!',
         });
@@ -108,7 +115,7 @@ module.exports = {
       const { refreshToken } = req.body;
 
       // Check refresh token exists
-      if (!refreshToken) throw createError.BadRequest();
+      if (!refreshToken) throw createError.BadRequest('No refresh token in cookies');
 
       // Check proper user
       const { userId } = await verifyRefreshToken(refreshToken);
@@ -117,7 +124,8 @@ module.exports = {
       const accessToken = await signAccessToken(userId);
       const refToken = await signRefreshToken(userId);
 
-      res.json({
+      res.status.json({
+        status: 200,
         accessToken,
         refreshToken: refToken,
       });
@@ -128,7 +136,7 @@ module.exports = {
   getAllUsers: async (req, res) => {
     try {
       const allUsers = await pool.query('SELECT * FROM users');
-      res.json(allUsers.rows);
+      res.status(200).json(allUsers.rows);
     } catch (err) {
       console.log(err.message);
     }
