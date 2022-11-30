@@ -21,7 +21,17 @@ const loginValidate = (data) => {
   return userSchema.validate(data);
 };
 
+const newPasswordValidate = (data) => {
+  const userSchema = Joi.object({
+    oldPassword: Joi.string(),
+    newPassword: Joi.string().trim().min(8).max(100).required(),
+  });
+
+  return userSchema.validate(data);
+};
+
 module.exports = {
   registerValidate,
   loginValidate,
+  newPasswordValidate,
 };

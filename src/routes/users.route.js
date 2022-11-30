@@ -9,6 +9,9 @@ router.post('/register', userController.register);
 // [POST] /users/login -> User login
 router.post('/login', userController.login);
 
+// [PUT] /users/change-password -> User change password
+router.put('/change-password', verifyAccessToken, userController.changePassword);
+
 // [DELETE] /users/logout
 router.delete('/logout', verifyAccessToken, userController.logout);
 
