@@ -21,6 +21,9 @@ router.post('/refresh-token', userController.refreshToken);
 // [GET] /users/me
 router.get('/me', verifyAccessToken, userController.account);
 
+// [PUT] /users/update-info
+router.put('/update-info', verifyAccessToken, userController.updateInfo);
+
 // [GET] /users -> get all user
 router.get('/', userController.getAllUsers);
 

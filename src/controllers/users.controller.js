@@ -33,8 +33,8 @@ module.exports = {
       );
       const newUser = createUserFromQuery.rows[0];
 
-      return res.status(200).json({
-        status: 200,
+      return res.status(201).json({
+        status: 201,
         elements: newUser,
       });
     } catch (err) {
@@ -72,6 +72,34 @@ module.exports = {
         status: 200,
         data: userInfo,
       });
+    } catch (err) {
+      next(err);
+    }
+  },
+  updateInfo: async (req, res, next) => {
+    try {
+      // Get userId from access token
+      const { userId } = req.payload;
+
+      // Get new user info
+      const { firstName, lastName, dateOfBirth, phoneNumber, description } = req.body;
+      const convertValidDate = new Date(dateOfBirth + 'T00:00:00.000Z'); // Convert valid date with DB
+
+      // Update new user info to DB
+      pool.query(
+        'UPDATE users SET first_name = $1, last_name = $2, date_of_birth = $3, phone_number = $4, description = $5 WHERE user_id = $6',
+        [firstName, lastName, convertValidDate, phoneNumber, description, userId],
+        (err, result) => {
+          if (err) {
+            throw createError.InternalServerError("Maybe there's something wrong with our server");
+          }
+
+          res.status(200).json({
+            status: 200,
+            message: 'Update user info successfully',
+          });
+        },
+      );
     } catch (err) {
       next(err);
     }
