@@ -123,8 +123,51 @@ module.exports = {
 
   getAllCourses: async (req, res) => {
     try {
-      const allCourses = await pool.query('SELECT * FROM course');
-      res.json(allCourses.rows);
+      const { uid } = req.params;
+      const data = await pool.query('SELECT * FROM course');
+
+      var courses = [];
+
+      await Promise.all(
+        data.rows.map(async (course) => {
+          const data = await pool.query(
+            `SELECT *
+            FROM join_course
+            WHERE student_id = $1
+            AND course_id = $2`,
+            [uid, course.course_id],
+          );
+
+          const isJoin = data.rowCount > 0 ? true : false;
+
+          courses.push({
+            id: course?.course_id,
+            level: course?.level,
+            isJoin: isJoin,
+            name: course?.name,
+            image: course?.image,
+            charges: course?.charges,
+            pointToUnlock: course?.point_to_unlock,
+            pointReward: course?.point_reward,
+            quantityRating: course?.quantity_rating,
+            avgRating: course?.avg_rating,
+            participants: course?.participants,
+            price: course?.price,
+            discount: course?.discount,
+            totalChapter: course?.total_chapter,
+            totalLesson: course?.total_lesson,
+            totalVideoTime: course?.total_video_time,
+            achieves: course?.achieves,
+            description: course?.description,
+            createAt: course?.created_at,
+            updateAt: course?.updated_at,
+          });
+        }),
+      );
+
+      res.json(courses);
+
+      //   res.json(allCourses);
     } catch (err) {
       console.log(err.message);
     }

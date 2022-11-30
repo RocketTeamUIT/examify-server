@@ -64,3 +64,7 @@ GET http://localhost:5000/courses/4/learned-in-week/4
 
 ### Get list unit, lesson user in completed
 GET http://localhost:5000/courses/4/unfinished-lesson/4
+
+### Get all courses
+//thêm field test và 1 để fake user khi chưa có token
+GET http://localhost:5000/courses/test/1
