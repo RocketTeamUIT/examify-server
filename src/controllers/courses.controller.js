@@ -25,24 +25,37 @@ module.exports = {
         [uid, id],
       );
 
-      const unfinishedLesson = listUnit.rows;
+      var unfinishedLesson = listUnit.rows.reduce((acc, curr) => {
+        acc.push({
+          id: curr.unit_id,
+          nameUnit: curr.unit_id,
+        });
+        return acc;
+      }, []);
 
       // get list lesson for each unit
       await Promise.all(
         unfinishedLesson.map(async (unit) => {
           listLesson = await pool.query(
             `SELECT lesson_id, name, type
-                FROM lesson
-                WHERE lesson.unit_id = $1
-                AND lesson_id NOT IN(
-                    SELECT lesson_id
-                    FROM join_lesson
-                    WHERE student_id = $2
-                )`,
-            [unit.unit_id, uid],
+                  FROM lesson
+                  WHERE lesson.unit_id = $1
+                  AND lesson_id NOT IN(
+                      SELECT lesson_id
+                      FROM join_lesson
+                      WHERE student_id = $2
+                  )`,
+            [unit.id, uid],
           );
           // add field lesson array for each unit
-          unit.lessons = listLesson.rows;
+          unit.lessons = listLesson.rows.reduce((acc, curr) => {
+            acc.push({
+              id: curr.lesson_id,
+              nameLesson: curr.name,
+              type: curr.type,
+            });
+            return acc;
+          }, []);
         }),
       );
 
