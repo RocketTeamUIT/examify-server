@@ -18,6 +18,9 @@ router.delete('/logout', verifyAccessToken, userController.logout);
 // [POST] /users/refresh-token
 router.post('/refresh-token', userController.refreshToken);
 
+// [GET] /users/me
+router.get('/me', verifyAccessToken, userController.account);
+
 // [GET] /users -> get all user
 router.get('/', userController.getAllUsers);
 

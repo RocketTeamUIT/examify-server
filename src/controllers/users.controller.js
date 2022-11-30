@@ -41,6 +41,41 @@ module.exports = {
       next(err);
     }
   },
+  account: async (req, res, next) => {
+    try {
+      // Get userId from access token
+      const { userId } = req.payload;
+
+      // Get User info
+      const userQuery = await pool.query('SELECT * FROM users WHERE user_id = $1', [userId]);
+      const userInfoQuery = userQuery.rows[0];
+      const userInfo = {
+        email: userInfoQuery.mail,
+        firstName: userInfoQuery.first_name,
+        lastName: userInfoQuery.last_name,
+        phoneNumber: userInfoQuery.phone_number,
+        dateOfBirth: userInfoQuery.date_of_birth,
+        description: userInfoQuery.description,
+        avt: userInfoQuery.avt,
+        banner: userInfoQuery.banner,
+        accumulatedPoint: userInfoQuery.accumulated_point,
+        joinedCourses: 15, // Temp
+        ownFlashcard: 0, // Temp
+      };
+
+      // Get rank of user
+      const rankId = userInfoQuery.rank_id;
+      const rankUserQuery = await pool.query('SELECT rank_name FROM rank WHERE rank_id = $1', [rankId]);
+      userInfo.rank = rankUserQuery.rows[0].rank_name;
+
+      res.status(200).json({
+        status: 200,
+        data: userInfo,
+      });
+    } catch (err) {
+      next(err);
+    }
+  },
   login: async (req, res, next) => {
     try {
       const email = req.body.email.toLowerCase(); // email lowercase
