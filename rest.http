@@ -61,3 +61,6 @@ Content-Type: application/json
 
 ### Get lesson learned in week
 GET http://localhost:5000/courses/4/learned-in-week/4
+
+### Get list unit, lesson user in completed
+GET http://localhost:5000/courses/4/unfinished-lesson/4

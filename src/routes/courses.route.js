@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const courseController = require('../controllers/courses.controller');
 
+// GET /courses/:id/unfinished-lesson
+router.get('/:id/unfinished-lesson/:uid', courseController.unitInCompleted);
+
 // [GET] /courses/:id/learned-in-week   -> Get quantity lesson user learned in week
 router.get('/:id/learned-in-week/:uid', courseController.lessonQntInWeek);
 

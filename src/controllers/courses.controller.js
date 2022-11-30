@@ -1,6 +1,57 @@
 const pool = require('../config/db');
 
 module.exports = {
+  unitInCompleted: async (req, res) => {
+    try {
+      const { id, uid } = req.params;
+      // get the list of units that the user has not completed
+      const listUnit = await pool.query(
+        `SELECT unit.unit_id, unit.name
+        FROM unit 
+            LEFT JOIN lesson ON unit.unit_id = lesson.unit_id
+            INNER JOIN join_lesson ON lesson.lesson_id = join_lesson.lesson_id
+        WHERE student_id = $1 
+        AND unit.unit_id IN (
+            SELECT unit_id
+            FROM unit
+            WHERE unit.chapter_id IN(
+                SELECT chapter_id
+                FROM chapter
+                WHERE chapter.course_id = $2
+            )
+        )
+        GROUP BY unit.unit_id
+        HAVING unit.total_lesson > COUNT(*)`,
+        [uid, id],
+      );
+
+      const unfinishedLesson = listUnit.rows;
+
+      // get list lesson for each unit
+      await Promise.all(
+        unfinishedLesson.map(async (unit) => {
+          listLesson = await pool.query(
+            `SELECT lesson_id, name, type
+                FROM lesson
+                WHERE lesson.unit_id = $1
+                AND lesson_id NOT IN(
+                    SELECT lesson_id
+                    FROM join_lesson
+                    WHERE student_id = $2
+                )`,
+            [unit.unit_id, uid],
+          );
+          // add field lesson array for each unit
+          unit.lessons = listLesson.rows;
+        }),
+      );
+
+      res.json(unfinishedLesson);
+    } catch (err) {
+      console.log(err.message);
+    }
+  },
+
   lessonQntInWeek: async (req, res) => {
     try {
       const { id, uid } = req.params;
