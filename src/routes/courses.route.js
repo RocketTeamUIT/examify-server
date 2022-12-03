@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const courseController = require('../controllers/courses.controller');
+const { checkLogin } = require('../utils/jwt_service');
 
 // GET /courses/:id/unfinished-lesson
 router.get('/:id/unfinished-lesson/:uid', courseController.unitInCompleted);
@@ -13,6 +14,9 @@ router.get('/:id', courseController.getCourse);
 
 // [GET] /courses -> get all courses
 router.get('/test/:uid', courseController.getAllCourses);
+
+// [GET] /courses -> get all courses
+router.get('/', checkLogin, courseController.getAllCourses);
 
 // [POST] /courses -> create new course
 router.post('/', courseController.createNewCourse);

@@ -124,8 +124,8 @@ module.exports = {
 
   getAllCourses: (req, res, next) => {
     try {
-      // fake user_id
-      const uid = 14;
+      // Get userId from middleware check login
+      const { userId } = req.payload || -1;
 
       // Course query
       pool.query(
@@ -136,7 +136,7 @@ module.exports = {
             FROM join_course
             WHERE student_id = $1
         ) AS TEM ON course.course_id = TEM.tem_course_id;`,
-        [uid],
+        [userId],
         (err, result) => {
           if (err) {
             throw createError.InternalServerError("Maybe there's something wrong with our server");

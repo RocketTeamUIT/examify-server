@@ -49,6 +49,29 @@ const verifyAccessToken = (req, res, next) => {
   });
 };
 
+// Check if login
+// This middleware allow we check if user login.
+const checkLogin = (req, res, next) => {
+  // Check if token in header
+  if (!req.headers['authorization']) {
+    return next();
+  }
+
+  // Get token from header
+  const authHeader = req.headers['authorization'];
+  const bearerToken = authHeader.split(' ');
+  const token = bearerToken[1];
+
+  // Check valid token
+  JWT.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, payload) => {
+    if (err) {
+      return next();
+    }
+    req.payload = payload;
+    next();
+  });
+};
+
 const signRefreshToken = async (userId) => {
   return new Promise((resolve, reject) => {
     // Payload
@@ -107,4 +130,5 @@ module.exports = {
   verifyAccessToken,
   signRefreshToken,
   verifyRefreshToken,
+  checkLogin,
 };
