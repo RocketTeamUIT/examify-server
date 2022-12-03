@@ -7,7 +7,12 @@ const createError = require('http-errors');
 const connectDB = require('./src/config/connectDB');
 
 // Apply middleware
-app.use(cors());
+app.use(
+  cors({
+    origin: 'http://localhost:3000',
+    credentials: true,
+  }),
+);
 app.use(express.json()); // req.body
 app.use(cookieParser()); // Allow server read cookie
 app.use(express.urlencoded({ extended: true }));
