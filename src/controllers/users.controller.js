@@ -77,24 +77,52 @@ module.exports = {
     }
   },
   getAvatar: async (req, res, next) => {
-    // Get userId from access token
-    const { userId } = req.payload;
+    try {
+      // Get userId from access token
+      const { userId } = req.payload;
 
-    // Query get avatar user
-    pool.query('SELECT avt FROM users WHERE user_id = $1', [userId], (err, result) => {
-      if (err) {
-        throw createError.InternalServerError("Maybe there's something wrong with our server");
-      }
+      // Query get avatar user
+      pool.query('SELECT avt FROM users WHERE user_id = $1', [userId], (err, result) => {
+        if (err) {
+          throw createError.InternalServerError("Maybe there's something wrong with our server");
+        }
 
-      const avatarUser = result.rows[0].avt;
+        const avatarUser = result.rows[0].avt;
 
-      res.status(200).json({
-        status: 200,
-        data: {
-          avatar: avatarUser,
-        },
+        res.status(200).json({
+          status: 200,
+          data: {
+            avatar: avatarUser,
+          },
+        });
       });
-    });
+    } catch (err) {
+      next(err);
+    }
+  },
+  getBanner: async (req, res, next) => {
+    try {
+      // Get userId from access token
+      const { userId } = req.payload;
+
+      // Query get banner user
+      pool.query('SELECT banner FROM users WHERE user_id = $1', [userId], (err, result) => {
+        if (err) {
+          throw createError.InternalServerError("Maybe there's something wrong with our server");
+        }
+
+        const bannerUser = result.rows[0].banner;
+
+        res.status(200).json({
+          status: 200,
+          data: {
+            banner: bannerUser,
+          },
+        });
+      });
+    } catch (err) {
+      next(err);
+    }
   },
   changeAvatar: async (req, res, next) => {
     try {

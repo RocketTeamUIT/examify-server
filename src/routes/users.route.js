@@ -18,6 +18,9 @@ router.get('/avatar', verifyAccessToken, userController.getAvatar);
 // [PUT] /users/avatar -> User change avatar
 router.put('/avatar', verifyAccessToken, userController.changeAvatar);
 
+// [GET] /users/banner -> Get banner user
+router.get('/banner', verifyAccessToken, userController.getBanner);
+
 // [PUT] /users/banner -> User change banner
 router.put('/banner', verifyAccessToken, userController.changeBanner);
 
