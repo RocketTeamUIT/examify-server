@@ -58,3 +58,13 @@ Content-Type: application/json
 {
     "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY2OTU2MzMyNiwiZXhwIjoxNzAxMTIwOTI2fQ.Jj7E7XXSKX1IUFs4v1_5XC2pAIMqLYa0gf_xHiA42nQ"
 }
+
+### Get lesson learned in week
+GET http://localhost:5000/courses/4/learned-in-week/4
+
+### Get list unit, lesson user in completed
+GET http://localhost:5000/courses/4/unfinished-lesson/4
+
+### Get all courses
+//thêm field test và 1 để fake user khi chưa có token
+GET http://localhost:5000/courses/test/1
