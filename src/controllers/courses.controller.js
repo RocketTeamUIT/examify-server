@@ -1,4 +1,5 @@
 const pool = require('../config/db');
+const createError = require('http-errors');
 
 module.exports = {
   unitInCompleted: async (req, res) => {
@@ -121,55 +122,56 @@ module.exports = {
     }
   },
 
-  getAllCourses: async (req, res) => {
+  getAllCourses: (req, res, next) => {
     try {
-      const { uid } = req.params;
-      const data = await pool.query('SELECT * FROM course');
+      // fake user_id
+      const uid = 14;
 
-      var courses = [];
-
-      await Promise.all(
-        data.rows.map(async (course) => {
-          const data = await pool.query(
-            `SELECT *
+      // Course query
+      pool.query(
+        `SELECT *, CASE WHEN TEM.tem_course_id = course.course_id THEN true ELSE false END as is_joined
+        FROM course
+        LEFT JOIN (
+            SELECT course_id AS tem_course_id
             FROM join_course
             WHERE student_id = $1
-            AND course_id = $2`,
-            [uid, course.course_id],
-          );
+        ) AS TEM ON course.course_id = TEM.tem_course_id;`,
+        [uid],
+        (err, result) => {
+          if (err) {
+            throw createError.InternalServerError("Maybe there's something wrong with our server");
+          }
 
-          const isJoin = data.rowCount > 0 ? true : false;
+          // Get origin course list from query
+          const originCourseList = result.rows;
 
-          courses.push({
-            id: course?.course_id,
-            level: course?.level,
-            isJoin: isJoin,
-            name: course?.name,
-            image: course?.image,
-            charges: course?.charges,
-            pointToUnlock: course?.point_to_unlock,
-            pointReward: course?.point_reward,
-            quantityRating: course?.quantity_rating,
-            avgRating: course?.avg_rating,
-            participants: course?.participants,
-            price: course?.price,
-            discount: course?.discount,
-            totalChapter: course?.total_chapter,
-            totalLesson: course?.total_lesson,
-            totalVideoTime: course?.total_video_time,
-            achieves: course?.achieves,
-            description: course?.description,
-            createAt: course?.created_at,
-            updateAt: course?.updated_at,
-          });
-        }),
+          // object mapping
+          const courseList = originCourseList.map((originCourseItem) => ({
+            id: originCourseItem.course_id,
+            level: originCourseItem.level,
+            isJoin: originCourseItem.is_joined,
+            name: originCourseItem.name,
+            image: originCourseItem?.image,
+            charges: originCourseItem?.charges,
+            pointToUnlock: originCourseItem?.point_to_unlock,
+            pointReward: originCourseItem?.point_reward,
+            quantityRating: originCourseItem?.quantity_rating,
+            avgRating: originCourseItem?.avg_rating,
+            participants: originCourseItem?.participants,
+            price: originCourseItem?.price,
+            discount: originCourseItem?.discount,
+            totalChapter: originCourseItem?.total_chapter,
+            totalLesson: originCourseItem?.total_lesson,
+            totalVideoTime: originCourseItem?.total_video_time,
+            achieves: originCourseItem?.achieves,
+            description: originCourseItem?.description,
+          }));
+
+          res.status(200).json({ data: courseList });
+        },
       );
-
-      res.json(courses);
-
-      //   res.json(allCourses);
     } catch (err) {
-      console.log(err.message);
+      next(err);
     }
   },
 
