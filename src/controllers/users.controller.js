@@ -105,10 +105,32 @@ module.exports = {
     }
   },
   changeBanner: async (req, res, next) => {
-    res.status(200).json({
-      status: 200,
-      message: 'Update banner successfully',
-    });
+    try {
+      // Get userId from access token
+      const { userId } = req.payload;
+
+      // Get new image url from req
+      const newImageUrl = req.body.newImageUrl;
+
+      // Check new image exist
+      if (!newImageUrl) {
+        throw createError.BadRequest('Missing new image url');
+      }
+
+      // Update new img via query
+      pool.query('UPDATE users SET banner = $1 WHERE user_id = $2', [newImageUrl, userId], (err, result) => {
+        if (err) {
+          throw createError.InternalServerError("Maybe there's something wrong with our server");
+        }
+
+        res.status(200).json({
+          status: 200,
+          message: 'Update banner successfully',
+        });
+      });
+    } catch (err) {
+      next(err);
+    }
   },
   updateInfo: async (req, res, next) => {
     try {
