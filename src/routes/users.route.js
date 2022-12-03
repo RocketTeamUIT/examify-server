@@ -12,6 +12,9 @@ router.post('/login', userController.login);
 // [PUT] /users/change-password -> User change password
 router.put('/change-password', verifyAccessToken, userController.changePassword);
 
+// [GET] /users/avatar -> Get avatar user
+router.get('/avatar', verifyAccessToken, userController.getAvatar);
+
 // [PUT] /users/avatar -> User change avatar
 router.put('/avatar', verifyAccessToken, userController.changeAvatar);
 

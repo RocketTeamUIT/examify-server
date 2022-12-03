@@ -76,6 +76,26 @@ module.exports = {
       next(err);
     }
   },
+  getAvatar: async (req, res, next) => {
+    // Get userId from access token
+    const { userId } = req.payload;
+
+    // Query get avatar user
+    pool.query('SELECT avt FROM users WHERE user_id = $1', [userId], (err, result) => {
+      if (err) {
+        throw createError.InternalServerError("Maybe there's something wrong with our server");
+      }
+
+      const avatarUser = result.rows[0].avt;
+
+      res.status(200).json({
+        status: 200,
+        data: {
+          avatar: avatarUser,
+        },
+      });
+    });
+  },
   changeAvatar: async (req, res, next) => {
     try {
       // Get userId from access token
