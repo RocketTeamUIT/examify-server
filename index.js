@@ -4,12 +4,16 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const route = require('./src/routes');
 const createError = require('http-errors');
+const connectDB = require('./src/config/connectDB');
 
 // Apply middleware
 app.use(cors());
 app.use(express.json()); // req.body
 app.use(cookieParser()); // Allow server read cookie
 app.use(express.urlencoded({ extended: true }));
+
+// Connect sequelize with pg
+connectDB();
 
 // Routes sẽ lọt vào đây
 route(app);
