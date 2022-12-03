@@ -12,6 +12,12 @@ router.post('/login', userController.login);
 // [PUT] /users/change-password -> User change password
 router.put('/change-password', verifyAccessToken, userController.changePassword);
 
+// [PUT] /users/avatar -> User change avatar
+router.put('/avatar', verifyAccessToken, userController.changeAvatar);
+
+// [PUT] /users/banner -> User change banner
+router.put('/banner', verifyAccessToken, userController.changeBanner);
+
 // [DELETE] /users/logout
 router.delete('/logout', verifyAccessToken, userController.logout);
 
