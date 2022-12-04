@@ -1,7 +1,39 @@
+// const db = require('../models/index');
 const pool = require('../config/db');
 const createError = require('http-errors');
+const Course = require('../models/course');
 
 module.exports = {
+  test: async (req, res) => {
+    try {
+      let course = await Course.create({
+        name: 'tu vung moi',
+        image: 'http://dummyimage.com',
+        level: 'easy',
+        charges: true,
+        pointToUnlock: 9365,
+        pointReward: 20,
+        quantityRating: 20,
+        avgRating: 4.68,
+        participants: 20,
+        price: 20,
+        discount: 5,
+        totalChapter: 8,
+        totalLesson: 8,
+        totalVideoTime: 8,
+        achieves: 'cascscacdcd',
+        description: 'sssssssdddd',
+        createBy: '21231',
+      });
+
+      // let course = await Course.findOne();
+
+      res.json(course);
+    } catch (err) {
+      console.log(err);
+    }
+  },
+
   unitInCompleted: async (req, res) => {
     try {
       const { id, uid } = req.params;
