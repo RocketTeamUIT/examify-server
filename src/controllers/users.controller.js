@@ -354,7 +354,7 @@ module.exports = {
       const refToken = await signRefreshToken(userId);
 
       // Store refresh token in cookie
-      res.cookie('refreshToken', refreshToken, {
+      res.cookie('refreshToken', refToken, {
         httpOnly: true,
         secure: false,
         path: '/',
