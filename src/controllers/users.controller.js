@@ -243,6 +243,7 @@ module.exports = {
         secure: false,
         path: '/',
         sameSite: 'strict',
+        maxAge: 60 * 60 * 24 * 3600 * 1000,
       });
 
       res.status(200).json({
@@ -359,6 +360,7 @@ module.exports = {
         secure: false,
         path: '/',
         sameSite: 'strict',
+        maxAge: 60 * 60 * 24 * 3600 * 1000,
       });
 
       res.status(200).json({

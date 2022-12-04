@@ -214,4 +214,29 @@ module.exports = {
       console.log(err.message);
     }
   },
+  updateParticipant: async (req, res, next) => {
+    try {
+      // Get courseId from req.params
+      const { courseId } = req.params;
+
+      // Check exist courseId params
+      if (!courseId) {
+        throw createError.BadRequest('Missing path parameter');
+      }
+
+      // Query update participant up one unit
+      pool.query('CALL increase_one_participant_course($1)', [courseId], (err, result) => {
+        if (err) {
+          throw createError.InternalServerError("Maybe there's something wrong with our server");
+        }
+
+        res.status(200).json({
+          status: 200,
+          message: 'Update pariticipant successfully',
+        });
+      });
+    } catch (err) {
+      next(err);
+    }
+  },
 };

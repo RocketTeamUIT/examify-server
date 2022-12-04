@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const courseController = require('../controllers/courses.controller');
-const { checkLogin } = require('../utils/jwt_service');
+const { checkLogin, verifyAccessToken } = require('../utils/jwt_service');
 
 // GET /courses/:id/unfinished-lesson
 router.get('/:id/unfinished-lesson/:uid', courseController.unitInCompleted);
@@ -24,7 +24,10 @@ router.post('/', courseController.createNewCourse);
 // [DELETE] /courses/:id -> delete a course
 router.delete('/:id', courseController.deleteCourse);
 
-// [UPDATE] /courses/:id -> update a course
+// [PUT] /courses/:id -> update a course
 router.put('/:id', courseController.updateCourse);
+
+// [PUT] /courses/update-participant/:course-id
+router.put('/:courseId/update-participant', verifyAccessToken, courseController.updateParticipant);
 
 module.exports = router;
