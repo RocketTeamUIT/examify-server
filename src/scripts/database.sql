@@ -1003,6 +1003,7 @@ create table comment (
 	student_id INTEGER NOT NULL REFERENCES users(user_id),
 	course_id INTEGER NOT NULL REFERENCES course(course_id),
 	content TEXT,
+	total_like: INTEGER DEFAULT 0,
 	respond_id INTEGER REFERENCES comment(comment_id),
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
