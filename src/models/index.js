@@ -1,9 +1,9 @@
-// const sequelize = require('../config/connectDB');
-
 // object db contain all Model in project
 const db = {
-  Course: require('./course'),
-  Chapter: require('./chapter'),
+  Course: require('./course.model'),
+  Chapter: require('./chapter.model'),
+  Unit: require('./unit.model'),
+  Lesson: require('./lesson.model'),
 };
 
 //Excute function associate of model

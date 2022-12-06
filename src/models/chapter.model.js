@@ -5,6 +5,7 @@ const { sequelize } = require('../config/connectDB');
 class Chapter extends Model {
   static associate(models) {
     Chapter.belongsTo(models.Course, { foreignKey: 'courseId' });
+    Chapter.hasMany(models.Unit, { foreignKey: 'chapterId', as: 'unitList' });
   }
 }
 
