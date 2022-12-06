@@ -3,7 +3,8 @@ const { sequelize } = require('../config/connectDB');
 
 class JoinCourse extends Model {
   static associate(models) {
-    // add here
+    JoinCourse.belongsTo(models.Course, { foreignKey: 'courseId' });
+    // JoinCourse.belongsTo(models.User, { foreignKey: 'studentId' });
   }
 }
 

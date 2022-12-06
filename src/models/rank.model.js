@@ -3,7 +3,7 @@ const { sequelize } = require('../config/connectDB');
 
 class Rank extends Model {
   static associate(models) {
-    // Add here
+    // Rank.hasMany(models.User, {foreignKey: 'rankId'})
   }
 }
 

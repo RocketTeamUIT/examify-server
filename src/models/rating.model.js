@@ -3,7 +3,8 @@ const { sequelize } = require('../config/connectDB');
 
 class Rating extends Model {
   static associate(models) {
-    // Add here
+    Rating.belongsTo(models.Course, { foreignKey: 'courseId' });
+    // Rating.belongsTo(models.User, { foreignKey: 'studentId' });
   }
 }
 

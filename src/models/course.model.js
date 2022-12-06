@@ -2,9 +2,12 @@ const { Model, DataTypes } = require('sequelize');
 const { sequelize } = require('../config/connectDB');
 
 class Course extends Model {
-  // Add associate here...
   static associate(models) {
-    Course.hasMany(models.Chapter, { foreignKey: 'courseId', as: 'chapterList:' });
+    Course.hasMany(models.Chapter, { foreignKey: 'courseId', as: 'chapterList' });
+    Course.hasMany(models.JoinCourse, { foreignKey: 'courseId' });
+    Course.hasMany(models.Rating, { foreignKey: 'courseId' });
+    // Course.hasMany(models.Comment, { foreignKey: 'courseId' });
+    // Course.belongsTo(models.User, { foreignKey: 'createBy' });
   }
 }
 

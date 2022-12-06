@@ -3,7 +3,7 @@ const { sequelize } = require('../config/connectDB');
 
 class Slide extends Model {
   static associate(models) {
-    // Add here
+    Slide.belongsTo(models.Lesson, { foreignKey: 'lessonId' });
   }
 }
 

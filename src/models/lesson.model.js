@@ -4,9 +4,9 @@ const { sequelize } = require('../config/connectDB');
 class Lesson extends Model {
   static associate(models) {
     Lesson.belongsTo(models.Unit, { foreignKey: 'unitId' });
-    // add associate for Slide
-    // add associate for Note
-    // add associate for JoinLesson
+    Lesson.hasMany(models.Slide, { foreignKey: 'lessonId' });
+    Lesson.hasMany(models.Note, { foreignKey: 'lessonId' });
+    Lesson.hasMany(models.JoinLesson, { foreignKey: 'lessonId' });
   }
 }
 
@@ -15,7 +15,7 @@ Lesson.init(
     id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
-      primaryKey: 'true',
+      primaryKey: true,
       field: 'lesson_id',
     },
 

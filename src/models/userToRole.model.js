@@ -3,7 +3,8 @@ const { sequelize } = require('../config/connectDB');
 
 class UserToRole extends Model {
   static associate(models) {
-    // Add here
+    UserToRole.belongsTo(models.Roles, { foreignKey: 'roleId' });
+    // UserToRole.belongsTo(models.User, { foreignKey: 'userId' });
   }
 }
 
