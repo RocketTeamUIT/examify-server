@@ -1,7 +1,26 @@
+const db = require('../models/index');
 const pool = require('../config/db');
 const createError = require('http-errors');
+// const Course = require('../models/course');
+// const Chapter = require('../models/chapter');
 
 module.exports = {
+  test: async (req, res) => {
+    try {
+      let course = await db.Course.findAll({
+        include: [
+          {
+            model: db.Chapter,
+          },
+        ],
+      });
+
+      res.json(course);
+    } catch (err) {
+      console.log(err);
+    }
+  },
+
   unitInCompleted: async (req, res) => {
     try {
       const { id, uid } = req.params;
