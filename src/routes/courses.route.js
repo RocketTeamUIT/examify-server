@@ -3,6 +3,8 @@ const router = express.Router();
 const courseController = require('../controllers/courses.controller');
 const { checkLogin, verifyAccessToken } = require('../utils/jwt_service');
 
+router.get('/test', courseController.test);
+
 // GET /courses/:id/unfinished-lesson
 router.get('/:id/unfinished-lesson/:uid', courseController.unitInCompleted);
 

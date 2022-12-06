@@ -4,7 +4,7 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const route = require('./src/routes');
 const createError = require('http-errors');
-const connectDB = require('./src/config/connectDB');
+const { connectDB } = require('./src/config/connectDB');
 
 // Apply middleware
 app.use(
