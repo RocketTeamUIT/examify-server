@@ -1,13 +1,13 @@
 const { Model, DataTypes } = require('sequelize');
 const { sequelize } = require('../config/connectDB');
 
-class joinCourse extends Model {
+class JoinCourse extends Model {
   static associate(models) {
     // add here
   }
 }
 
-joinCourse.init(
+JoinCourse.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -38,10 +38,10 @@ joinCourse.init(
   },
   {
     sequelize,
-    modelName: 'joinCourse',
+    modelName: 'JoinCourse',
     tableName: 'join_course',
     timestamps: true,
   },
 );
 
-module.exports = joinCourse;
+module.exports = JoinCourse;
