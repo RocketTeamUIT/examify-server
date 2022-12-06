@@ -2,8 +2,10 @@
 
 // object db contain all Model in project
 const db = {
-  Course: require('./course'),
-  Chapter: require('./chapter'),
+  Rank: require('./rank.model'),
+  User: require('./user.model'),
+  Course: require('./course.model'),
+  Chapter: require('./chapter.model'),
 };
 
 //Excute function associate of model

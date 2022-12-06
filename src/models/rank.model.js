@@ -1,39 +1,33 @@
 const { Model, DataTypes } = require('sequelize');
 const { sequelize } = require('../config/connectDB');
 
-class Comment extends Model {
+class Rank extends Model {
   // Add associate here...
-  static associate(models) {}
+  static associate(models) {
+    Rank.hasMany(models.User, { foreignKey: 'rankId' });
+  }
 }
 
-Comment.init(
+Rank.init(
   {
-    commentId: {
+    rankId: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       allowNull: false,
       primaryKey: true,
-      field: 'comment_id',
+      field: 'rank_id',
     },
 
-    studentId: {
-      type: DataTypes.INTEGER,
-      field: 'student_id',
-    },
-
-    courseId: {
-      type: DataTypes.INTEGER,
-      field: 'course_id',
-    },
-
-    content: {
+    rankName: {
       type: DataTypes.STRING,
-      field: 'content',
+      field: 'rank_name',
+      allowNull: false,
     },
 
-    totalLike: {
+    pointToUnlock: {
       type: DataTypes.INTEGER,
-      field: 'total_like',
+      field: 'point_to_unlock',
+      allowNull: false,
     },
 
     createdAt: {
@@ -49,9 +43,9 @@ Comment.init(
   {
     sequelize,
     timestamps: true,
-    modelName: 'Comment',
-    tableName: 'comment',
+    modelName: 'Rank',
+    tableName: 'rank',
   },
 );
 
-module.exports = Comment;
+module.exports = Rank;
