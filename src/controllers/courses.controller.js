@@ -1,3 +1,4 @@
+const Op = require('sequelize');
 const db = require('../models/index');
 const pool = require('../config/db');
 const createError = require('http-errors');
@@ -5,22 +6,6 @@ const createError = require('http-errors');
 // const Chapter = require('../models/chapter');
 
 module.exports = {
-  test: async (req, res) => {
-    try {
-      let course = await db.Course.findAll({
-        include: [
-          {
-            model: db.Chapter,
-          },
-        ],
-      });
-
-      res.json(course);
-    } catch (err) {
-      console.log(err);
-    }
-  },
-
   unitInCompleted: async (req, res) => {
     try {
       const { id, uid } = req.params;
@@ -130,14 +115,45 @@ module.exports = {
     }
   },
 
-  getCourse: async (req, res) => {
+  getCourse: async (req, res, next) => {
     try {
-      const { id } = req.params;
-      const course = await pool.query('SELECT * FROM course WHERE course_id = $1', [id]);
+      let { id } = req.params;
+      let course = await db.Course.findOne({
+        attributes: {
+          exclude: ['createBy', 'createdAt', 'updatedAt'],
+        },
+        where: {
+          id: id,
+        },
+        include: [
+          {
+            model: db.Chapter,
+            as: 'chapterList',
+            attributes: {
+              exclude: ['courseId', 'createdAt', 'updatedAt'],
+            },
+            include: [
+              {
+                model: db.Unit,
+                as: 'unitList',
+                attributes: {
+                  exclude: ['unitId'],
+                },
+                include: [
+                  {
+                    model: db.Lesson,
+                    as: 'lessonList',
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      });
 
-      res.json(course.rows[0]);
+      res.status(200).json({ data: course });
     } catch (err) {
-      console.log(err.message);
+      next(err);
     }
   },
 
