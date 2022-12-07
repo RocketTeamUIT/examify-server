@@ -5,15 +5,16 @@ class User extends Model {
   // Add associate here...
   static associate(models) {
     User.belongsTo(models.Rank, { foreignKey: 'rankId' });
+    User.belongsToMany(models.Course, { through: models.Comment, foreignKey: 'userId' });
+    User.belongsToMany(models.Comment, { through: models.Like, foreignKey: 'userId' });
   }
 }
 
 User.init(
   {
-    userId: {
+    id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
-      allowNull: false,
       primaryKey: true,
       field: 'user_id',
     },
@@ -21,21 +22,28 @@ User.init(
     email: {
       type: DataTypes.STRING,
       field: 'mail',
+      allowNull: false,
+      validate: {
+        isEmail: true,
+      },
     },
 
     password: {
       type: DataTypes.TEXT,
       field: 'password',
+      allowNull: false,
     },
 
     firstName: {
       type: DataTypes.STRING,
       field: 'first_name',
+      allowNull: false,
     },
 
     lastName: {
       type: DataTypes.INTEGER,
       field: 'last_name',
+      allowNull: false,
     },
 
     dateOfBirth: {
@@ -51,11 +59,15 @@ User.init(
     avt: {
       type: DataTypes.TEXT,
       field: 'avt',
+      defaultValue:
+        'https://media.istockphoto.com/id/1223671392/vector/default-profile-picture-avatar-photo-placeholder-vector-illustration.jpg?s=170667a&w=0&k=20&c=m-F9Doa2ecNYEEjeplkFCmZBlc5tm1pl1F7cBCh9ZzM=',
     },
 
     banner: {
       type: DataTypes.TEXT,
       field: 'banner',
+      defaultValue:
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAX8AAACECAMAAABPuNs7AAAACVBMVEWAgICLi4uUlJSuV9pqAAABI0lEQVR4nO3QMQEAAAjAILV/aGPwjAjMbZybnTjbP9W/1b/Vv9W/1b/Vv9W/1b/Vv9W/1b/Vv9W/1b/Vv9W/1b/Vv9W/1b/Vv9W/1b/Vv9W/1b/Vv9W/1b/Vv9W/1b/Vv9W/1b/Vv9W/1b/Vv9W/1b/Vv9W/1b/Vv9W/1b/Vv9W/1b/Vv9W/1b/Vv9W/1b/Vv9W/1b/Vv9W/1b/Vv9W/1b/Vv9W/1b/Vv9W/1b/Vv9W/1b/Vv9W/1b/Vv9W/1b/Vv9W/1b/Vv9W/1b/Vv9W/1b/Vv9W/1b/Vv9W/1b/Vv9W/1b/Vv9W/1b/Vv9W/1b/Vv9W/1b/Vv9W/1b/Vv9W/1b/Vv9W/1b/Vv9W/1b/Vv9W/1b/Vv9W/1b/Vv9W/1b+1cxvnHi9hBAfkOyqGAAAAAElFTkSuQmCC',
     },
 
     description: {
@@ -66,16 +78,19 @@ User.init(
     rankId: {
       type: DataTypes.INTEGER,
       field: 'rank_id',
+      defaultValue: 1,
     },
 
     accumulatedPoint: {
       type: DataTypes.INTEGER,
       field: 'accumulated_point',
+      defaultValue: 0,
     },
 
     refreshToken: {
       type: DataTypes.TEXT,
       field: 'refresh_token',
+      defaultValue: '',
     },
 
     createdAt: {
@@ -90,7 +105,6 @@ User.init(
   },
   {
     sequelize,
-    timestamps: true,
     modelName: 'User',
     tableName: 'users',
   },

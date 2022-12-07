@@ -3,7 +3,11 @@ const { sequelize } = require('../config/connectDB');
 
 class Comment extends Model {
   // Add associate here...
-  static associate(models) {}
+  static associate(models) {
+    Comment.belongsTo(models.User, { foreignKey: 'userId' });
+    Comment.belongsTo(models.Course, { foreignKey: 'courseId' });
+    Comment.belongsToMany(models.User, { through: models.Like, foreignKey: 'commentId' });
+  }
 }
 
 Comment.init(
@@ -11,14 +15,13 @@ Comment.init(
     commentId: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
-      allowNull: false,
       primaryKey: true,
       field: 'comment_id',
     },
 
-    studentId: {
+    userId: {
       type: DataTypes.INTEGER,
-      field: 'student_id',
+      field: 'user_id',
     },
 
     courseId: {
@@ -29,11 +32,13 @@ Comment.init(
     content: {
       type: DataTypes.STRING,
       field: 'content',
+      allowNull: false,
     },
 
     totalLike: {
       type: DataTypes.INTEGER,
       field: 'total_like',
+      defaultValue: 0,
     },
 
     createdAt: {
@@ -48,7 +53,6 @@ Comment.init(
   },
   {
     sequelize,
-    timestamps: true,
     modelName: 'Comment',
     tableName: 'comment',
   },

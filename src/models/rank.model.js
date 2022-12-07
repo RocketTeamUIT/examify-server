@@ -19,7 +19,7 @@ Rank.init(
     },
 
     rankName: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       field: 'rank_name',
       allowNull: false,
     },
@@ -42,7 +42,6 @@ Rank.init(
   },
   {
     sequelize,
-    timestamps: true,
     modelName: 'Rank',
     tableName: 'rank',
   },
