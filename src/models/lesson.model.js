@@ -68,7 +68,6 @@ Lesson.init(
     sequelize,
     modelName: 'Lesson',
     tableName: 'lesson',
-    timestamps: true,
   },
 );
 

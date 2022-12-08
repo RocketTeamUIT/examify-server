@@ -48,7 +48,6 @@ Slide.init(
     sequelize,
     modelName: 'Slide',
     tableName: 'slide',
-    timestamps: true,
   },
 );
 

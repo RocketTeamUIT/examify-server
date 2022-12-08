@@ -35,7 +35,6 @@ Roles.init(
     sequelize,
     modelName: 'Roles',
     tableName: 'roles',
-    timestamps: true,
   },
 );
 

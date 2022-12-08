@@ -41,7 +41,6 @@ JoinLesson.init(
     sequelize,
     modelName: 'JoinLesson',
     tableName: 'join_lesson',
-    timestamps: true,
   },
 );
 

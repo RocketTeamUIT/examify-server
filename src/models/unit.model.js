@@ -46,7 +46,6 @@ Unit.init(
     sequelize,
     modelName: 'Unit',
     tableName: 'unit',
-    timestamps: true,
   },
 );
 

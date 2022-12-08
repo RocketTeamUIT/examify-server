@@ -45,7 +45,6 @@ Chapter.init(
   },
   {
     sequelize,
-    timestamps: true,
     modelName: 'Chapter',
     tableName: 'chapter',
   },

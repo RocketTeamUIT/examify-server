@@ -46,7 +46,6 @@ Note.init(
     sequelize,
     modelName: 'Note',
     tableName: 'note',
-    timestamps: true,
   },
 );
 

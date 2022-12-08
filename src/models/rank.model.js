@@ -40,7 +40,6 @@ Rank.init(
     sequelize,
     modelName: 'Rank',
     tableName: 'rank',
-    timestamps: true,
   },
 );
 
