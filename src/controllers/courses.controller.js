@@ -2,8 +2,7 @@ const Op = require('sequelize');
 const db = require('../models/index');
 const pool = require('../config/db');
 const createError = require('http-errors');
-// const Course = require('../models/course');
-// const Chapter = require('../models/chapter');
+const { sequelize } = require('../config/connectDB');
 
 module.exports = {
   unitInCompleted: async (req, res) => {
@@ -157,55 +156,36 @@ module.exports = {
     }
   },
 
-  getAllCourses: (req, res, next) => {
+  getAllCourses: async (req, res, next) => {
     try {
       // Get userId from middleware check login
       const { userId } = req.payload || -1;
 
-      // Course query
-      pool.query(
-        `SELECT *, CASE WHEN TEM.tem_course_id = course.course_id THEN true ELSE false END as is_joined
-        FROM course
-        LEFT JOIN (
-            SELECT course_id AS tem_course_id
-            FROM join_course
-            WHERE student_id = $1
-        ) AS TEM ON course.course_id = TEM.tem_course_id;`,
-        [userId],
-        (err, result) => {
-          if (err) {
-            throw createError.InternalServerError("Maybe there's something wrong with our server");
-          }
-
-          // Get origin course list from query
-          const originCourseList = result.rows;
-
-          // object mapping
-          const courseList = originCourseList.map((originCourseItem) => ({
-            id: originCourseItem.course_id,
-            level: originCourseItem.level,
-            isJoin: originCourseItem.is_joined,
-            name: originCourseItem.name,
-            image: originCourseItem?.image,
-            charges: originCourseItem?.charges,
-            pointToUnlock: originCourseItem?.point_to_unlock,
-            pointReward: originCourseItem?.point_reward,
-            quantityRating: originCourseItem?.quantity_rating,
-            avgRating: originCourseItem?.avg_rating,
-            participants: originCourseItem?.participants,
-            price: originCourseItem?.price,
-            discount: originCourseItem?.discount,
-            totalChapter: originCourseItem?.total_chapter,
-            totalLesson: originCourseItem?.total_lesson,
-            totalVideoTime: originCourseItem?.total_video_time,
-            achieves: originCourseItem?.achieves,
-            description: originCourseItem?.description,
-          }));
-
-          res.status(200).json({ data: courseList });
+      // Query get all course from DB
+      const courseList = await db.Course.findAll({
+        attributes: {
+          include: [
+            [
+              // Query add field "isJoin" to check user is joined course
+              sequelize.literal(`(
+                SELECT CASE WHEN TEM.course_id = course.course_id THEN true ELSE false END
+                FROM course
+                LEFT JOIN (
+                  SELECT course_id 
+                  FROM join_course
+                  WHERE student_id = ${userId}
+                ) AS TEM ON course.course_id = TEM.course_id
+                WHERE course.course_id = "Course"."course_id"
+                )`),
+              'isJoin',
+            ],
+          ],
         },
-      );
+      });
+
+      res.status(200).json({ data: courseList });
     } catch (err) {
+      console.log(err);
       next(err);
     }
   },

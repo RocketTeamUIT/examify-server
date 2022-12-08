@@ -13,9 +13,6 @@ router.get('/:id/learned-in-week/:uid', courseController.lessonQntInWeek);
 router.get('/:id', courseController.getCourse);
 
 // [GET] /courses -> get all courses
-router.get('/test/:uid', courseController.getAllCourses);
-
-// [GET] /courses -> get all courses
 router.get('/', checkLogin, courseController.getAllCourses);
 
 // [POST] /courses -> create new course

@@ -68,3 +68,6 @@ GET http://localhost:5000/courses/4/unfinished-lesson/4
 
 ### Get a course
 GET http://localhost:5000/courses/8
+
+### Get all course
+GET http://localhost:5000/courses
