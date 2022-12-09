@@ -7,6 +7,7 @@ class Comment extends Model {
     Comment.belongsTo(models.User, { foreignKey: 'userId' });
     Comment.belongsTo(models.Course, { foreignKey: 'courseId' });
     Comment.belongsToMany(models.User, { through: models.Like, foreignKey: 'commentId' });
+    Comment.hasMany(models.Comment, { as: 'ReplyComment', foreignKey: 'respondId' }); // Self ref
   }
 }
 
@@ -21,12 +22,17 @@ Comment.init(
 
     userId: {
       type: DataTypes.INTEGER,
-      field: 'user_id',
+      field: 'student_id',
     },
 
     courseId: {
       type: DataTypes.INTEGER,
       field: 'course_id',
+    },
+
+    respondId: {
+      type: DataTypes.INTEGER,
+      field: 'respond_id',
     },
 
     content: {
