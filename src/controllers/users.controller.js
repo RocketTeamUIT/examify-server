@@ -243,6 +243,7 @@ module.exports = {
         secure: false,
         path: '/',
         sameSite: 'strict',
+        maxAge: 60 * 60 * 24 * 3600 * 1000,
       });
 
       res.status(200).json({
@@ -354,11 +355,12 @@ module.exports = {
       const refToken = await signRefreshToken(userId);
 
       // Store refresh token in cookie
-      res.cookie('refreshToken', refreshToken, {
+      res.cookie('refreshToken', refToken, {
         httpOnly: true,
         secure: false,
         path: '/',
         sameSite: 'strict',
+        maxAge: 60 * 60 * 24 * 3600 * 1000,
       });
 
       res.status(200).json({

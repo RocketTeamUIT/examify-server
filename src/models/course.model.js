@@ -6,8 +6,7 @@ class Course extends Model {
     Course.hasMany(models.Chapter, { foreignKey: 'courseId', as: 'chapterList' });
     Course.hasMany(models.JoinCourse, { foreignKey: 'courseId' });
     Course.hasMany(models.Rating, { foreignKey: 'courseId' });
-    // Course.hasMany(models.Comment, { foreignKey: 'courseId' });
-    // Course.belongsTo(models.User, { foreignKey: 'createBy' });
+    Course.belongsToMany(models.User, { through: models.Comment, foreignKey: 'courseId' });
   }
 }
 
@@ -23,21 +22,25 @@ Course.init(
     name: {
       type: DataTypes.STRING,
       field: 'name',
+      allowNull: false,
     },
 
     image: {
       type: DataTypes.STRING,
       field: 'image',
+      allowNull: false,
     },
 
     level: {
       type: DataTypes.STRING,
       field: 'level',
+      allowNull: false,
     },
 
     charges: {
       type: DataTypes.BOOLEAN,
       field: 'charges',
+      allowNull: false,
     },
 
     pointToUnlock: {
@@ -48,21 +51,28 @@ Course.init(
     pointReward: {
       type: DataTypes.INTEGER,
       field: 'point_reward',
+      allowNull: false,
     },
 
     quantityRating: {
       type: DataTypes.INTEGER,
       field: 'quantity_rating',
+      allowNull: false,
+      defaultValue: 0,
     },
 
     avgRating: {
       type: DataTypes.INTEGER,
       field: 'avg_rating',
+      allowNull: false,
+      defaultValue: 0,
     },
 
     participants: {
       type: DataTypes.INTEGER,
       field: 'participants',
+      allowNull: false,
+      defaultValue: 0,
     },
 
     price: {
@@ -78,16 +88,22 @@ Course.init(
     totalChapter: {
       type: DataTypes.INTEGER,
       field: 'total_chapter',
+      allowNull: false,
+      defaultValue: 0,
     },
 
     totalLesson: {
       type: DataTypes.INTEGER,
       field: 'total_lesson',
+      allowNull: false,
+      defaultValue: 0,
     },
 
     totalVideoTime: {
       type: DataTypes.INTEGER,
       field: 'total_video_time',
+      allowNull: false,
+      defaultValue: 0,
     },
 
     achieves: {

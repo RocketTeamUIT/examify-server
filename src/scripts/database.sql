@@ -1003,6 +1003,7 @@ create table comment (
 	student_id INTEGER NOT NULL REFERENCES users(user_id),
 	course_id INTEGER NOT NULL REFERENCES course(course_id),
 	content TEXT,
+	total_like INTEGER DEFAULT 0,
 	respond_id INTEGER REFERENCES comment(comment_id),
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -1012,56 +1013,36 @@ ON comment
 FOR EACH ROW
 EXECUTE PROCEDURE update_timestamp();
 
-insert into comment (student_id, course_id, content, respond_id) values (14, 8, 'Pointe-à-Pitre Le Raizet', null);
-insert into comment (student_id, course_id, content, respond_id) values (13, 18, 'Bologna Guglielmo Marconi Airport', null);
-insert into comment (student_id, course_id, content, respond_id) values (13, 25, 'Yakataga Airport', null);
-insert into comment (student_id, course_id, content, respond_id) values (19, 23, 'Hearst René Fontaine Municipal Airport', null);
-insert into comment (student_id, course_id, content, respond_id) values (13, 9, 'Galegu Airport', null);
-insert into comment (student_id, course_id, content, respond_id) values (18, 30, 'Piedmont Triad International Airport', null);
-insert into comment (student_id, course_id, content, respond_id) values (13, 22, 'Hollister Municipal Airport', null);
-insert into comment (student_id, course_id, content, respond_id) values (15, 7, 'Urrao Airport', null);
-insert into comment (student_id, course_id, content, respond_id) values (18, 16, 'Luang Namtha Airport', null);
-insert into comment (student_id, course_id, content, respond_id) values (11, 3, 'Persian Gulf International Airport', null);
-insert into comment (student_id, course_id, content, respond_id) values (7, 30, 'Orinduik Airport', 6);
-insert into comment (student_id, course_id, content, respond_id) values (1, 6, 'Overberg Airport', null);
-insert into comment (student_id, course_id, content, respond_id) values (2, 12, 'Eaker Field', null);
-insert into comment (student_id, course_id, content, respond_id) values (8, 19, 'Pecos Municipal Airport', 5);
-insert into comment (student_id, course_id, content, respond_id) values (2, 6, 'Chuuk International Airport', 6);
-insert into comment (student_id, course_id, content, respond_id) values (10, 26, 'Parachinar Airport', null);
-insert into comment (student_id, course_id, content, respond_id) values (18, 17, 'St Catherine International Airport', 1);
-insert into comment (student_id, course_id, content, respond_id) values (6, 7, 'New Ishigaki Airport', null);
-insert into comment (student_id, course_id, content, respond_id) values (4, 18, 'Herat Airport', null);
-insert into comment (student_id, course_id, content, respond_id) values (1, 4, 'Miller Field', null);
-insert into comment (student_id, course_id, content, respond_id) values (17, 2, 'Chi Mei Airport', null);
-insert into comment (student_id, course_id, content, respond_id) values (18, 19, 'Pond Inlet Airport', 13);
-insert into comment (student_id, course_id, content, respond_id) values (11, 21, 'Ouvéa Airport', null);
-insert into comment (student_id, course_id, content, respond_id) values (7, 13, 'Fort McMurray / Mildred Lake Airport', null);
-insert into comment (student_id, course_id, content, respond_id) values (13, 2, 'Round Lake (Weagamow Lake) Airport', null);
-insert into comment (student_id, course_id, content, respond_id) values (2, 4, 'Allakaket Airport', 9);
-insert into comment (student_id, course_id, content, respond_id) values (6, 19, 'Bimin Airport', 8);
-insert into comment (student_id, course_id, content, respond_id) values (13, 8, 'Mojica Airport', 15);
-insert into comment (student_id, course_id, content, respond_id) values (1, 6, 'Juína Airport', 11);
-insert into comment (student_id, course_id, content, respond_id) values (15, 12, 'Balgo Hill Airport', 12);
-insert into comment (student_id, course_id, content, respond_id) values (5, 8, 'Surgut Airport', null);
-insert into comment (student_id, course_id, content, respond_id) values (11, 18, 'Kilimanjaro International Airport', null);
-insert into comment (student_id, course_id, content, respond_id) values (13, 3, 'Mareb Airport', 6);
-insert into comment (student_id, course_id, content, respond_id) values (13, 14, 'Baicheng Chang''an Airport', null);
-insert into comment (student_id, course_id, content, respond_id) values (5, 23, 'Tongliao Airport', null);
-insert into comment (student_id, course_id, content, respond_id) values (3, 9, 'Robert L. Bradshaw International Airport', null);
-insert into comment (student_id, course_id, content, respond_id) values (16, 15, 'Paamiut Airport', null);
-insert into comment (student_id, course_id, content, respond_id) values (17, 4, 'South Jersey Regional Airport', null);
-insert into comment (student_id, course_id, content, respond_id) values (20, 5, 'Big Creek Airport', null);
-insert into comment (student_id, course_id, content, respond_id) values (1, 22, 'Latrobe Airport', 6);
-insert into comment (student_id, course_id, content, respond_id) values (12, 2, 'Atlantic City International Airport', null);
-insert into comment (student_id, course_id, content, respond_id) values (4, 17, 'Bandon State Airport', null);
-insert into comment (student_id, course_id, content, respond_id) values (19, 14, 'Obbia Airport', null);
-insert into comment (student_id, course_id, content, respond_id) values (6, 14, 'San Carlos', 32);
-insert into comment (student_id, course_id, content, respond_id) values (9, 17, 'Los Cerrillos Airport', null);
-insert into comment (student_id, course_id, content, respond_id) values (3, 24, 'Uttaradit Airport', 37);
-insert into comment (student_id, course_id, content, respond_id) values (14, 22, 'Waukon Municipal Airport', 2);
-insert into comment (student_id, course_id, content, respond_id) values (13, 9, 'Iliamna Airport', null);
-insert into comment (student_id, course_id, content, respond_id) values (18, 13, 'Ludhiana Airport', null);
-insert into comment (student_id, course_id, content, respond_id) values (13, 15, 'Conakry International Airport', null);
+insert into comment (student_id, course_id, content, total_like, respond_id) values (1, 1, 'Topicware', 0, null);
+insert into comment (student_id, course_id, content, total_like, respond_id) values (2, 1, 'Photobean', 0, null);
+insert into comment (student_id, course_id, content, total_like, respond_id) values (3, 1, 'Zoonder', 0, null);
+insert into comment (student_id, course_id, content, total_like, respond_id) values (4, 1, 'Zoonoodle', 0, null);
+insert into comment (student_id, course_id, content, total_like, respond_id) values (5, 1, 'Dabfeed', 0, null);
+insert into comment (student_id, course_id, content, total_like, respond_id) values (6, 1, 'Dynabox', 0, null);
+insert into comment (student_id, course_id, content, total_like, respond_id) values (7, 1, 'Gevee', 0, null);
+insert into comment (student_id, course_id, content, total_like, respond_id) values (8, 1, 'Wikivu', 0, null);
+insert into comment (student_id, course_id, content, total_like, respond_id) values (9, 1, 'Blognation', 0, null);
+insert into comment (student_id, course_id, content, total_like, respond_id) values (10, 1, 'Mynte', 0, null);
+insert into comment (student_id, course_id, content, total_like, respond_id) values (11, 1, 'Muxo', 0, null);
+insert into comment (student_id, course_id, content, total_like, respond_id) values (12, 1, 'Tekfly', 0, null);
+insert into comment (student_id, course_id, content, total_like, respond_id) values (13, 1, 'Skyndu', 0, null);
+insert into comment (student_id, course_id, content, total_like, respond_id) values (14, 1, 'Eire', 0, null);
+insert into comment (student_id, course_id, content, total_like, respond_id) values (15, 1, 'Oloo', 0, null);
+insert into comment (student_id, course_id, content, total_like, respond_id) values (16, 1, 'Kare', 0, null);
+insert into comment (student_id, course_id, content, total_like, respond_id) values (17, 1, 'Flashpoint', 0, null);
+insert into comment (student_id, course_id, content, total_like, respond_id) values (18, 1, 'Gabvine', 0, null);
+insert into comment (student_id, course_id, content, total_like, respond_id) values (19, 1, 'Buzzshare', 0, null);
+insert into comment (student_id, course_id, content, total_like, respond_id) values (20, 1, 'Twiyo', 0, null);
+
+insert into comment (student_id, course_id, content, total_like, respond_id) values (1, 1, '2 Goodland Hill', 0, 1);
+insert into comment (student_id, course_id, content, total_like, respond_id) values (2, 1, '58837 Bonner Place', 0, 1);
+insert into comment (student_id, course_id, content, total_like, respond_id) values (3, 1, '22882 Orin Point', 0, 1);
+
+insert into comment (student_id, course_id, content, total_like, respond_id) values (4, 1, '2 Goodland Hill', 0, 2);
+insert into comment (student_id, course_id, content, total_like, respond_id) values (5, 1, '58837 Bonner Place', 0, 2);
+insert into comment (student_id, course_id, content, total_like, respond_id) values (6, 1, '22882 Orin Point', 0, 2);
+insert into comment (student_id, course_id, content, total_like, respond_id) values (7, 1, '22882 Orin Point', 0, 2);
+
 
 -- ROLE
 create table roles (
@@ -1229,3 +1210,22 @@ insert into slide (sequence, lesson_id, text) values (97, 125, 'Struck by other 
 insert into slide (sequence, lesson_id, text) values (98, 75, 'Secondary osteoarthritis, left ankle and foot');
 insert into slide (sequence, lesson_id, text) values (99, 70, 'Person on outside of pick-up truck or van injured in noncollision transport accident in nontraffic accident, sequela');
 insert into slide (sequence, lesson_id, text) values (100, 191, 'Unspecified physeal fracture of upper end of unspecified fibula');
+
+create table likes (
+	user_id INTEGER NOT NULL REFERENCES users(user_id),
+	comment_id INTEGER NOT NULL REFERENCES comment(comment_id),
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY (user_id, comment_id)
+);
+
+insert into likes (user_id, comment_id) values (1, 1);
+insert into likes (user_id, comment_id) values (2, 1);
+insert into likes (user_id, comment_id) values (3, 1);
+insert into likes (user_id, comment_id) values (4, 1);
+insert into likes (user_id, comment_id) values (5, 1);
+insert into likes (user_id, comment_id) values (1, 2);
+insert into likes (user_id, comment_id) values (2, 2);
+insert into likes (user_id, comment_id) values (3, 2);
+insert into likes (user_id, comment_id) values (1, 3);
+insert into likes (user_id, comment_id) values (2, 3);
+insert into likes (user_id, comment_id) values (1, 4);
