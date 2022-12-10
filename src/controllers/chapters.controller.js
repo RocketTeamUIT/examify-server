@@ -61,7 +61,7 @@ module.exports = {
                 model: db.Unit,
                 as: 'unitList',
                 attributes: {
-                  exclude: ['unitId'],
+                  exclude: ['chapterId', 'createdAt', 'updatedAt'],
                   include: [
                     [
                       // add field statusLearned for Unit
@@ -98,7 +98,7 @@ module.exports = {
                 model: db.Unit,
                 as: 'unitList',
                 attributes: {
-                  exclude: ['unitId'],
+                  exclude: ['chapterId', 'createdAt', 'updatedAt'],
                   include: [
                     [
                       // add field statusLearned for Unit
@@ -113,6 +113,7 @@ module.exports = {
                     model: db.Lesson,
                     as: 'lessonList',
                     attributes: {
+                      exclude: ['unitId'],
                       include: [
                         // add field completed = true or false for Lesson
                         [

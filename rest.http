@@ -100,3 +100,16 @@ GET http://localhost:5000/chapters/57?depth=3
 
 ### Get  a chapter, depth don't have
 GET http://localhost:5000/chapters/57?depth=4
+
+
+#UNIT:
+### Get  a chapter, default depth = 1
+GET http://localhost:5000/units/39
+###
+GET http://localhost:5000/units/39?depth=1
+
+### Get  a chapter, default depth = 2
+GET http://localhost:5000/units/39?depth=2
+
+### Get  a chapter, default depth = 3
+GET http://localhost:5000/units/39?depth=3
