@@ -3,8 +3,6 @@ const router = express.Router();
 const courseController = require('../controllers/courses.controller');
 const { checkLogin, verifyAccessToken } = require('../utils/jwt_service');
 
-router.get('/test', courseController.test);
-
 // GET /courses/:id/unfinished-lesson
 router.get('/:id/unfinished-lesson/:uid', courseController.unitInCompleted);
 
@@ -15,10 +13,7 @@ router.get('/:id/learned-in-week/:uid', courseController.lessonQntInWeek);
 router.get('/:id', courseController.getCourse);
 
 // [GET] /courses -> get all courses
-router.get('/test/:uid', courseController.getAllCourses);
-
-// [GET] /courses -> get all courses
-router.get('/', checkLogin, courseController.getAllCourses);
+router.get('/', courseController.getAllCourses);
 
 // [POST] /courses -> create new course
 router.post('/', courseController.createNewCourse);

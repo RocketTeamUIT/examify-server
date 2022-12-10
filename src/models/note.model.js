@@ -1,35 +1,35 @@
 const { Model, DataTypes } = require('sequelize');
 const { sequelize } = require('../config/connectDB');
 
-class Unit extends Model {
+class Note extends Model {
   static associate(models) {
-    Unit.belongsTo(models.Chapter, { foreignKey: 'chapterId' });
-    Unit.hasMany(models.Lesson, { foreignKey: 'unitId', as: 'lessonList' });
+    // Note.belongsTo(models.Lesson, { foreignKey: 'lessonId' });
+    // Note.belongsTo(models.User, { foreignKey: 'studentId' });
   }
 }
 
-Unit.init(
+Note.init(
   {
     id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
-      field: 'unit_id',
+      field: 'note_id',
     },
 
-    chapterId: {
+    studentId: {
       type: DataTypes.INTEGER,
-      field: 'chapter_id',
+      field: 'student_id',
     },
 
-    name: {
+    lessonId: {
+      type: DataTypes.INTEGER,
+      field: 'lesson_id',
+    },
+
+    note: {
       type: DataTypes.STRING,
-      field: 'name',
-    },
-
-    totalLesson: {
-      type: DataTypes.INTEGER,
-      field: 'total_lesson',
+      field: 'note',
     },
 
     createdAt: {
@@ -44,9 +44,9 @@ Unit.init(
   },
   {
     sequelize,
-    modelName: 'Unit',
-    tableName: 'unit',
+    modelName: 'Note',
+    tableName: 'note',
   },
 );
 
-module.exports = Unit;
+module.exports = Note;

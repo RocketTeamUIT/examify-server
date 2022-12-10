@@ -1,35 +1,24 @@
 const { Model, DataTypes } = require('sequelize');
 const { sequelize } = require('../config/connectDB');
 
-class Unit extends Model {
+class Roles extends Model {
   static associate(models) {
-    Unit.belongsTo(models.Chapter, { foreignKey: 'chapterId' });
-    Unit.hasMany(models.Lesson, { foreignKey: 'unitId', as: 'lessonList' });
+    Roles.hasMany(models.UserToRole, { foreignKey: 'roleId' });
   }
 }
 
-Unit.init(
+Roles.init(
   {
     id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
-      field: 'unit_id',
+      field: 'role_id',
     },
 
-    chapterId: {
-      type: DataTypes.INTEGER,
-      field: 'chapter_id',
-    },
-
-    name: {
+    roleName: {
       type: DataTypes.STRING,
-      field: 'name',
-    },
-
-    totalLesson: {
-      type: DataTypes.INTEGER,
-      field: 'total_lesson',
+      field: 'role_name',
     },
 
     createdAt: {
@@ -44,9 +33,9 @@ Unit.init(
   },
   {
     sequelize,
-    modelName: 'Unit',
-    tableName: 'unit',
+    modelName: 'Roles',
+    tableName: 'roles',
   },
 );
 
-module.exports = Unit;
+module.exports = Roles;

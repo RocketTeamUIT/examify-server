@@ -1,21 +1,25 @@
 const { Model, DataTypes } = require('sequelize');
-// One a connection
 const { sequelize } = require('../config/connectDB');
 
-class Chapter extends Model {
+class Rating extends Model {
   static associate(models) {
-    Chapter.belongsTo(models.Course, { foreignKey: 'courseId' });
-    Chapter.hasMany(models.Unit, { foreignKey: 'chapterId', as: 'unitList' });
+    Rating.belongsTo(models.Course, { foreignKey: 'courseId' });
+    // Rating.belongsTo(models.User, { foreignKey: 'studentId' });
   }
 }
 
-Chapter.init(
+Rating.init(
   {
     id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
-      field: 'chapter_id',
+      field: 'rating_id',
+    },
+
+    studentId: {
+      type: DataTypes.INTEGER,
+      field: 'student_id',
     },
 
     courseId: {
@@ -23,14 +27,9 @@ Chapter.init(
       field: 'course_id',
     },
 
-    name: {
-      type: DataTypes.STRING,
-      field: 'name',
-    },
-
-    totalLesson: {
+    rate: {
       type: DataTypes.INTEGER,
-      field: 'total_lesson',
+      field: 'rate',
     },
 
     createdAt: {
@@ -45,9 +44,9 @@ Chapter.init(
   },
   {
     sequelize,
-    modelName: 'Chapter',
-    tableName: 'chapter',
+    modelName: 'Rating',
+    tableName: 'rating',
   },
 );
 
-module.exports = Chapter;
+module.exports = Rating;

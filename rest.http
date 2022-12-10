@@ -65,9 +65,51 @@ GET http://localhost:5000/courses/4/learned-in-week/4
 ### Get list unit, lesson user in completed
 GET http://localhost:5000/courses/4/unfinished-lesson/4
 
-### Get all courses
-//thêm field test và 1 để fake user khi chưa có token
-GET http://localhost:5000/courses/test/1
 
-### test model
-GET http://localhost:5000/courses/test
+### Get a course, default depth = 1
+GET http://localhost:5000/courses/4
+###
+GET http://localhost:5000/courses/4?depth=1
+
+### Get a course depth = 2
+GET http://localhost:5000/courses/4?depth=2
+
+### Get a course depth = 3
+GET http://localhost:5000/courses/4?depth=3
+
+### Get a course depth = 4
+GET http://localhost:5000/courses/4?depth=4
+
+### Get a course depth don't have
+GET http://localhost:5000/courses/4?depth=5
+
+### Get a course
+GET http://localhost:5000/courses
+
+#CHAPTER:
+### Get  a chapter, default depth = 1
+GET http://localhost:5000/chapters/57
+###
+GET http://localhost:5000/chapters/57?depth=1
+
+### Get  a chapter, default depth = 2
+GET http://localhost:5000/chapters/57?depth=2
+
+### Get  a chapter, default depth = 3
+GET http://localhost:5000/chapters/57?depth=3
+
+### Get  a chapter, depth don't have
+GET http://localhost:5000/chapters/57?depth=4
+
+
+#UNIT:
+### Get  a chapter, default depth = 1
+GET http://localhost:5000/units/39
+###
+GET http://localhost:5000/units/39?depth=1
+
+### Get  a chapter, default depth = 2
+GET http://localhost:5000/units/39?depth=2
+
+### Get  a chapter, default depth = 3
+GET http://localhost:5000/units/39?depth=3
