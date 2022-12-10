@@ -71,17 +71,32 @@ GET http://localhost:5000/courses/4
 ###
 GET http://localhost:5000/courses/4?depth=1
 
-### Get all course depth = 2
+### Get a course depth = 2
 GET http://localhost:5000/courses/4?depth=2
 
-### Get all course depth = 3
+### Get a course depth = 3
 GET http://localhost:5000/courses/4?depth=3
 
-### Get all course depth = 4
+### Get a course depth = 4
 GET http://localhost:5000/courses/4?depth=4
 
-### Get all course depth don't have
+### Get a course depth don't have
 GET http://localhost:5000/courses/4?depth=5
 
-### Get all course
+### Get a course
 GET http://localhost:5000/courses
+
+#CHAPTER:
+### Get  a chapter, default depth = 1
+GET http://localhost:5000/chapters/57
+###
+GET http://localhost:5000/chapters/57?depth=1
+
+### Get  a chapter, default depth = 2
+GET http://localhost:5000/chapters/57?depth=2
+
+### Get  a chapter, default depth = 3
+GET http://localhost:5000/chapters/57?depth=3
+
+### Get  a chapter, depth don't have
+GET http://localhost:5000/chapters/57?depth=4
