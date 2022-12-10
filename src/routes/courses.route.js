@@ -10,7 +10,7 @@ router.get('/:id/unfinished-lesson/:uid', courseController.unitInCompleted);
 router.get('/:id/learned-in-week/:uid', courseController.lessonQntInWeek);
 
 // [GET] /courses/:id -> get a course
-router.get('/:id', verifyAccessToken, courseController.getCourse);
+router.get('/:id', courseController.getCourse);
 
 // [GET] /courses -> get all courses
 router.get('/', checkLogin, courseController.getAllCourses);

@@ -117,7 +117,8 @@ module.exports = {
   getCourse: async (req, res, next) => {
     try {
       let { id } = req.params;
-      let { userId } = req.payload;
+      // let { userId } = req.payload;
+      let userId = 4;
       let course = await db.Course.findOne({
         attributes: {
           exclude: ['createBy', 'createdAt', 'updatedAt'],
@@ -137,19 +138,7 @@ module.exports = {
               // statusLearned = 2: completed
               include: [
                 [
-                  sequelize.literal(`(
-                    SELECT CASE WHEN total = learned THEN 2 ELSE 1 END
-                    FROM (
-                      SELECT chapter.total_lesson AS total, COUNT(*) AS learned
-                      FROM chapter, unit
-                      INNER JOIN lesson ON unit.unit_id = lesson.unit_id
-                      INNER JOIN join_lesson ON lesson.lesson_id = join_lesson.lesson_id
-                      WHERE chapter.chapter_id = "chapterList"."chapter_id"
-                      AND unit.chapter_id = chapter.chapter_id
-                      AND join_lesson.student_id = ${userId}
-                      GROUP BY chapter.chapter_id
-                    ) AS TEM
-               )`),
+                  sequelize.literal(`(SELECT * FROM get_status_learned_chapter(${userId}, "chapterList".chapter_id))`),
                   'statusLearned',
                 ],
               ],
@@ -166,18 +155,9 @@ module.exports = {
                       // statusLearned = null: not learned any lesson in the unit
                       // statusLearned = 1: learned but not completed
                       // statusLearned = 2: completed
-                      sequelize.literal(`(
-                        SELECT CASE WHEN total = learned THEN 2 ELSE 1 END
-                        FROM (
-                          SELECT unit.total_lesson AS total, COUNT(*) AS learned
-                          FROM unit, lesson
-                          INNER JOIN join_lesson ON lesson.lesson_id = join_lesson.lesson_id
-                          WHERE unit.unit_id = "chapterList->unitList"."unit_id"
-                          AND unit.unit_id = lesson.unit_id
-                          AND join_lesson.student_id = ${userId}
-                          GROUP BY unit.unit_id
-                        ) AS TEM
-                   )`),
+                      sequelize.literal(
+                        `(SELECT * FROM get_status_learned_unit(${userId}, "chapterList->unitList".unit_id))`,
+                      ),
                       'statusLearned',
                     ],
                   ],
@@ -190,12 +170,9 @@ module.exports = {
                       include: [
                         // add field completed = true or false
                         [
-                          sequelize.literal(`(
-                            SELECT CASE WHEN COUNT(*) = 0 THEN false ELSE true END 
-                            FROM join_lesson
-                            WHERE student_id = ${userId}
-                            AND lesson_id = "chapterList->unitList->lessonList"."lesson_id"
-                          )`),
+                          sequelize.literal(
+                            `(SELECT * FROM check_completed_lesson(${userId}, "chapterList->unitList->lessonList".lesson_id))`,
+                          ),
                           'completed',
                         ],
                       ],
