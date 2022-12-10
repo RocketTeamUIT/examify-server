@@ -21,4 +21,7 @@ router.post('/create', verifyAccessToken, commentController.createNewComment);
 // [PUT] comments/:commentId -> Update content of comment
 router.put('/:commentId', verifyAccessToken, commentController.updateContentComment);
 
+// [DELETE] comments/:commentId -> Delete a comment
+router.delete('/:commentId', verifyAccessToken, commentController.deleteComment);
+
 module.exports = router;

@@ -163,9 +163,37 @@ const updateContentComment = async (userId, commentId, newContent) => {
   }
 };
 
+const deleteComment = async (userId, commentId) => {
+  try {
+    // Check if comment belong to user ?
+    const commentRecord = await db.Comment.findOne({
+      where: {
+        commentId,
+        userId,
+      },
+      raw: true,
+    });
+
+    if (commentRecord === null) {
+      throw createError.BadRequest('Users can only delete their own comments');
+    }
+
+    // Query delete
+    await db.Comment.destroy({
+      where: {
+        commentId,
+        userId,
+      },
+    });
+  } catch (err) {
+    throw err;
+  }
+};
+
 module.exports = {
   getAllCommentsBelongToCourse,
   createNewComment,
   getOneComment,
   updateContentComment,
+  deleteComment,
 };

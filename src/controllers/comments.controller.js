@@ -6,6 +6,7 @@ const {
   createNewComment,
   getOneComment,
   updateContentComment,
+  deleteComment,
 } = require('../services/comment.service');
 
 module.exports = {
@@ -135,6 +136,24 @@ module.exports = {
       res.status(200).json({
         status: 200,
         message: 'Update content comment successfully',
+      });
+    } catch (err) {
+      next(err);
+    }
+  },
+  deleteComment: async (req, res, next) => {
+    try {
+      // Get userId from access token
+      const { userId } = req.payload;
+
+      // Get commentId from path parameters
+      const commentId = Number(req.params.commentId);
+
+      await deleteComment(userId, commentId);
+
+      res.status(200).json({
+        status: 200,
+        message: 'Delete successfully',
       });
     } catch (err) {
       next(err);
