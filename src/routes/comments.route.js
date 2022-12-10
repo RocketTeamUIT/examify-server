@@ -12,4 +12,7 @@ router.post('/:commentId/like', verifyAccessToken, commentController.userLike);
 // [DELETE] comments/:commentId/unlike -> Unlike a comment
 router.post('/:commentId/unlike', verifyAccessToken, commentController.userUnlike);
 
+// [POST] comments/create -> Create a new comment
+router.post('/create', verifyAccessToken, commentController.createNewComment);
+
 module.exports = router;

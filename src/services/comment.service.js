@@ -66,6 +66,47 @@ const getAllCommentsBelongToCourse = async (type, page, userId, courseId) => {
   }
 };
 
+const createNewComment = async (userId, courseId, content, respondId) => {
+  try {
+    // Check if respondId !== null, we validate 'reply comment with courseId must match parent comment'
+    if (respondId === null) {
+      // if respondId === null -> oke no problem -> create new comment
+      newComment = await db.Comment.create({
+        userId,
+        courseId,
+        content,
+        respondId,
+      });
+    } else {
+      // Given respondId from 'Reply comment', query parent comment
+      const parentComment = await db.Comment.findOne({
+        where: {
+          commentId: respondId,
+        },
+        raw: true,
+      });
+
+      // Check match
+      if (parentComment.courseId !== courseId) {
+        throw createError.BadRequest('Reply comment with courseId must match parent comment');
+      }
+
+      // Valid -> create new comment
+      newComment = await db.Comment.create({
+        userId,
+        courseId,
+        content,
+        respondId,
+      });
+
+      return Promise.resolve(newComment);
+    }
+  } catch (err) {
+    throw err;
+  }
+};
+
 module.exports = {
   getAllCommentsBelongToCourse,
+  createNewComment,
 };

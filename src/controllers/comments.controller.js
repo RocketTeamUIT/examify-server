@@ -1,7 +1,7 @@
 const { Op, Sequelize } = require('sequelize');
 const db = require('../models/index');
 const connectDB = require('../config/connectDB');
-const { getAllCommentsBelongToCourse } = require('../services/comment.service');
+const { getAllCommentsBelongToCourse, createNewComment } = require('../services/comment.service');
 
 module.exports = {
   getAllCommentOfUser: async (req, res, next) => {
@@ -69,6 +69,26 @@ module.exports = {
       res.status(200).json({
         status: 200,
         message: 'User already unliked',
+      });
+    } catch (err) {
+      next(err);
+    }
+  },
+  createNewComment: async (req, res, next) => {
+    try {
+      // Get userId from access token
+      const { userId } = req.payload;
+
+      // Get info from req.body
+      const { courseId, content, respondId } = req.body;
+
+      // Create new comment
+      const newComment = await createNewComment(userId, courseId, content, respondId);
+
+      res.status(200).json({
+        status: 200,
+        message: 'Create new comment successfully',
+        data: newComment,
       });
     } catch (err) {
       next(err);
