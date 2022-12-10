@@ -9,6 +9,20 @@ const getAllCommentsBelongToCourse = async (type, page, userId, courseId) => {
 
     // Get parent comment list from course Id
     const commentList = await db.Comment.findAll({
+      include: [
+        {
+          model: db.User,
+          as: 'user',
+          attributes: ['id', 'avt', 'lastName', 'firstName'],
+          include: [
+            {
+              model: db.Rank,
+              as: 'rank',
+              attributes: ['rankId', 'rankName'],
+            },
+          ],
+        },
+      ],
       attributes: {
         include: [
           [
@@ -27,6 +41,7 @@ const getAllCommentsBelongToCourse = async (type, page, userId, courseId) => {
         courseId: courseId,
       },
       order: [[nameOrderBy, 'DESC']],
+      nest: true,
       raw: true,
     });
 
@@ -35,11 +50,26 @@ const getAllCommentsBelongToCourse = async (type, page, userId, courseId) => {
 
     // Get all reply comment from parent comment
     const childCommentList = await db.Comment.findAll({
+      include: [
+        {
+          model: db.User,
+          as: 'user',
+          attributes: ['id', 'avt', 'lastName', 'firstName'],
+          include: [
+            {
+              model: db.Rank,
+              as: 'rank',
+              attributes: ['rankId', 'rankName'],
+            },
+          ],
+        },
+      ],
       where: {
         respondId: {
           [Op.in]: parentCommentIdList,
         },
       },
+      nest: true,
       raw: true,
     });
 
@@ -109,6 +139,20 @@ const createNewComment = async (userId, courseId, content, respondId) => {
 const getOneComment = async (userId, commentId) => {
   try {
     const comment = await db.Comment.findOne({
+      include: [
+        {
+          model: db.User,
+          as: 'user',
+          attributes: ['id', 'avt', 'lastName', 'firstName'],
+          include: [
+            {
+              model: db.Rank,
+              as: 'rank',
+              attributes: ['rankId', 'rankName'],
+            },
+          ],
+        },
+      ],
       attributes: {
         include: [
           [
@@ -124,6 +168,7 @@ const getOneComment = async (userId, commentId) => {
       where: {
         commentId,
       },
+      nest: true,
       raw: true,
     });
 

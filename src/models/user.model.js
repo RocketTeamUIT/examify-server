@@ -4,7 +4,7 @@ const { sequelize } = require('../config/connectDB');
 class User extends Model {
   // Add associate here...
   static associate(models) {
-    User.belongsTo(models.Rank, { foreignKey: 'rankId' });
+    User.belongsTo(models.Rank, { foreignKey: 'rankId', as: 'rank' });
     User.belongsToMany(models.Course, { through: models.Comment, foreignKey: 'userId' });
     User.belongsToMany(models.Comment, { through: models.Like, foreignKey: 'userId' });
   }
@@ -41,7 +41,7 @@ User.init(
     },
 
     lastName: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       field: 'last_name',
       allowNull: false,
     },

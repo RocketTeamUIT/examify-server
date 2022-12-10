@@ -4,7 +4,7 @@ const { sequelize } = require('../config/connectDB');
 class Comment extends Model {
   // Add associate here...
   static associate(models) {
-    Comment.belongsTo(models.User, { foreignKey: 'userId' });
+    Comment.belongsTo(models.User, { foreignKey: 'userId', as: 'user' });
     Comment.belongsTo(models.Course, { foreignKey: 'courseId' });
     Comment.belongsToMany(models.User, { through: models.Like, foreignKey: 'commentId' });
     Comment.hasMany(models.Comment, { as: 'ReplyComment', foreignKey: 'respondId' }); // Self ref
