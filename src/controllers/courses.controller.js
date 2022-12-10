@@ -218,23 +218,13 @@ module.exports = {
     try {
       // Get userId from middleware check login
       const { userId } = req.payload || -1;
-
       // Query get all course from DB
       const courseList = await db.Course.findAll({
         attributes: {
           include: [
             [
               // Query add field "isJoin" to check user is joined course
-              sequelize.literal(`(
-                SELECT CASE WHEN TEM.course_id = course.course_id THEN true ELSE false END
-                FROM course
-                LEFT JOIN (
-                  SELECT course_id 
-                  FROM join_course
-                  WHERE student_id = ${userId}
-                ) AS TEM ON course.course_id = TEM.course_id
-                WHERE course.course_id = "Course"."course_id"
-                )`),
+              sequelize.literal(`(SELECT * FROM check_join_course(${userId}, "Course".course_id))`),
               'isJoin',
             ],
           ],
