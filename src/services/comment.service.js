@@ -106,7 +106,35 @@ const createNewComment = async (userId, courseId, content, respondId) => {
   }
 };
 
+const getOneComment = async (userId, commentId) => {
+  try {
+    const comment = await db.Comment.findOne({
+      attributes: {
+        include: [
+          [
+            Sequelize.literal(
+              `CASE WHEN fn_check_user_like(${userId}, ${
+                connectDB.sequelize.col('comment_id').col
+              }) = true THEN true ELSE false END`,
+            ),
+            'hasLiked',
+          ],
+        ],
+      },
+      where: {
+        commentId,
+      },
+      raw: true,
+    });
+
+    return Promise.resolve(comment);
+  } catch (err) {
+    throw createError.InternalServerError("Maybe there's something wrong with our server");
+  }
+};
+
 module.exports = {
   getAllCommentsBelongToCourse,
   createNewComment,
+  getOneComment,
 };

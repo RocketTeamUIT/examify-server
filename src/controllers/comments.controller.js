@@ -1,9 +1,29 @@
 const { Op, Sequelize } = require('sequelize');
 const db = require('../models/index');
 const connectDB = require('../config/connectDB');
-const { getAllCommentsBelongToCourse, createNewComment } = require('../services/comment.service');
+const { getAllCommentsBelongToCourse, createNewComment, getOneComment } = require('../services/comment.service');
 
 module.exports = {
+  getOneComment: async (req, res, next) => {
+    try {
+      // Get userId from middleware check login
+      let userId = -1;
+      if (req?.payload?.userId !== undefined) userId = req.payload.userId;
+
+      // Get comment id from req.params
+      const commentId = Number(req.params.commentId);
+
+      // Get comment
+      const comment = await getOneComment(userId, commentId);
+
+      res.status(200).json({
+        status: 200,
+        data: comment,
+      });
+    } catch (err) {
+      next(err);
+    }
+  },
   getAllCommentOfUser: async (req, res, next) => {
     try {
       // Get TYPE query parameters from req.query
@@ -85,8 +105,8 @@ module.exports = {
       // Create new comment
       const newComment = await createNewComment(userId, courseId, content, respondId);
 
-      res.status(200).json({
-        status: 200,
+      res.status(201).json({
+        status: 201,
         message: 'Create new comment successfully',
         data: newComment,
       });
