@@ -133,8 +133,39 @@ const getOneComment = async (userId, commentId) => {
   }
 };
 
+const updateContentComment = async (userId, commentId, newContent) => {
+  try {
+    // Check if comment belong to user ?
+    const commentRecord = await db.Comment.findOne({
+      where: {
+        commentId,
+        userId,
+      },
+      raw: true,
+    });
+
+    if (commentRecord === null) {
+      throw createError.BadRequest('Users can only edit their own comments');
+    }
+
+    // Query update
+    await db.Comment.update(
+      { content: newContent },
+      {
+        where: {
+          commentId,
+          userId,
+        },
+      },
+    );
+  } catch (err) {
+    throw err;
+  }
+};
+
 module.exports = {
   getAllCommentsBelongToCourse,
   createNewComment,
   getOneComment,
+  updateContentComment,
 };

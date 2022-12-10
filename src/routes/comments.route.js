@@ -18,4 +18,7 @@ router.post('/:commentId/unlike', verifyAccessToken, commentController.userUnlik
 // [POST] comments/create -> Create a new comment
 router.post('/create', verifyAccessToken, commentController.createNewComment);
 
+// [PUT] comments/:commentId -> Update content of comment
+router.put('/:commentId', verifyAccessToken, commentController.updateContentComment);
+
 module.exports = router;

@@ -1,7 +1,12 @@
 const { Op, Sequelize } = require('sequelize');
 const db = require('../models/index');
 const connectDB = require('../config/connectDB');
-const { getAllCommentsBelongToCourse, createNewComment, getOneComment } = require('../services/comment.service');
+const {
+  getAllCommentsBelongToCourse,
+  createNewComment,
+  getOneComment,
+  updateContentComment,
+} = require('../services/comment.service');
 
 module.exports = {
   getOneComment: async (req, res, next) => {
@@ -109,6 +114,27 @@ module.exports = {
         status: 201,
         message: 'Create new comment successfully',
         data: newComment,
+      });
+    } catch (err) {
+      next(err);
+    }
+  },
+  updateContentComment: async (req, res, next) => {
+    try {
+      // Get userId from access token
+      const { userId } = req.payload;
+
+      // Get commentId from path parameters
+      const commentId = Number(req.params.commentId);
+
+      // Get info from req.body
+      const newContent = req.body.newContent;
+
+      updateContentComment(userId, commentId, newContent);
+
+      res.status(200).json({
+        status: 200,
+        message: 'Update content comment successfully',
       });
     } catch (err) {
       next(err);
