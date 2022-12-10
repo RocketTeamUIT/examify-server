@@ -119,61 +119,101 @@ module.exports = {
       let { id } = req.params;
       // let { userId } = req.payload;
       let userId = 4;
-      let course = await db.Course.findOne({
-        attributes: {
-          exclude: ['createBy', 'createdAt', 'updatedAt'],
-        },
-        where: {
-          id: id,
-        },
-        include: [
-          {
-            model: db.Chapter,
-            as: 'chapterList',
+      let depth = req.query.depth || '1';
+      let course = {};
+
+      // Note:
+      // statusLearned = null: not learned any lesson
+      // statusLearned = 1: learned but not completed
+      // statusLearned = 2: completed
+
+      switch (depth) {
+        // depth = 1:
+        case '1':
+          // Query get course
+          course = await db.Course.findOne({
             attributes: {
-              exclude: ['courseId', 'createdAt', 'updatedAt'],
-              // add field statusLearned
-              // statusLearned = null: not learned any lesson in the chapter
-              // statusLearned = 1: learned but not completed
-              // statusLearned = 2: completed
-              include: [
-                [
-                  sequelize.literal(`(SELECT * FROM get_status_learned_chapter(${userId}, "chapterList".chapter_id))`),
-                  'statusLearned',
-                ],
-              ],
+              exclude: ['createBy', 'createdAt', 'updatedAt'],
             },
+            where: {
+              id: id,
+            },
+          });
+          break;
+
+        // depth = 2:
+        case '2':
+          // Query get course
+          course = await db.Course.findOne({
+            attributes: {
+              exclude: ['createBy', 'createdAt', 'updatedAt'],
+            },
+            where: {
+              id: id,
+            },
+            // Include Chapter
             include: [
               {
-                model: db.Unit,
-                as: 'unitList',
+                model: db.Chapter,
+                as: 'chapterList',
                 attributes: {
-                  exclude: ['unitId'],
+                  exclude: ['courseId', 'createdAt', 'updatedAt'],
+                  // add field statusLearned for Chapter
                   include: [
                     [
-                      // add field statusLearned
-                      // statusLearned = null: not learned any lesson in the unit
-                      // statusLearned = 1: learned but not completed
-                      // statusLearned = 2: completed
                       sequelize.literal(
-                        `(SELECT * FROM get_status_learned_unit(${userId}, "chapterList->unitList".unit_id))`,
+                        `(SELECT * FROM get_status_learned_chapter(${userId}, "chapterList".chapter_id))`,
                       ),
                       'statusLearned',
                     ],
                   ],
                 },
+              },
+            ],
+          });
+          break;
+
+        // depth = 3:
+        case '3':
+          // Query get course
+          course = await db.Course.findOne({
+            attributes: {
+              exclude: ['createBy', 'createdAt', 'updatedAt'],
+            },
+            where: {
+              id: id,
+            },
+            // Include Chapter
+            include: [
+              {
+                model: db.Chapter,
+                as: 'chapterList',
+                attributes: {
+                  exclude: ['courseId', 'createdAt', 'updatedAt'],
+                  // add field statusLearned for Chapter
+                  include: [
+                    [
+                      sequelize.literal(
+                        `(SELECT * FROM get_status_learned_chapter(${userId}, "chapterList".chapter_id))`,
+                      ),
+                      'statusLearned',
+                    ],
+                  ],
+                },
+                // Include Unit
                 include: [
                   {
-                    model: db.Lesson,
-                    as: 'lessonList',
+                    model: db.Unit,
+                    as: 'unitList',
                     attributes: {
+                      exclude: ['unitId'],
                       include: [
-                        // add field completed = true or false
                         [
+                          // add field statusLearned for Unit
                           sequelize.literal(
-                            `(SELECT * FROM check_completed_lesson(${userId}, "chapterList->unitList->lessonList".lesson_id))`,
+                            `(SELECT * FROM get_status_learned_unit(${userId}, "chapterList->unitList".unit_id))`,
                           ),
-                          'completed',
+                          'statusLearned',
                         ],
                       ],
                     },
@@ -181,9 +221,82 @@ module.exports = {
                 ],
               },
             ],
-          },
-        ],
-      });
+          });
+          break;
+
+        // depth = 4:
+        case '4':
+          // Query get course
+          course = await db.Course.findOne({
+            attributes: {
+              exclude: ['createBy', 'createdAt', 'updatedAt'],
+            },
+            where: {
+              id: id,
+            },
+            // Include Chapter
+            include: [
+              {
+                model: db.Chapter,
+                as: 'chapterList',
+                attributes: {
+                  exclude: ['courseId', 'createdAt', 'updatedAt'],
+                  // add field statusLearned for Chapter
+                  include: [
+                    [
+                      sequelize.literal(
+                        `(SELECT * FROM get_status_learned_chapter(${userId}, "chapterList".chapter_id))`,
+                      ),
+                      'statusLearned',
+                    ],
+                  ],
+                },
+                // Include Unit
+                include: [
+                  {
+                    model: db.Unit,
+                    as: 'unitList',
+                    attributes: {
+                      exclude: ['unitId'],
+                      include: [
+                        [
+                          // add field statusLearned for Unit
+                          sequelize.literal(
+                            `(SELECT * FROM get_status_learned_unit(${userId}, "chapterList->unitList".unit_id))`,
+                          ),
+                          'statusLearned',
+                        ],
+                      ],
+                    },
+                    // Include Lesson
+                    include: [
+                      {
+                        model: db.Lesson,
+                        as: 'lessonList',
+                        attributes: {
+                          include: [
+                            // add field completed = true or false for Lesson
+                            [
+                              sequelize.literal(
+                                `(SELECT * FROM check_completed_lesson(${userId}, "chapterList->unitList->lessonList".lesson_id))`,
+                              ),
+                              'completed',
+                            ],
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          });
+          break;
+
+        default:
+          console.log("Don't have depth equal to " + depth);
+          next(createError.NotFound("Don't have depth equal to " + depth));
+      }
 
       res.status(200).json({ data: course });
     } catch (err) {

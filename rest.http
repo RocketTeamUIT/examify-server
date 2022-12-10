@@ -66,8 +66,22 @@ GET http://localhost:5000/courses/4/learned-in-week/4
 GET http://localhost:5000/courses/4/unfinished-lesson/4
 
 
-### Get a course
+### Get a course, default depth = 1
 GET http://localhost:5000/courses/4
+###
+GET http://localhost:5000/courses/4?depth=1
+
+### Get all course depth = 2
+GET http://localhost:5000/courses/4?depth=2
+
+### Get all course depth = 3
+GET http://localhost:5000/courses/4?depth=3
+
+### Get all course depth = 4
+GET http://localhost:5000/courses/4?depth=4
+
+### Get all course depth don't have
+GET http://localhost:5000/courses/4?depth=5
 
 ### Get all course
 GET http://localhost:5000/courses
