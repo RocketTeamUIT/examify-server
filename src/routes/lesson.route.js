@@ -4,7 +4,7 @@ const lessonController = require('../controllers/lesson.controller');
 const { checkLogin, verifyAccessToken } = require('../utils/jwt_service');
 
 // [GET] /lessons/:id -> get a lesson
-router.get('/:id', lessonController.getLesson);
+router.get('/:id', checkLogin, lessonController.getLesson);
 
 // [POST] /lessons/create -> create new lesson
 router.post('/create', lessonController.createNewLesson);

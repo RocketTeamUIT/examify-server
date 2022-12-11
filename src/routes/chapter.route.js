@@ -4,7 +4,7 @@ const chapterController = require('../controllers/chapters.controller');
 const { checkLogin, verifyAccessToken } = require('../utils/jwt_service');
 
 // [GET] /chapters/:id -> get a chapter
-router.get('/:id', chapterController.getChapter);
+router.get('/:id', checkLogin, chapterController.getChapter);
 
 // [POST] /chapters -> create new chapter
 router.post('/', chapterController.createNewChapter);

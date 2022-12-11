@@ -8,10 +8,15 @@ module.exports = {
   getLesson: async (req, res, next) => {
     try {
       const { id } = req.params;
+      const userId = req?.payload?.userId || -1;
       const lesson = await db.Lesson.findOne({
         where: { id: id },
         attributes: {
           exclude: ['unitId'],
+          include: [
+            // add field completed = true or false for Lesson
+            [sequelize.literal(`(SELECT * FROM check_completed_lesson(${userId}, "Lesson".lesson_id))`), 'completed'],
+          ],
         },
       });
 

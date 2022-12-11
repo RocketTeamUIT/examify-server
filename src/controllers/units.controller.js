@@ -7,8 +7,7 @@ module.exports = {
   getUnit: async (req, res, next) => {
     try {
       let { id } = req.params;
-      // let { userId } = req.payload;
-      let userId = 4;
+      const userId = req?.payload?.userId || -1;
       let depth = req.query.depth || '1';
       let unit = {};
 
@@ -72,7 +71,10 @@ module.exports = {
           next(createError.NotFound("Don't have depth equal to " + depth));
       }
 
-      res.status(200).json({ data: unit });
+      res.status(200).json({
+        status: 200,
+        data: unit,
+      });
     } catch (err) {
       next(err);
     }

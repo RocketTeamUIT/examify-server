@@ -4,7 +4,7 @@ const unitController = require('../controllers/units.controller');
 const { checkLogin, verifyAccessToken } = require('../utils/jwt_service');
 
 // [GET] /units/:id -> get a unit
-router.get('/:id', unitController.getUnit);
+router.get('/:id', checkLogin, unitController.getUnit);
 
 // [POST] /units -> create new unit
 router.post('/', unitController.createNewUnit);

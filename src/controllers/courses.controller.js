@@ -117,9 +117,8 @@ module.exports = {
   getCourse: async (req, res, next) => {
     try {
       let { id } = req.params;
-      // let { userId } = req.payload;
-      let userId = 4;
-      let depth = req.query.depth || '1';
+      const userId = req?.payload?.userId || -1;
+      let depth = req?.query?.depth || '1';
       let course = {};
 
       // Note:
@@ -299,7 +298,10 @@ module.exports = {
           next(createError.NotFound("Don't have depth equal to " + depth));
       }
 
-      res.status(200).json({ data: course });
+      res.status(200).json({
+        status: 200,
+        data: course,
+      });
     } catch (err) {
       next(err);
     }
@@ -308,7 +310,7 @@ module.exports = {
   getAllCourses: async (req, res, next) => {
     try {
       // Get userId from middleware check login
-      const { userId } = req.payload || -1;
+      const userId = req?.payload?.userId || -1;
       // Query get all course from DB
       const courseList = await db.Course.findAll({
         attributes: {
@@ -322,7 +324,10 @@ module.exports = {
         },
       });
 
-      res.status(200).json({ data: courseList });
+      res.status(200).json({
+        status: 200,
+        data: courseList,
+      });
     } catch (err) {
       console.log(err);
       next(err);

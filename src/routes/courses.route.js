@@ -4,16 +4,16 @@ const courseController = require('../controllers/courses.controller');
 const { checkLogin, verifyAccessToken } = require('../utils/jwt_service');
 
 // GET /courses/:id/unfinished-lesson
-router.get('/:id/unfinished-lesson/:uid', courseController.unitInCompleted);
+router.get('/:id/unfinished-lesson', courseController.unitInCompleted);
 
 // [GET] /courses/:id/learned-in-week   -> Get quantity lesson user learned in week
-router.get('/:id/learned-in-week/:uid', courseController.lessonQntInWeek);
+router.get('/:id/learned-in-week', courseController.lessonQntInWeek);
 
 // [GET] /courses/:id -> get a course
-router.get('/:id', courseController.getCourse);
+router.get('/:id', checkLogin, courseController.getCourse);
 
 // [GET] /courses -> get all courses
-router.get('/', courseController.getAllCourses);
+router.get('/', checkLogin, courseController.getAllCourses);
 
 // [POST] /courses -> create new course
 router.post('/', courseController.createNewCourse);

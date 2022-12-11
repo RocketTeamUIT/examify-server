@@ -7,8 +7,7 @@ module.exports = {
   getChapter: async (req, res, next) => {
     try {
       let { id } = req.params;
-      // let { userId } = req.payload;
-      let userId = 4;
+      const userId = req?.payload?.userId || -1;
       let depth = req.query.depth || '1';
       let chapter = {};
 
@@ -136,7 +135,10 @@ module.exports = {
           next(createError.NotFound("Don't have depth equal to " + depth));
       }
 
-      res.status(200).json({ data: chapter });
+      res.status(200).json({
+        status: 200,
+        data: chapter,
+      });
     } catch (err) {
       next(err);
     }
