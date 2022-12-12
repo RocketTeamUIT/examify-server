@@ -1,4 +1,4 @@
-const Op = require('sequelize');
+const Op = require('sequelize').Op;
 const db = require('../models/index');
 const pool = require('../config/db');
 const createError = require('http-errors');
@@ -7,63 +7,56 @@ const { sequelize } = require('../config/connectDB');
 module.exports = {
   unitInCompleted: async (req, res) => {
     try {
-      const { id, uid } = req.params;
-      // get the list of units that the user has not completed
-      const listUnit = await pool.query(
-        `SELECT unit.unit_id, unit.name
-        FROM unit 
-            LEFT JOIN lesson ON unit.unit_id = lesson.unit_id
-            INNER JOIN join_lesson ON lesson.lesson_id = join_lesson.lesson_id
-        WHERE student_id = $1 
-        AND unit.unit_id IN (
-            SELECT unit_id
+      const { id } = req.params;
+      const userId = req?.payload?.userId || -1;
+      const listInCompeleted = await db.Unit.findAll({
+        attributes: ['id', 'name'],
+        // Get unitId that user is not completed
+        where: {
+          id: {
+            [Op.in]: sequelize.literal(`
+          (
+            SELECT unit.unit_id
             FROM unit
-            WHERE unit.chapter_id IN(
+              LEFT JOIN lesson ON unit.unit_id = lesson.unit_id
+              INNER JOIN join_lesson ON lesson.lesson_id = join_lesson.lesson_id
+            WHERE student_id = ${userId}
+            AND unit.unit_id IN (
+              SELECT unit_id
+              FROM unit
+              WHERE unit.chapter_id IN(
                 SELECT chapter_id
                 FROM chapter
-                WHERE chapter.course_id = $2
+                WHERE chapter.course_id = ${id}
+              )
             )
-        )
-        GROUP BY unit.unit_id
-        HAVING unit.total_lesson > COUNT(*)`,
-        [uid, id],
-      );
+            GROUP BY unit.unit_id
+            HAVING unit.total_lesson > COUNT(*)
+          )`),
+          },
+        },
+        // Get Lesson that user is not completed
+        include: {
+          model: db.Lesson,
+          as: 'lessonList',
+          attributes: ['id', 'name', 'type'],
+          where: {
+            id: {
+              [Op.notIn]: sequelize.literal(`
+              (
+                  SELECT lesson_id
+                  FROM join_lesson
+                  WHERE student_id = ${userId}
+              )`),
+            },
+          },
+        },
+      });
 
-      var unfinishedLesson = listUnit.rows.reduce((acc, curr) => {
-        acc.push({
-          id: curr.unit_id,
-          nameUnit: curr.unit_id,
-        });
-        return acc;
-      }, []);
-
-      // get list lesson for each unit
-      await Promise.all(
-        unfinishedLesson.map(async (unit) => {
-          listLesson = await pool.query(
-            `SELECT lesson_id, name, type
-                  FROM lesson
-                  WHERE lesson.unit_id = $1
-                  AND lesson_id NOT IN(
-                      SELECT lesson_id
-                      FROM join_lesson
-                      WHERE student_id = $2
-                  )`,
-            [unit.id, uid],
-          );
-          // add field lesson array for each unit
-          unit.lessons = listLesson.rows.reduce((acc, curr) => {
-            acc.push({
-              id: curr.lesson_id,
-              nameLesson: curr.name,
-              type: curr.type,
-            });
-            return acc;
-          }, []);
-        }),
-      );
-
-      res.json(unfinishedLesson);
+      res.status(200).json({
+        status: 200,
+        data: listInCompeleted,
+      });
     } catch (err) {
       console.log(err.message);
     }
