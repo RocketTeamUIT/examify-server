@@ -5,7 +5,7 @@ const createError = require('http-errors');
 const { sequelize } = require('../config/connectDB');
 
 module.exports = {
-  unitInCompleted: async (req, res) => {
+  unitInCompleted: async (req, res, next) => {
     try {
       const { id } = req.params;
       const userId = req?.payload?.userId || -1;
@@ -59,12 +59,14 @@ module.exports = {
       });
     } catch (err) {
       console.log(err.message);
+      next(err);
     }
   },
 
-  lessonQntInWeek: async (req, res) => {
+  lessonQntInWeek: async (req, res, next) => {
     try {
-      const { id, uid } = req.params;
+      const { id } = req.params;
+      const userId = req?.payload?.userId || -1;
       const learned = {
         videoLessonQnt: 0,
         textLessonQnt: 0,
@@ -72,11 +74,11 @@ module.exports = {
       };
 
       const data = await pool.query(
-        `SELECT type, COUNT (*)
+        `SELECT type, COUNT(*) AS "quantityLearned"
         FROM join_lesson AS JLS LEFT JOIN lesson
         ON JLS.lesson_id = lesson.lesson_id
         WHERE JLS.student_id = $1 
-        AND JLS.created_at >= NOW() - INTERVAL '7 day'
+        AND JLS.created_at >= (SELECT fn_monday_nearly())
         AND JLS.lesson_id IN(
             SELECT lesson_id
             FROM lesson
@@ -88,22 +90,26 @@ module.exports = {
                 FROM chapter
                 WHERE course_id = $2 )))
         GROUP BY type;`,
-        [uid, id],
+        [userId, id],
       );
 
       data.rows.map((data) => {
         if (data.type === 1) {
-          learned.videoLessonQnt = data.count;
+          learned.videoLessonQnt = data.quantityLearned;
         } else if (data.type === 2) {
-          learned.textLessonQnt = data.count;
+          learned.textLessonQnt = data.quantityLearned;
         } else if (data.type === 3) {
-          learned.flashcardLessonQnt = data.count;
+          learned.flashcardLessonQnt = data.quantityLearned;
         }
       });
 
-      res.json(learned);
+      res.status(200).json({
+        status: 200,
+        data: learned,
+      });
     } catch (err) {
       console.log(err.message);
+      next(err);
     }
   },
 
