@@ -87,4 +87,24 @@ module.exports = {
       next(err);
     }
   },
+
+  joinLesson: async (req, res, next) => {
+    try {
+      const userId = req?.params?.userId;
+      const { lessonId } = req.body;
+
+      const joinLesson = await db.JoinLesson.create({
+        studentId: userId,
+        lessonId,
+      });
+
+      res.status(200).json({
+        status: 200,
+        data: joinLesson,
+      });
+    } catch (err) {
+      console.log(err);
+      next(err);
+    }
+  },
 };
