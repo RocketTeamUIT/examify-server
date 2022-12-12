@@ -3,7 +3,7 @@ $$
 	DECLARE 
 		isExist boolean;
 	BEGIN
-		SELECT * INTO isExist
+		SELECT CASE WHEN user_id = arg_user_id AND comment_id = arg_comment_id THEN true ELSE false END INTO isExist
 		FROM likes
 		WHERE user_id = arg_user_id AND comment_id = arg_comment_id;
 		
