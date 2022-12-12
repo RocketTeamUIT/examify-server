@@ -64,6 +64,18 @@ const getAllCommentsBelongToCourse = async (type, page, userId, courseId) => {
           ],
         },
       ],
+      attributes: {
+        include: [
+          [
+            Sequelize.literal(
+              `CASE WHEN fn_check_user_like(${userId}, ${
+                connectDB.sequelize.col('comment_id').col
+              }) = true THEN true ELSE false END`,
+            ),
+            'hasLiked',
+          ],
+        ],
+      },
       where: {
         respondId: {
           [Op.in]: parentCommentIdList,
