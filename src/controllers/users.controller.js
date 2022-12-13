@@ -3,6 +3,7 @@ const createError = require('http-errors');
 const { registerValidate, loginValidate, newPasswordValidate } = require('../utils/validation');
 const bcrypt = require('bcrypt');
 const { signAccessToken, signRefreshToken, verifyRefreshToken } = require('../utils/jwt_service');
+const { getUserInfoService } = require('../services/user.service');
 
 module.exports = {
   register: async (req, res, next) => {
@@ -47,27 +48,7 @@ module.exports = {
       const { userId } = req.payload;
 
       // Get User info
-      const userQuery = await pool.query('SELECT * FROM users WHERE user_id = $1', [userId]);
-      const userInfoQuery = userQuery.rows[0];
-      const userInfo = {
-        userId: userInfoQuery.user_id,
-        email: userInfoQuery.mail,
-        firstName: userInfoQuery.first_name,
-        lastName: userInfoQuery.last_name,
-        phoneNumber: userInfoQuery.phone_number,
-        dateOfBirth: userInfoQuery.date_of_birth,
-        description: userInfoQuery.description,
-        avt: userInfoQuery.avt,
-        banner: userInfoQuery.banner,
-        accumulatedPoint: userInfoQuery.accumulated_point,
-        joinedCourses: 15, // Temp
-        ownFlashcard: 0, // Temp
-      };
-
-      // Get rank of user
-      const rankId = userInfoQuery.rank_id;
-      const rankUserQuery = await pool.query('SELECT rank_name FROM rank WHERE rank_id = $1', [rankId]);
-      userInfo.rank = rankUserQuery.rows[0].rank_name;
+      const userInfo = await getUserInfoService(userId);
 
       res.status(200).json({
         status: 200,
