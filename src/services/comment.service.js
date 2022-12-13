@@ -106,6 +106,7 @@ const getAllCommentsBelongToCourse = async (type, page, userId, courseId) => {
     // Get total comments
     const totalComment = await db.Comment.count({
       where: {
+        courseId: courseId,
         respondId: null,
       },
     });
