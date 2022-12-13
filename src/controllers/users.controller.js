@@ -50,6 +50,7 @@ module.exports = {
       const userQuery = await pool.query('SELECT * FROM users WHERE user_id = $1', [userId]);
       const userInfoQuery = userQuery.rows[0];
       const userInfo = {
+        userId: userInfoQuery.user_id,
         email: userInfoQuery.mail,
         firstName: userInfoQuery.first_name,
         lastName: userInfoQuery.last_name,
