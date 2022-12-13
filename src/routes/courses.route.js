@@ -3,6 +3,9 @@ const router = express.Router();
 const courseController = require('../controllers/courses.controller');
 const { checkLogin, verifyAccessToken } = require('../utils/jwt_service');
 
+// [GET] /courses/popular?limit=    -> Get top courses popular
+router.get('/popular', checkLogin, courseController.getCoursePopular);
+
 // GET /courses/:id/unfinished-lesson
 router.get('/:id/unfinished-lesson', verifyAccessToken, courseController.unitInCompleted);
 

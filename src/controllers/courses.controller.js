@@ -333,6 +333,37 @@ module.exports = {
     }
   },
 
+  getCoursePopular: async (req, res, next) => {
+    try {
+      // Get userId from middleware check login
+      const userId = req?.payload?.userId || -1;
+      // Get limit from query parameter
+      const limit = req?.query?.limit || 4;
+
+      const courseList = await db.Course.findAll({
+        attributes: {
+          include: [
+            [
+              // Query add field "isJoin" to check user is joined course
+              sequelize.literal(`(SELECT * FROM check_join_course(${userId}, "Course".course_id))`),
+              'isJoin',
+            ],
+          ],
+        },
+        order: [[sequelize.literal('participants'), 'DESC']],
+        limit: limit,
+      });
+
+      res.status(200).json({
+        status: 200,
+        data: courseList,
+      });
+    } catch (err) {
+      console.log(err);
+      next(err);
+    }
+  },
+
   createNewCourse: async (req, res) => {
     try {
       const { name, description, participants } = req.body;
