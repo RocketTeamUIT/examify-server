@@ -52,10 +52,7 @@ module.exports = {
       const courseId = Number(req.params.courseId);
 
       // Get all comments from courseId
-      const commentList = await getAllCommentsBelongToCourse(type, page, userId, courseId);
-
-      // Get total comment
-      const totalComment = await db.Comment.count();
+      const { totalComment, commentList } = await getAllCommentsBelongToCourse(type, page, userId, courseId);
 
       res.status(200).json({
         status: 200,
