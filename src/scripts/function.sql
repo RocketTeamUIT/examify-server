@@ -84,3 +84,19 @@ CREATE OR REPLACE FUNCTION check_completed_lesson(arg_user_id int, arg_lesson_id
 		RETURN completed;
 	END;
 $$ LANGUAGE plpgsql;
+
+
+-- Function get monday nearly
+CREATE OR REPLACE FUNCTION fn_monday_nearly() RETURNS timestamp AS 
+$$
+	DECLARE 
+		var_monday timestamp;
+		var_distance integer;
+	BEGIN
+		SELECT extract(isodow from NOW()) INTO var_distance;
+		var_monday:= NOW()::date - (var_distance - 1) * INTERVAL '1 day' ;
+		
+		RETURN var_monday;
+	END;
+$$ 
+LANGUAGE plpgsql;

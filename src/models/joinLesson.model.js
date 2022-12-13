@@ -3,8 +3,8 @@ const { sequelize } = require('../config/connectDB');
 
 class JoinLesson extends Model {
   static associate(models) {
-    // JoinLesson.belongsTo(models.Lesson, { foreignKey: 'lessonId' });
-    // JoinLesson.belongsTo(models.User, { foreignKey: 'studentId' });
+    JoinLesson.belongsTo(models.Lesson, { foreignKey: 'lessonId' });
+    JoinLesson.belongsTo(models.User, { foreignKey: 'studentId' });
   }
 }
 
@@ -31,16 +31,12 @@ JoinLesson.init(
       type: DataTypes.DATE,
       field: 'created_at',
     },
-
-    updatedAt: {
-      type: DataTypes.DATE,
-      field: 'updated_at',
-    },
   },
   {
     sequelize,
     modelName: 'JoinLesson',
     tableName: 'join_lesson',
+    timestamps: false,
   },
 );
 
