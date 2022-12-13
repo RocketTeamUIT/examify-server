@@ -39,6 +39,7 @@ const getAllCommentsBelongToCourse = async (type, page, userId, courseId) => {
       offset: 10 * (page - 1),
       where: {
         courseId: courseId,
+        respondId: null,
       },
       order: [[nameOrderBy, 'DESC']],
       nest: true,

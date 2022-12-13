@@ -132,7 +132,7 @@ module.exports = {
 
         default:
           console.log("Don't have depth equal to " + depth);
-          next(createError.NotFound("Don't have depth equal to " + depth));
+          return next(createError.NotFound("Don't have depth equal to " + depth));
       }
 
       res.status(200).json({
