@@ -39,6 +39,7 @@ const getAllCommentsBelongToCourse = async (type, page, userId, courseId) => {
       offset: 10 * (page - 1),
       where: {
         courseId: courseId,
+        respondId: null,
       },
       order: [[nameOrderBy, 'DESC']],
       nest: true,
@@ -64,6 +65,18 @@ const getAllCommentsBelongToCourse = async (type, page, userId, courseId) => {
           ],
         },
       ],
+      attributes: {
+        include: [
+          [
+            Sequelize.literal(
+              `CASE WHEN fn_check_user_like(${userId}, ${
+                connectDB.sequelize.col('comment_id').col
+              }) = true THEN true ELSE false END`,
+            ),
+            'hasLiked',
+          ],
+        ],
+      },
       where: {
         respondId: {
           [Op.in]: parentCommentIdList,
@@ -90,7 +103,15 @@ const getAllCommentsBelongToCourse = async (type, page, userId, courseId) => {
       commentItem.childComment = childCommentMappingList[index].childComment;
     });
 
-    return Promise.resolve(commentList);
+    // Get total comments
+    const totalComment = await db.Comment.count({
+      where: {
+        courseId: courseId,
+        respondId: null,
+      },
+    });
+
+    return Promise.resolve({ commentList, totalComment });
   } catch (err) {
     throw createError.InternalServerError("Maybe there's something wrong with our server");
   }

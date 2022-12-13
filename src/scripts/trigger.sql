@@ -9,7 +9,7 @@ DECLARE var_unit_id INTEGER;
 DECLARE var_chapter_id INTEGER;
 DECLARE var_course_id INTEGER;
 BEGIN
-	var_unit_id := NEW.unit_id; ; 
+	var_unit_id := NEW.unit_id;
 	SELECT chapter_id INTO var_chapter_id FROM unit WHERE unit_id = var_unit_id;
 	SELECT course_id INTO var_course_id FROM chapter WHERE chapter_id = var_chapter_id;
 -- 	Trigger:

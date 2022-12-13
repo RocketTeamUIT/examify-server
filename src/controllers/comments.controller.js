@@ -52,11 +52,14 @@ module.exports = {
       const courseId = Number(req.params.courseId);
 
       // Get all comments from courseId
-      const commentList = await getAllCommentsBelongToCourse(type, page, userId, courseId);
+      const { totalComment, commentList } = await getAllCommentsBelongToCourse(type, page, userId, courseId);
 
       res.status(200).json({
         status: 200,
-        data: commentList,
+        data: {
+          totalComment,
+          commentList,
+        },
       });
     } catch (err) {
       next(err);
@@ -106,7 +109,8 @@ module.exports = {
       const { userId } = req.payload;
 
       // Get info from req.body
-      const { courseId, content, respondId } = req.body;
+      const { courseId, content } = req.body;
+      const respondId = req?.body?.respondId || null;
 
       // Create new comment
       const newComment = await createNewComment(userId, courseId, content, respondId);
