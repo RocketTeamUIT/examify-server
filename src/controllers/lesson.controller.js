@@ -90,7 +90,7 @@ module.exports = {
 
   joinLesson: async (req, res, next) => {
     try {
-      const userId = req?.params?.userId;
+      const userId = req?.payload?.userId;
       const { lessonId } = req.body;
 
       const joinLesson = await db.JoinLesson.create({
