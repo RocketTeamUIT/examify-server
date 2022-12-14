@@ -10,13 +10,6 @@ class JoinCourse extends Model {
 
 JoinCourse.init(
   {
-    id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true,
-      field: 'join_course_id',
-    },
-
     studentId: {
       type: DataTypes.INTEGER,
       field: 'student_id',

@@ -23,6 +23,11 @@ Chapter.init(
       field: 'course_id',
     },
 
+    numericOrder: {
+      type: DataTypes.INTEGER,
+      field: 'numeric_order',
+    },
+
     name: {
       type: DataTypes.STRING,
       field: 'name',

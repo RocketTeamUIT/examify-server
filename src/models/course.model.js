@@ -62,7 +62,7 @@ Course.init(
     },
 
     avgRating: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.FLOAT,
       field: 'avg_rating',
       allowNull: false,
       defaultValue: 0,
