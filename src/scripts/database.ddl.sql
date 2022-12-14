@@ -87,10 +87,12 @@ EXECUTE PROCEDURE update_timestamp();
 create table chapter (
 	chapter_id SERIAL PRIMARY KEY,
 	course_id INT NOT NULL REFERENCES course(course_id),
+	numeric_order INT NOT NULL,
 	name VARCHAR(150) NOT NULL,
 	total_lesson SMALLINT NOT NULL DEFAULT 0,
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	UNIQUE(course_id, numeric_order)
 );
 CREATE TRIGGER update_db_timestamp BEFORE UPDATE
 ON chapter
@@ -102,10 +104,12 @@ EXECUTE PROCEDURE update_timestamp();
 create table unit (
 	unit_id SERIAL PRIMARY KEY,
 	chapter_id INTEGER NOT NULL REFERENCES chapter(chapter_id),
+	numeric_order INT NOT NULL,
 	name VARCHAR(150) NOT NULL,
 	total_lesson SMALLINT NOT NULL DEFAULT 0,
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	UNIQUE(chapter_id, numeric_order)
 );
 CREATE TRIGGER update_db_timestamp BEFORE UPDATE
 ON unit
@@ -117,6 +121,7 @@ EXECUTE PROCEDURE update_timestamp();
 create table lesson (
 	lesson_id SERIAL PRIMARY KEY,
 	unit_id INTEGER NOT NULL REFERENCES unit(unit_id),
+	numeric_order INT NOT NULL,
 	name TEXT NOT NULL,
 	type SMALLINT NOT NULL,
 	video_url TEXT,
@@ -125,7 +130,8 @@ create table lesson (
 	text TEXT,
 	description TEXT,
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	UNIQUE(unit_id, numeric_order)
 );
 CREATE TRIGGER update_db_timestamp BEFORE UPDATE
 ON lesson
@@ -231,11 +237,12 @@ EXECUTE PROCEDURE update_timestamp();
 -- CREATE TABLE SLIDE:
 create table slide (
     slide_id SERIAL PRIMARY KEY,
-	sequence SERIAL NOT NULL,
+	sequence NOT NULL,
 	lesson_id INTEGER REFERENCES lesson(lesson_id),
 	text TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+	UNIQUE(sequence, lesson_id)
 );
 
 CREATE TRIGGER update_db_timestamp BEFORE UPDATE

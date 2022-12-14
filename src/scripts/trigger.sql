@@ -267,50 +267,81 @@ CREATE OR REPLACE TRIGGER update_video_time_lesson
 
 
 
--- Function update rating for course
-CREATE OR REPLACE FUNCTION fn_update_rating_course() RETURNS Trigger AS 
+-- Function create, update rating for course
+CREATE OR REPLACE FUNCTION fn_create_update_rating_course() RETURNS Trigger AS 
 $$
 DECLARE var_course_id INTEGER;
 DECLARE var_quatity_rating INTEGER;
 DECLARE var_avg_rating NUMERIC(3,2);
 	BEGIN
-		IF NEW.course_id THEN var_course_id:= NEW.course_id;
-		ELSE var_course_id:= OLD.course_id;
+		var_course_id:= NEW.course_id;
+		IF EXISTS (SELECT 1 FROM rating WHERE course_id = var_course_id) THEN
+			SELECT COUNT(*), AVG(rating.rate) INTO var_quatity_rating, var_avg_rating
+			FROM rating
+			WHERE rating.course_id = var_course_id;
+		
+			UPDATE course 
+			SET quantity_rating = var_quatity_rating, avg_rating = var_avg_rating
+			WHERE course_id = var_course_id;
+		ELSE
+			UPDATE course 
+			SET quantity_rating = 0, avg_rating = 0
+			WHERE course_id = var_course_id;
 		END IF;
-	
-		SELECT COUNT(*), AVG(rating.rate) INTO var_quatity_rating, var_avg_rating
-		FROM course, rating
-		WHERE course.course_id = rating.course_id
-		AND course.course_id = var_course_id
-		GROUP BY course.course_id;
-		
-		UPDATE course 
-		SET quantity_rating = var_quatity_rating, avg_rating = var_avg_rating
-		WHERE course_id = var_course_id;
-		
-		RAISE NOTICE'Updated quantity rating and average rating!';
+			RAISE NOTICE'Updated quantity rating and average rating!';
 	RETURN NULL;
 	END
 $$ 
 LANGUAGE plpgsql;
 
+
+-- Function delete rating for course
+CREATE OR REPLACE FUNCTION fn_delete_rating_course() RETURNS Trigger AS 
+$$
+DECLARE var_course_id INTEGER;
+DECLARE var_quatity_rating INTEGER;
+DECLARE var_avg_rating NUMERIC(3,2);
+	BEGIN
+		var_course_id:= OLD.course_id;
+		IF EXISTS (SELECT 1 FROM rating WHERE course_id = var_course_id) THEN
+			SELECT COUNT(*), AVG(rating.rate) INTO var_quatity_rating, var_avg_rating
+			FROM rating
+			WHERE rating.course_id = var_course_id;
+		
+			UPDATE course 
+			SET quantity_rating = var_quatity_rating, avg_rating = var_avg_rating
+			WHERE course_id = var_course_id;
+		ELSE
+			UPDATE course 
+			SET quantity_rating = 0, avg_rating = 0
+			WHERE course_id = var_course_id;
+		END IF;
+			RAISE NOTICE'Updated quantity rating and average rating!';
+	RETURN NULL;
+	END
+$$ 
+LANGUAGE plpgsql;
+
+
 -- Trigger: update rating for course when create rating
-CREATE OR REPLACE TRIGGER delete_rating_course
+CREATE OR REPLACE TRIGGER create_rating_course
 	AFTER INSERT ON rating
 	FOR EACH ROW
-	EXECUTE PROCEDURE fn_update_rating_course();
+	EXECUTE PROCEDURE fn_create_update_rating_course();
 
 -- Trigger: update rating for course
 CREATE OR REPLACE TRIGGER update_rating_course
 	AFTER UPDATE OF rate ON rating
 	FOR EACH ROW
-	EXECUTE PROCEDURE fn_update_rating_course();
+	EXECUTE PROCEDURE fn_create_update_rating_course();
 
 -- Trigger: update rating for course
 CREATE OR REPLACE TRIGGER delete_rating_course
 	AFTER DELETE ON rating
 	FOR EACH ROW
-	EXECUTE PROCEDURE fn_update_rating_course();
+	EXECUTE PROCEDURE fn_delete_rating_course();
+
+	
 	
 
 -- Function update participants for course
