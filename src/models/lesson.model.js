@@ -24,6 +24,11 @@ Lesson.init(
       field: 'unit_id',
     },
 
+    numericOrder: {
+      type: DataTypes.INTEGER,
+      field: 'numeric_order',
+    },
+
     name: {
       type: DataTypes.STRING,
       field: 'name',
@@ -37,6 +42,11 @@ Lesson.init(
     videoUrl: {
       type: DataTypes.STRING,
       field: 'video_url',
+    },
+
+    videoTime: {
+      type: DataTypes.INTEGER,
+      field: 'video_time',
     },
 
     flashcardSetId: {

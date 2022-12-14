@@ -10,13 +10,6 @@ class Rating extends Model {
 
 Rating.init(
   {
-    id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true,
-      field: 'rating_id',
-    },
-
     studentId: {
       type: DataTypes.INTEGER,
       field: 'student_id',

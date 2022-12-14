@@ -146,6 +146,7 @@ module.exports = {
             attributes: {
               exclude: ['createBy', 'createdAt', 'updatedAt'],
             },
+            order: [[{ model: db.Chapter, as: 'chapterList' }, 'numeric_order', 'ASC']],
             where: {
               id: id,
             },
@@ -178,6 +179,10 @@ module.exports = {
             attributes: {
               exclude: ['createBy', 'createdAt', 'updatedAt'],
             },
+            order: [
+              [{ model: db.Chapter, as: 'chapterList' }, 'numeric_order', 'ASC'],
+              [{ model: db.Chapter, as: 'chapterList' }, { model: db.Unit, as: 'unitList' }, 'numeric_order', 'ASC'],
+            ],
             where: {
               id: id,
             },
@@ -229,6 +234,17 @@ module.exports = {
             attributes: {
               exclude: ['createBy', 'createdAt', 'updatedAt'],
             },
+            order: [
+              [{ model: db.Chapter, as: 'chapterList' }, 'numeric_order', 'ASC'],
+              [{ model: db.Chapter, as: 'chapterList' }, { model: db.Unit, as: 'unitList' }, 'numeric_order', 'ASC'],
+              [
+                { model: db.Chapter, as: 'chapterList' },
+                { model: db.Unit, as: 'unitList' },
+                { model: db.Lesson, as: 'lessonList' },
+                'numeric_order',
+                'ASC',
+              ],
+            ],
             where: {
               id: id,
             },
