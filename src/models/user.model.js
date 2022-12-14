@@ -73,6 +73,7 @@ User.init(
     description: {
       type: DataTypes.TEXT,
       field: 'description',
+      defaultValue: '',
     },
 
     rankId: {
