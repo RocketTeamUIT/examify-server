@@ -1,4 +1,4 @@
--- Data Manipulation Languagev
+-- Data Definition Language
 
 
 -- INSERT DATA FOR TABLE RANK:
@@ -724,56 +724,56 @@ insert into join_lesson (student_id, lesson_id) values (3, 271);
 
 
 -- INSERT DATA FOR TABLE NOTE:
-insert into note (student_id, lesson_id, note) values (2,	1,		'Nicotine dependence, chewing tobacco, with withdrawal');
-insert into note (student_id, lesson_id, note) values (2,	21,		'Causalgia of unspecified lower limb');
-insert into note (student_id, lesson_id, note) values (2,	31,		'Contusion and laceration of left cerebrum without loss of consciousness');
-insert into note (student_id, lesson_id, note) values (2,	41,		'Other reduction defects of left lower limb');
-insert into note (student_id, lesson_id, note) values (2,	51,		'Acute hematogenous osteomyelitis, right humerus');
-insert into note (student_id, lesson_id, note) values (2,	61,		'Displaced transverse fracture of shaft of right tibia, subsequent encounter for open fracture type I or II with delayed healing');
-insert into note (student_id, lesson_id, note) values (2,	111,	'Open bite of unspecified wrist, initial encounter');
-insert into note (student_id, lesson_id, note) values (2,	171,	'Fracture of unspecified carpal bone, left wrist');
-insert into note (student_id, lesson_id, note) values (2,	181,	'Strain of muscle, fascia and tendon of long head of biceps, left arm');
-insert into note (student_id, lesson_id, note) values (2,	191,	'Major laceration of tail of pancreas, initial encounter');
-insert into note (student_id, lesson_id, note) values (2,	261,	'Acute lymphadenitis');
-insert into note (student_id, lesson_id, note) values (2,	271,	'Displaced fracture of greater trochanter of left femur, initial encounter for open fracture type IIIA, IIIB, or IIIC');
-insert into note (student_id, lesson_id, note) values (2,	281,	'Unspecified occupant of three-wheeled motor vehicle injured in collision with railway train or railway vehicle in nontraffic accident, initial encounter');
-insert into note (student_id, lesson_id, note) values (2,	291,	'Other physeal fracture of lower end of left tibia, subsequent encounter for fracture with malunion');
-insert into note (student_id, lesson_id, note) values (2,	51,		'Insect bite of other specified part of neck');
-insert into note (student_id, lesson_id, note) values (2,	61,		'Posterior dislocation of right radial head, initial encounter');
-insert into note (student_id, lesson_id, note) values (2,	111,	'Corrosion of third degree of right shoulder, sequela');
-insert into note (student_id, lesson_id, note) values (2,	171,	'Displaced fracture of posterior column [ilioischial] of left acetabulum');
-insert into note (student_id, lesson_id, note) values (2,	181,	'Intraoperative hemorrhage and hematoma of an endocrine system organ or structure complicating other procedure');
-insert into note (student_id, lesson_id, note) values (2,	191,	'Partial traumatic metacarpophalangeal amputation of right ring finger');
-insert into note (student_id, lesson_id, note) values (2,	261,	'Nondisplaced spiral fracture of shaft of right tibia');
-insert into note (student_id, lesson_id, note) values (2,	271,	'Left lower quadrant pain');
-insert into note (student_id, lesson_id, note) values (2,	281,	'Other malformation of placenta, second trimester');
-insert into note (student_id, lesson_id, note) values (2,	291,	'Nondisplaced osteochondral fracture of left patella, subsequent encounter for closed fracture with malunion');
-insert into note (student_id, lesson_id, note) values (2,	1,		'Toxic effect of carbon monoxide from other source, accidental (unintentional), initial encounter');
-insert into note (student_id, lesson_id, note) values (2,	21,		'Nondisplaced fracture of medial condyle of left femur, initial encounter for closed fracture');
-insert into note (student_id, lesson_id, note) values (2,	31,		'Other specified malignant neoplasm of skin of left upper limb, including shoulder');
-insert into note (student_id, lesson_id, note) values (2,	41,		'Acquired atrophy of ovary, unspecified side');
-insert into note (student_id, lesson_id, note) values (2,	51,		'Other contact with other marine mammals, subsequent encounter');
-insert into note (student_id, lesson_id, note) values (2,	61,		'Unspecified open wound of unspecified lesser toe(s) with damage to nail, subsequent encounter');
-insert into note (student_id, lesson_id, note) values (2,	111,	'Toxic effect of nitroderivatives and aminoderivatives of benzene and its homologues, undetermined, subsequent encounter');
-insert into note (student_id, lesson_id, note) values (2,	171,	'Infection and inflammatory reaction due to internal left knee prosthesis');
-insert into note (student_id, lesson_id, note) values (2,	181,	'Pathological fracture in other disease, left hand, sequela');
-insert into note (student_id, lesson_id, note) values (2,	191,	'Other rupture of muscle (nontraumatic), right ankle and foot');
-insert into note (student_id, lesson_id, note) values (2,	261,	'Effusion, right wrist');
-insert into note (student_id, lesson_id, note) values (2,	271,	'Dislocation of unspecified parts of unspecified shoulder girdle, subsequent encounter');
-insert into note (student_id, lesson_id, note) values (2,	281,	'Drowning and submersion due to fall off sailboat');
-insert into note (student_id, lesson_id, note) values (2,	291,	'Unspecified fracture of left forearm, subsequent encounter for open fracture type I or II with malunion');
-insert into note (student_id, lesson_id, note) values (2,	51,		'Laceration of other flexor muscle, fascia and tendon at forearm level, unspecified arm, initial encounter');
-insert into note (student_id, lesson_id, note) values (2,	61,		'Contusion of unspecified foot, initial encounter');
-insert into note (student_id, lesson_id, note) values (3,	31,		'Paraneoplastic neuromyopathy and neuropathy');
-insert into note (student_id, lesson_id, note) values (3,	41,		'Displaced oblique fracture of shaft of left radius, subsequent encounter for open fracture type IIIA, IIIB, or IIIC with routine healing');
-insert into note (student_id, lesson_id, note) values (3,	51,		'Unspecified transplanted organ and tissue rejection');
-insert into note (student_id, lesson_id, note) values (3,	61,		'Unspecified physeal fracture of phalanx of right toe, initial encounter for closed fracture');
-insert into note (student_id, lesson_id, note) values (3,	111,	'Retinopathy of prematurity, stage 0, left eye');
-insert into note (student_id, lesson_id, note) values (3,	171,	'Dislocation of interphalangeal joint of right lesser toe(s), initial encounter');
-insert into note (student_id, lesson_id, note) values (3,	181,	'Injury of trigeminal nerve, left side');
-insert into note (student_id, lesson_id, note) values (3,	191,	'Unspecified injury of left internal jugular vein, subsequent encounter');
-insert into note (student_id, lesson_id, note) values (3,	261,	'Salmonella pneumonia');
-insert into note (student_id, lesson_id, note) values (3,	271,	'Corrosion of third degree of multiple sites of lower limb, except ankle and foot');
+insert into note (student_id, lesson_id, note) values (20, 141, 'Nicotine dependence, chewing tobacco, with withdrawal');
+insert into note (student_id, lesson_id, note) values (4, 7, 'Causalgia of unspecified lower limb');
+insert into note (student_id, lesson_id, note) values (8, 103, 'Contusion and laceration of left cerebrum without loss of consciousness');
+insert into note (student_id, lesson_id, note) values (17, 17, 'Other reduction defects of left lower limb');
+insert into note (student_id, lesson_id, note) values (2, 245, 'Acute hematogenous osteomyelitis, right humerus');
+insert into note (student_id, lesson_id, note) values (18, 286, 'Displaced transverse fracture of shaft of right tibia, subsequent encounter for open fracture type I or II with delayed healing');
+insert into note (student_id, lesson_id, note) values (6, 150, 'Open bite of unspecified wrist, initial encounter');
+insert into note (student_id, lesson_id, note) values (12, 103, 'Fracture of unspecified carpal bone, left wrist');
+insert into note (student_id, lesson_id, note) values (1, 105, 'Strain of muscle, fascia and tendon of long head of biceps, left arm');
+insert into note (student_id, lesson_id, note) values (14, 29, 'Major laceration of tail of pancreas, initial encounter');
+insert into note (student_id, lesson_id, note) values (7, 197, 'Acute lymphadenitis');
+insert into note (student_id, lesson_id, note) values (16, 69, 'Displaced fracture of greater trochanter of left femur, initial encounter for open fracture type IIIA, IIIB, or IIIC');
+insert into note (student_id, lesson_id, note) values (8, 37, 'Unspecified occupant of three-wheeled motor vehicle injured in collision with railway train or railway vehicle in nontraffic accident, initial encounter');
+insert into note (student_id, lesson_id, note) values (3, 83, 'Other physeal fracture of lower end of left tibia, subsequent encounter for fracture with malunion');
+insert into note (student_id, lesson_id, note) values (13, 153, 'Insect bite of other specified part of neck');
+insert into note (student_id, lesson_id, note) values (10, 90, 'Posterior dislocation of right radial head, initial encounter');
+insert into note (student_id, lesson_id, note) values (20, 55, 'Corrosion of third degree of right shoulder, sequela');
+insert into note (student_id, lesson_id, note) values (20, 1, 'Displaced fracture of posterior column [ilioischial] of left acetabulum');
+insert into note (student_id, lesson_id, note) values (16, 80, 'Intraoperative hemorrhage and hematoma of an endocrine system organ or structure complicating other procedure');
+insert into note (student_id, lesson_id, note) values (4, 12, 'Partial traumatic metacarpophalangeal amputation of right ring finger');
+insert into note (student_id, lesson_id, note) values (19, 99, 'Nondisplaced spiral fracture of shaft of right tibia');
+insert into note (student_id, lesson_id, note) values (5, 102, 'Left lower quadrant pain');
+insert into note (student_id, lesson_id, note) values (13, 236, 'Other malformation of placenta, second trimester');
+insert into note (student_id, lesson_id, note) values (9, 38, 'Nondisplaced osteochondral fracture of left patella, subsequent encounter for closed fracture with malunion');
+insert into note (student_id, lesson_id, note) values (18, 266, 'Toxic effect of carbon monoxide from other source, accidental (unintentional), initial encounter');
+insert into note (student_id, lesson_id, note) values (18, 155, 'Nondisplaced fracture of medial condyle of left femur, initial encounter for closed fracture');
+insert into note (student_id, lesson_id, note) values (16, 195, 'Other specified malignant neoplasm of skin of left upper limb, including shoulder');
+insert into note (student_id, lesson_id, note) values (17, 28, 'Acquired atrophy of ovary, unspecified side');
+insert into note (student_id, lesson_id, note) values (1, 213, 'Other contact with other marine mammals, subsequent encounter');
+insert into note (student_id, lesson_id, note) values (1, 8, 'Unspecified open wound of unspecified lesser toe(s) with damage to nail, subsequent encounter');
+insert into note (student_id, lesson_id, note) values (4, 254, 'Toxic effect of nitroderivatives and aminoderivatives of benzene and its homologues, undetermined, subsequent encounter');
+insert into note (student_id, lesson_id, note) values (17, 184, 'Infection and inflammatory reaction due to internal left knee prosthesis');
+insert into note (student_id, lesson_id, note) values (18, 65, 'Pathological fracture in other disease, left hand, sequela');
+insert into note (student_id, lesson_id, note) values (3, 75, 'Other rupture of muscle (nontraumatic), right ankle and foot');
+insert into note (student_id, lesson_id, note) values (10, 238, 'Effusion, right wrist');
+insert into note (student_id, lesson_id, note) values (17, 91, 'Dislocation of unspecified parts of unspecified shoulder girdle, subsequent encounter');
+insert into note (student_id, lesson_id, note) values (18, 185, 'Drowning and submersion due to fall off sailboat');
+insert into note (student_id, lesson_id, note) values (2, 225, 'Unspecified fracture of left forearm, subsequent encounter for open fracture type I or II with malunion');
+insert into note (student_id, lesson_id, note) values (20, 48, 'Laceration of other flexor muscle, fascia and tendon at forearm level, unspecified arm, initial encounter');
+insert into note (student_id, lesson_id, note) values (1, 127, 'Contusion of unspecified foot, initial encounter');
+insert into note (student_id, lesson_id, note) values (5, 165, 'Paraneoplastic neuromyopathy and neuropathy');
+insert into note (student_id, lesson_id, note) values (13, 70, 'Displaced oblique fracture of shaft of left radius, subsequent encounter for open fracture type IIIA, IIIB, or IIIC with routine healing');
+insert into note (student_id, lesson_id, note) values (2, 296, 'Unspecified transplanted organ and tissue rejection');
+insert into note (student_id, lesson_id, note) values (18, 128, 'Unspecified physeal fracture of phalanx of right toe, initial encounter for closed fracture');
+insert into note (student_id, lesson_id, note) values (11, 54, 'Retinopathy of prematurity, stage 0, left eye');
+insert into note (student_id, lesson_id, note) values (6, 292, 'Dislocation of interphalangeal joint of right lesser toe(s), initial encounter');
+insert into note (student_id, lesson_id, note) values (16, 151, 'Injury of trigeminal nerve, left side');
+insert into note (student_id, lesson_id, note) values (7, 126, 'Unspecified injury of left internal jugular vein, subsequent encounter');
+insert into note (student_id, lesson_id, note) values (18, 206, 'Salmonella pneumonia');
+insert into note (student_id, lesson_id, note) values (15, 131, 'Corrosion of third degree of multiple sites of lower limb, except ankle and foot');
 
 
 -- INSERT DATA FOR TABLE RATING:
