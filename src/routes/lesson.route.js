@@ -6,6 +6,9 @@ const { checkLogin, verifyAccessToken } = require('../utils/jwt_service');
 // [GET] /lessons/:id -> get a lesson
 router.get('/:id', checkLogin, lessonController.getLesson);
 
+// [POST] / lessons/joined
+router.post('/join', verifyAccessToken, lessonController.joinLesson);
+
 // [POST] /lessons/create -> create new lesson
 router.post('/create', lessonController.createNewLesson);
 
