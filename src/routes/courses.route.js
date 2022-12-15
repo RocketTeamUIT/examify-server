@@ -6,6 +6,9 @@ const { checkLogin, verifyAccessToken } = require('../utils/jwt_service');
 // [GET] /courses/popular?limit=    -> Get top courses popular
 router.get('/popular', checkLogin, courseController.getCoursePopular);
 
+// [POST] /courses/:id/enroll
+router.post('/:id/enroll', verifyAccessToken, courseController.enrrollCourse);
+
 // GET /courses/:id/unfinished-lesson
 router.get('/:id/unfinished-lesson', verifyAccessToken, courseController.unitInCompleted);
 
@@ -26,8 +29,5 @@ router.delete('/:id', courseController.deleteCourse);
 
 // [PUT] /courses/:id -> update a course
 router.put('/:id', courseController.updateCourse);
-
-// [PUT] /courses/update-participant/:course-id
-router.put('/:courseId/update-participant', verifyAccessToken, courseController.updateParticipant);
 
 module.exports = router;
