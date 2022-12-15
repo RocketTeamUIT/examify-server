@@ -5,6 +5,40 @@ const createError = require('http-errors');
 const { sequelize } = require('../config/connectDB');
 
 module.exports = {
+  enrrollCourse: async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const userId = req?.payload?.userId || -1;
+
+      const data = await pool.query(`
+        SELECT fn_enroll_course(${userId}, ${Number(id)}) AS joined
+      `);
+
+      let joined = data.rows[0]['joined'];
+
+      if (joined === true) {
+        res.status(200).json({
+          status: 200,
+          message: 'user enroll course success!',
+          data: {
+            enroll: true,
+          },
+        });
+      } else {
+        res.status(200).json({
+          status: 200,
+          message: 'accumulated points are not enough to enroll course',
+          data: {
+            enroll: false,
+          },
+        });
+      }
+    } catch (err) {
+      console.log(err);
+      next(err);
+    }
+  },
+
   unitInCompleted: async (req, res, next) => {
     try {
       const { id } = req.params;
@@ -417,31 +451,6 @@ module.exports = {
       res.json('Course was updated!');
     } catch (err) {
       console.log(err.message);
-    }
-  },
-  updateParticipant: async (req, res, next) => {
-    try {
-      // Get courseId from req.params
-      const { courseId } = req.params;
-
-      // Check exist courseId params
-      if (!courseId) {
-        throw createError.BadRequest('Missing path parameter');
-      }
-
-      // Query update participant up one unit
-      pool.query('CALL increase_one_participant_course($1)', [courseId], (err, result) => {
-        if (err) {
-          throw createError.InternalServerError("Maybe there's something wrong with our server");
-        }
-
-        res.status(200).json({
-          status: 200,
-          message: 'Update pariticipant successfully',
-        });
-      });
-    } catch (err) {
-      next(err);
     }
   },
 };

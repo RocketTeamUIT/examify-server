@@ -88,6 +88,12 @@ User.init(
       defaultValue: 0,
     },
 
+    rankPoint: {
+      type: DataTypes.INTEGER,
+      field: 'rank_point',
+      defaultValue: 0,
+    },
+
     refreshToken: {
       type: DataTypes.TEXT,
       field: 'refresh_token',

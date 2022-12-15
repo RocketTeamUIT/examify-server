@@ -100,3 +100,34 @@ $$
 	END;
 $$ 
 LANGUAGE plpgsql;
+
+
+
+-- Function check Enroll course
+CREATE OR REPLACE FUNCTION fn_enroll_course(arg_user_id int, arg_course_id int)
+RETURNS Boolean	AS
+$$
+DECLARE var_accumulated_point INTEGER;
+DECLARE var_point_to_unlock INTEGER;
+	BEGIN
+		SELECT accumulated_point 
+		INTO var_accumulated_point
+		FROM users WHERE user_id = arg_user_id;
+		
+		SELECT point_to_unlock 
+		INTO var_point_to_unlock
+		FROM course WHERE course_id = arg_course_id;
+		
+		IF var_accumulated_point >= var_point_to_unlock THEN
+			INSERT INTO join_course 
+			VALUES(arg_user_id, arg_course_id);
+			
+			UPDATE users SET accumulated_point = accumulated_point - var_point_to_unlock
+			WHERE user_id = arg_user_id;
+			RETURN TRUE;
+		ELSE
+			RETURN FALSE;
+		END IF;	
+	END;
+$$
+LANGUAGE plpgsql; 
