@@ -166,6 +166,13 @@ module.exports = {
           course = await db.Course.findOne({
             attributes: {
               exclude: ['createBy', 'createdAt', 'updatedAt'],
+              include: [
+                [
+                  // Query add field "isJoin" to check user is joined course
+                  sequelize.literal(`(SELECT * FROM check_join_course(${userId}, "Course".course_id))`),
+                  'isJoin',
+                ],
+              ],
             },
             where: {
               id: id,
@@ -179,6 +186,13 @@ module.exports = {
           course = await db.Course.findOne({
             attributes: {
               exclude: ['createBy', 'createdAt', 'updatedAt'],
+              include: [
+                [
+                  // Query add field "isJoin" to check user is joined course
+                  sequelize.literal(`(SELECT * FROM check_join_course(${userId}, "Course".course_id))`),
+                  'isJoin',
+                ],
+              ],
             },
             order: [[{ model: db.Chapter, as: 'chapterList' }, 'numeric_order', 'ASC']],
             where: {
@@ -212,6 +226,13 @@ module.exports = {
           course = await db.Course.findOne({
             attributes: {
               exclude: ['createBy', 'createdAt', 'updatedAt'],
+              include: [
+                [
+                  // Query add field "isJoin" to check user is joined course
+                  sequelize.literal(`(SELECT * FROM check_join_course(${userId}, "Course".course_id))`),
+                  'isJoin',
+                ],
+              ],
             },
             order: [
               [{ model: db.Chapter, as: 'chapterList' }, 'numeric_order', 'ASC'],
@@ -267,6 +288,13 @@ module.exports = {
           course = await db.Course.findOne({
             attributes: {
               exclude: ['createBy', 'createdAt', 'updatedAt'],
+              include: [
+                [
+                  // Query add field "isJoin" to check user is joined course
+                  sequelize.literal(`(SELECT * FROM check_join_course(${userId}, "Course".course_id))`),
+                  'isJoin',
+                ],
+              ],
             },
             order: [
               [{ model: db.Chapter, as: 'chapterList' }, 'numeric_order', 'ASC'],

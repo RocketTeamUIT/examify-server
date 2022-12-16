@@ -18,15 +18,12 @@ Slide.init(
 
     sequence: {
       type: DataTypes.INTEGER,
-      unique: true,
       field: 'sequence',
     },
 
     lessonId: {
-      type: {
-        type: DataTypes.INTEGER,
-        field: 'lesson_id',
-      },
+      type: DataTypes.INTEGER,
+      field: 'lesson_id',
     },
 
     text: {

@@ -3,6 +3,9 @@ const router = express.Router();
 const lessonController = require('../controllers/lesson.controller');
 const { checkLogin, verifyAccessToken } = require('../utils/jwt_service');
 
+// [GET] /lessons/:id/slide   -> get slide in lesson text
+router.get('/:id/get-slide', lessonController.getSlide);
+
 // [GET] /lessons/:id -> get a lesson
 router.get('/:id', checkLogin, lessonController.getLesson);
 

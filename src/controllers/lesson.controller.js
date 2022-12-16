@@ -107,4 +107,26 @@ module.exports = {
       next(err);
     }
   },
+
+  getSlide: async (req, res, next) => {
+    try {
+      const { id } = req.params;
+
+      const slides = await db.Slide.findAll({
+        attributes: ['sequence', 'text'],
+        where: {
+          lessonId: id,
+        },
+        order: [['sequence', 'ASC']],
+      });
+
+      res.status(200).json({
+        status: 200,
+        data: slides,
+      });
+    } catch (err) {
+      console.log(err);
+      next(err);
+    }
+  },
 };
