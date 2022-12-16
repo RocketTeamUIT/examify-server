@@ -237,7 +237,7 @@ EXECUTE PROCEDURE update_timestamp();
 -- CREATE TABLE SLIDE:
 create table slide (
     slide_id SERIAL PRIMARY KEY,
-	sequence NOT NULL,
+	sequence INTEGER NOT NULL,
 	lesson_id INTEGER REFERENCES lesson(lesson_id),
 	text TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
