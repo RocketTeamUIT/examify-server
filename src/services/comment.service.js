@@ -103,15 +103,22 @@ const getAllCommentsBelongToCourse = async (type, page, userId, courseId) => {
       commentItem.childComment = childCommentMappingList[index].childComment;
     });
 
-    // Get total comments
-    const totalComment = await db.Comment.count({
+    // Get total root comments
+    const totalRootComment = await db.Comment.count({
       where: {
         courseId: courseId,
         respondId: null,
       },
     });
 
-    return Promise.resolve({ commentList, totalComment });
+    // Get total comments
+    const totalComment = await db.Comment.count({
+      where: {
+        courseId: courseId,
+      },
+    });
+
+    return Promise.resolve({ commentList, totalRootComment, totalComment });
   } catch (err) {
     throw createError.InternalServerError("Maybe there's something wrong with our server");
   }
