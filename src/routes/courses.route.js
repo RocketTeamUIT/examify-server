@@ -3,6 +3,9 @@ const router = express.Router();
 const courseController = require('../controllers/courses.controller');
 const { checkLogin, verifyAccessToken } = require('../utils/jwt_service');
 
+// [GET] /courses/search?key= &limit=
+router.get('/search', checkLogin, courseController.searchCourse);
+
 // [GET] /courses/popular?limit=    -> Get top courses popular
 router.get('/popular', checkLogin, courseController.getCoursePopular);
 

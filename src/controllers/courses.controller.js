@@ -5,10 +5,42 @@ const createError = require('http-errors');
 const { sequelize } = require('../config/connectDB');
 
 module.exports = {
+  searchCourse: async (req, res, next) => {
+    try {
+      const userId = req?.payload?.userId || -1;
+      const key = req?.query?.key;
+      // limit == null: get all result
+      const limit = req?.query?.limit || null;
+
+      const courseList = await db.Course.findAll({
+        attributes: {
+          include: [
+            [
+              // Query add field "isJoin" to check user is joined course
+              sequelize.literal(`(SELECT * FROM check_join_course(${userId}, "Course".course_id))`),
+              'isJoin',
+            ],
+          ],
+        },
+        where: {
+          [Op.or]: [{ name: { [Op.iLike]: `%${key}%` } }, { level: { [Op.iLike]: `%${key}%` } }],
+        },
+        limit: limit,
+      });
+
+      res.status(200).json({
+        status: 200,
+        data: courseList,
+      });
+    } catch (err) {
+      next(err);
+    }
+  },
+
   enrrollChargesCourse: async (req, res, next) => {
     try {
       const { id } = req.params;
-      const userId = req?.payload?.userId || 7;
+      const userId = req?.payload?.userId;
 
       const data = await pool.query(`SELECT fn_enroll_course_charges(${userId}, ${id}) AS joined`);
 
