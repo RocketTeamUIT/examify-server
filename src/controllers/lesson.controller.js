@@ -31,9 +31,19 @@ module.exports = {
 
   createNewLesson: async (req, res, next) => {
     try {
-      const { unitId, name, type, videoUrl, flashcardSetId, text, description } = req.body;
+      const { unitId, numericOrder, name, type, videoUrl, videoTime, flashcardSetId, text, description } = req.body;
 
-      const lesson = await db.Lesson.create({ unitId, name, type, videoUrl, flashcardSetId, text, description });
+      const lesson = await db.Lesson.create({
+        unitId,
+        numericOrder,
+        name,
+        type,
+        videoUrl,
+        videoTime,
+        flashcardSetId,
+        text,
+        description,
+      });
 
       res.status(200).json({
         status: 200,
@@ -48,9 +58,9 @@ module.exports = {
   updateLesson: async (req, res, next) => {
     try {
       const { id } = req.params;
-      const { unitId, name, type, videoUrl, flashcardSetId, text, description } = req.body;
-      const lesson = await db.Lesson.update(
-        { unitId, name, type, videoUrl, flashcardSetId, text, description },
+      const { unitId, numericOrder, name, type, videoUrl, videoTime, flashcardSetId, text, description } = req.body;
+      await db.Lesson.update(
+        { unitId, numericOrder, name, type, videoUrl, videoTime, flashcardSetId, text, description },
         {
           where: {
             id: id,
@@ -60,7 +70,7 @@ module.exports = {
 
       res.status(200).json({
         status: 200,
-        data: lesson,
+        message: 'updated lesson successful!',
       });
     } catch (err) {
       console.log(err);
