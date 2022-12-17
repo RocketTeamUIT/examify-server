@@ -187,3 +187,51 @@ DECLARE var_recode RECORD;
 	END;
 $$ 
 LANGUAGE plpgsql;
+
+
+-- Function delete one Comment
+CREATE OR REPLACE FUNCTION fn_delete_comment(arg_comment_id int) RETURNS void AS 
+$$
+	BEGIN
+-- 		Detete all relationship 
+		DELETE FROM likes where comment_id = arg_comment_id;
+-- 		Delete comment
+		DELETE FROM comment where comment_id = arg_comment_id;
+		
+		RAISE NOTICE 'Delete comment success!';
+	END;
+$$ 
+LANGUAGE plpgsql;
+
+
+-- Function delete one Course
+CREATE OR REPLACE FUNCTION fn_delete_course(arg_course_id int) RETURNS void AS 
+$$
+DECLARE var_recode RECORD;
+	BEGIN
+-- 	Delete comment reference
+		FOR var_recode IN 
+			SELECT comment_id
+			FROM comment
+			WHERE course_id = arg_course_id
+		 LOOP
+			PERFORM fn_delete_comment(var_recode.comment_id);
+		END LOOP;
+-- 	Delete Join_course reference
+		DELETE FROM join_course WHERE course_id = arg_course_id;
+-- 	Delete Raing reference
+		DELETE FROM rating WHERE course_id = arg_course_id;
+-- 	Delete chapter reference
+		FOR var_recode IN 
+			SELECT chapter_id
+			FROM chapter
+			WHERE course_id = arg_course_id
+		 LOOP
+			PERFORM fn_delete_chapter(var_recode.chapter_id);
+		END LOOP;
+		
+		DELETE FROM course WHERE course_id = arg_course_id;
+		RAISE NOTICE 'Delete course success!';
+	END;
+$$ 
+LANGUAGE plpgsql;

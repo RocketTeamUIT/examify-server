@@ -22,12 +22,12 @@ router.get('/:id', checkLogin, courseController.getCourse);
 router.get('/', checkLogin, courseController.getAllCourses);
 
 // [POST] /courses -> create new course
-router.post('/', courseController.createNewCourse);
+router.post('/create', courseController.createNewCourse);
 
 // [DELETE] /courses/:id -> delete a course
-router.delete('/:id', courseController.deleteCourse);
+router.delete('/delete/:id', courseController.deleteCourse);
 
 // [PUT] /courses/:id -> update a course
-router.put('/:id', courseController.updateCourse);
+router.put('/update/:id', courseController.updateCourse);
 
 module.exports = router;
