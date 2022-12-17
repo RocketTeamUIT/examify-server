@@ -4,6 +4,24 @@ const createError = require('http-errors');
 const { sequelize } = require('../config/connectDB');
 
 module.exports = {
+  getQuantityCourse: async (req, res, next) => {
+    try {
+      const userId = req?.payload?.userId || -1;
+      const courseQnt = await db.JoinCourse.count({
+        where: {
+          studentId: userId,
+        },
+      });
+
+      res.status(200).json({
+        status: 200,
+        quantity: courseQnt,
+      });
+    } catch (err) {
+      next(err);
+    }
+  },
+
   getMyCourses: async (req, res, next) => {
     try {
       // Get userId from middleware check login
