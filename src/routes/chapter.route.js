@@ -6,13 +6,13 @@ const { checkLogin, verifyAccessToken } = require('../utils/jwt_service');
 // [GET] /chapters/:id -> get a chapter
 router.get('/:id', checkLogin, chapterController.getChapter);
 
-// [POST] /chapters -> create new chapter
-router.post('/', chapterController.createNewChapter);
+// [POST] /chapters/create -> create new chapter
+router.post('/create', chapterController.createNewChapter);
 
-// [DELETE] /chapters/:id -> delete a chapter
-router.delete('/:id', chapterController.deleteChapter);
+// [DELETE] /chapters/delete/:id -> delete a chapter
+router.delete('/delete/:id', chapterController.deleteChapter);
 
-// [UPDATE] /chapters/:id -> update a chapter
-router.put('/:id', chapterController.updateChapter);
+// [UPDATE] /chapters/update/:id -> update a chapter
+router.put('/update/:id', chapterController.updateChapter);
 
 module.exports = router;

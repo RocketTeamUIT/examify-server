@@ -167,3 +167,23 @@ DECLARE var_recode RECORD;
 	END;
 $$ 
 LANGUAGE plpgsql;
+
+
+-- Function delete one Chapter
+CREATE OR REPLACE FUNCTION fn_delete_chapter(arg_chapter_id int) RETURNS void AS 
+$$
+DECLARE var_recode RECORD;
+	BEGIN
+		FOR var_recode IN 
+			SELECT unit_id
+			FROM unit
+			WHERE chapter_id = arg_chapter_id
+		 LOOP
+			PERFORM fn_delete_unit(var_recode.unit_id);
+		END LOOP;
+		
+		DELETE FROM chapter where chapter_id = arg_chapter_id;
+		RAISE NOTICE 'Delete chapter success!';
+	END;
+$$ 
+LANGUAGE plpgsql;
