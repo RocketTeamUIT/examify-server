@@ -12,11 +12,13 @@ Rating.init(
   {
     studentId: {
       type: DataTypes.INTEGER,
+      primaryKey: true,
       field: 'student_id',
     },
 
     courseId: {
       type: DataTypes.INTEGER,
+      primaryKey: true,
       field: 'course_id',
     },
 

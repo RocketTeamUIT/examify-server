@@ -6,13 +6,13 @@ const { checkLogin, verifyAccessToken } = require('../utils/jwt_service');
 // [GET] /units/:id -> get a unit
 router.get('/:id', checkLogin, unitController.getUnit);
 
-// [POST] /units -> create new unit
-router.post('/', unitController.createNewUnit);
+// [POST] /units/create -> create new unit
+router.post('/create', unitController.createNewUnit);
 
-// [DELETE] /units/:id -> delete a unit
-router.delete('/:id', unitController.deleteUnit);
+// [DELETE] /units/delete/:id -> delete a unit
+router.delete('/delete/:id', unitController.deleteUnit);
 
-// [UPDATE] /units/:id -> update a unit
-router.put('/:id', unitController.updateUnit);
+// [UPDATE] /units/update/:id -> update a unit
+router.put('/update/:id', unitController.updateUnit);
 
 module.exports = router;

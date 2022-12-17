@@ -131,3 +131,39 @@ DECLARE var_point_to_unlock INTEGER;
 	END;
 $$
 LANGUAGE plpgsql; 
+
+
+-- Function delete one lesson
+CREATE OR REPLACE FUNCTION fn_delete_lesson(arg_lesson_id int) RETURNS void AS 
+$$
+	BEGIN
+		-- Delete all relationship
+		DELETE FROM note WHERE lesson_id = arg_lesson_id;
+		DELETE FROM slide WHERE lesson_id = arg_lesson_id;
+		DELETE FROM join_lesson WHERE lesson_id = arg_lesson_id;
+		-- Delete lesson
+		DELETE FROM lesson where lesson_id = arg_lesson_id;
+		RAISE NOTICE 'Deleted lesson success!';
+	END;
+$$ 
+LANGUAGE plpgsql;
+
+
+-- Function delete one Unit 
+CREATE OR REPLACE FUNCTION fn_delete_unit(arg_unit_id int) RETURNS void AS 
+$$
+DECLARE var_recode RECORD;
+	BEGIN
+		FOR var_recode IN 
+			SELECT lesson_id
+			FROM lesson
+			WHERE unit_id = arg_unit_id
+		 LOOP
+			PERFORM fn_delete_lesson(var_recode.lesson_id);
+		END LOOP;
+		
+		DELETE FROM unit where unit_id = arg_unit_id;
+		RAISE NOTICE 'Delete unit success!';
+	END;
+$$ 
+LANGUAGE plpgsql;
