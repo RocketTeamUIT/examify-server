@@ -133,6 +133,27 @@ $$
 LANGUAGE plpgsql; 
 
 
+
+-- Function check Enroll course Charges
+CREATE OR REPLACE FUNCTION fn_enroll_course_charges(arg_user_id int, arg_course_id int)
+RETURNS Boolean	AS
+$$
+DECLARE var_charges Boolean;
+	BEGIN
+	SELECT charges INTO var_charges FROM course WHERE course_id = arg_course_id;
+-- 	Check course charges
+		IF var_charges = TRUE THEN
+			INSERT INTO join_course VALUES(arg_user_id, arg_course_id);
+			RETURN TRUE;
+		ELSE
+			RETURN FALSE;
+		END IF;	
+	END;
+$$
+LANGUAGE plpgsql; 
+
+
+
 -- Function delete one lesson
 CREATE OR REPLACE FUNCTION fn_delete_lesson(arg_lesson_id int) RETURNS void AS 
 $$
@@ -164,6 +185,74 @@ DECLARE var_recode RECORD;
 		
 		DELETE FROM unit where unit_id = arg_unit_id;
 		RAISE NOTICE 'Delete unit success!';
+	END;
+$$ 
+LANGUAGE plpgsql;
+
+
+-- Function delete one Chapter
+CREATE OR REPLACE FUNCTION fn_delete_chapter(arg_chapter_id int) RETURNS void AS 
+$$
+DECLARE var_recode RECORD;
+	BEGIN
+		FOR var_recode IN 
+			SELECT unit_id
+			FROM unit
+			WHERE chapter_id = arg_chapter_id
+		 LOOP
+			PERFORM fn_delete_unit(var_recode.unit_id);
+		END LOOP;
+		
+		DELETE FROM chapter where chapter_id = arg_chapter_id;
+		RAISE NOTICE 'Delete chapter success!';
+	END;
+$$ 
+LANGUAGE plpgsql;
+
+
+-- Function delete one Comment
+CREATE OR REPLACE FUNCTION fn_delete_comment(arg_comment_id int) RETURNS void AS 
+$$
+	BEGIN
+-- 		Detete all relationship 
+		DELETE FROM likes where comment_id = arg_comment_id;
+-- 		Delete comment
+		DELETE FROM comment where comment_id = arg_comment_id;
+		
+		RAISE NOTICE 'Delete comment success!';
+	END;
+$$ 
+LANGUAGE plpgsql;
+
+
+-- Function delete one Course
+CREATE OR REPLACE FUNCTION fn_delete_course(arg_course_id int) RETURNS void AS 
+$$
+DECLARE var_recode RECORD;
+	BEGIN
+-- 	Delete comment reference
+		FOR var_recode IN 
+			SELECT comment_id
+			FROM comment
+			WHERE course_id = arg_course_id
+		 LOOP
+			PERFORM fn_delete_comment(var_recode.comment_id);
+		END LOOP;
+-- 	Delete Join_course reference
+		DELETE FROM join_course WHERE course_id = arg_course_id;
+-- 	Delete Raing reference
+		DELETE FROM rating WHERE course_id = arg_course_id;
+-- 	Delete chapter reference
+		FOR var_recode IN 
+			SELECT chapter_id
+			FROM chapter
+			WHERE course_id = arg_course_id
+		 LOOP
+			PERFORM fn_delete_chapter(var_recode.chapter_id);
+		END LOOP;
+		
+		DELETE FROM course WHERE course_id = arg_course_id;
+		RAISE NOTICE 'Delete course success!';
 	END;
 $$ 
 LANGUAGE plpgsql;

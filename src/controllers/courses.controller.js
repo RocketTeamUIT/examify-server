@@ -5,6 +5,69 @@ const createError = require('http-errors');
 const { sequelize } = require('../config/connectDB');
 
 module.exports = {
+  searchCourse: async (req, res, next) => {
+    try {
+      const userId = req?.payload?.userId || -1;
+      const key = req?.query?.key;
+      // limit == null: get all result
+      const limit = req?.query?.limit || null;
+
+      const courseList = await db.Course.findAll({
+        attributes: {
+          include: [
+            [
+              // Query add field "isJoin" to check user is joined course
+              sequelize.literal(`(SELECT * FROM check_join_course(${userId}, "Course".course_id))`),
+              'isJoin',
+            ],
+          ],
+        },
+        where: {
+          [Op.or]: [{ name: { [Op.iLike]: `%${key}%` } }, { level: { [Op.iLike]: `%${key}%` } }],
+        },
+        limit: limit,
+      });
+
+      res.status(200).json({
+        status: 200,
+        data: courseList,
+      });
+    } catch (err) {
+      next(err);
+    }
+  },
+
+  enrrollChargesCourse: async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const userId = req?.payload?.userId;
+
+      const data = await pool.query(`SELECT fn_enroll_course_charges(${userId}, ${id}) AS joined`);
+
+      let joined = data.rows[0]['joined'];
+
+      if (joined === true) {
+        res.status(200).json({
+          status: 200,
+          message: 'user enroll course success!',
+          data: {
+            enroll: true,
+          },
+        });
+      } else {
+        res.status(200).json({
+          status: 200,
+          message: 'This is not a charges course',
+          data: {
+            enroll: false,
+          },
+        });
+      }
+    } catch (err) {
+      next(err);
+    }
+  },
+
   enrrollCourse: async (req, res, next) => {
     try {
       const { id } = req.params;
@@ -442,43 +505,91 @@ module.exports = {
     }
   },
 
-  createNewCourse: async (req, res) => {
+  createNewCourse: async (req, res, next) => {
     try {
-      const { name, description, participants } = req.body;
-      console.log(req.body);
-      const newCourse = await pool.query(
-        'INSERT INTO course (name, description, participants) VALUES($1, $2, $3) RETURNING *',
-        [name, description, participants],
-      );
+      const {
+        name,
+        image,
+        level,
+        charges,
+        pointToUnlock,
+        pointReward,
+        price,
+        discount,
+        achieves,
+        description,
+        createBy,
+      } = req.body;
 
-      res.json(newCourse.rows[0]);
+      const course = await db.Course.create({
+        name,
+        image,
+        level,
+        charges,
+        pointToUnlock,
+        pointReward,
+        price,
+        discount,
+        achieves,
+        description,
+        createBy,
+      });
+
+      res.status(200).json({
+        status: 200,
+        data: course,
+      });
     } catch (err) {
-      console.log(err.message);
+      next(err);
     }
   },
 
-  deleteCourse: async (req, res) => {
+  updateCourse: async (req, res, next) => {
     try {
       const { id } = req.params;
-      const deleteCourse = await pool.query('DELETE FROM course WHERE course_id = $1', [id]);
-      res.json('Course was deleted!');
+      const { name, image, level, charges, pointToUnlock, pointReward, price, discount, achieves, description } =
+        req.body;
+
+      await db.Course.update(
+        {
+          name,
+          image,
+          level,
+          charges,
+          pointToUnlock,
+          pointReward,
+          price,
+          discount,
+          achieves,
+          description,
+        },
+        {
+          where: {
+            id: id,
+          },
+        },
+      );
+
+      res.status(200).json({
+        status: 200,
+        message: 'Updated course successful!',
+      });
     } catch (err) {
-      console.log(err.message);
+      next(err);
     }
   },
 
-  updateCourse: async (req, res) => {
+  deleteCourse: async (req, res, next) => {
     try {
       const { id } = req.params;
-      const { name, description, participants } = req.body;
-      const updateCourse = await pool.query(
-        'UPDATE course SET name = $1, description = $2, participants = $3 WHERE course_id = $4',
-        [name, description, participants, id],
-      );
+      await pool.query(`SELECT fn_delete_course(${id})`);
 
-      res.json('Course was updated!');
+      res.status(200).json({
+        status: 200,
+        message: 'Deleted course successful!',
+      });
     } catch (err) {
-      console.log(err.message);
+      next(err);
     }
   },
 };

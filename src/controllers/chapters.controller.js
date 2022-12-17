@@ -1,5 +1,6 @@
 const Op = require('sequelize');
 const db = require('../models/index');
+const pool = require('../config/db');
 const createError = require('http-errors');
 const { sequelize } = require('../config/connectDB');
 
@@ -144,9 +145,53 @@ module.exports = {
     }
   },
 
-  createNewChapter: async (req, res) => {},
+  createNewChapter: async (req, res, next) => {
+    try {
+      const { courseId, numericOrder, name } = req.body;
+      const chapter = await db.Chapter.create({ courseId, numericOrder, name });
 
-  deleteChapter: async (req, res) => {},
+      res.status(200).json({
+        status: 200,
+        data: chapter,
+      });
+    } catch (err) {
+      next(err);
+    }
+  },
 
-  updateChapter: async (req, res) => {},
+  updateChapter: async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const { courseId, numericOrder, name } = req.body;
+      await db.Chapter.update(
+        { courseId, numericOrder, name },
+        {
+          where: {
+            id: id,
+          },
+        },
+      );
+
+      res.status(200).json({
+        status: 200,
+        message: 'Updated chapter successful!',
+      });
+    } catch (err) {
+      next(err);
+    }
+  },
+
+  deleteChapter: async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      await pool.query(`SELECT fn_delete_chapter(${id})`);
+
+      res.status(200).json({
+        status: 200,
+        message: 'Deleted chapter successful!',
+      });
+    } catch (err) {
+      next(err);
+    }
+  },
 };
