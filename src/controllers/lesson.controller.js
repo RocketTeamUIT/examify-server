@@ -1,5 +1,6 @@
 const Op = require('sequelize');
 const db = require('../models/index');
+const pool = require('../config/db');
 const createError = require('http-errors');
 const { sequelize } = require('../config/connectDB');
 const { where } = require('sequelize');
@@ -81,12 +82,9 @@ module.exports = {
   deleteLesson: async (req, res, next) => {
     try {
       const { id } = req.params;
-
-      await db.Lesson.destroy({
-        where: {
-          id: id,
-        },
-      });
+      await pool.query(`
+        SELECT fn_delete_lesson(${id})  
+      `);
 
       res.status(200).json({
         status: 200,

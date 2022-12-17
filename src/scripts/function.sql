@@ -131,3 +131,19 @@ DECLARE var_point_to_unlock INTEGER;
 	END;
 $$
 LANGUAGE plpgsql; 
+
+
+-- Function delete one lesson
+CREATE OR REPLACE FUNCTION fn_delete_lesson(arg_lesson_id int) RETURNS void AS 
+$$
+	BEGIN
+		-- Delete all relationship
+		DELETE FROM note WHERE lesson_id = arg_lesson_id;
+		DELETE FROM slide WHERE lesson_id = arg_lesson_id;
+		DELETE FROM join_lesson WHERE lesson_id = arg_lesson_id;
+		-- Delete lesson
+		DELETE FROM lesson where lesson_id = arg_lesson_id;
+		RAISE NOTICE 'Deleted lesson success!';
+	END;
+$$ 
+LANGUAGE plpgsql;
