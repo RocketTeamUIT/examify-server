@@ -147,3 +147,23 @@ $$
 	END;
 $$ 
 LANGUAGE plpgsql;
+
+
+-- Function delete one Unit 
+CREATE OR REPLACE FUNCTION fn_delete_unit(arg_unit_id int) RETURNS void AS 
+$$
+DECLARE var_recode RECORD;
+	BEGIN
+		FOR var_recode IN 
+			SELECT lesson_id
+			FROM lesson
+			WHERE unit_id = arg_unit_id
+		 LOOP
+			PERFORM fn_delete_lesson(var_recode.lesson_id);
+		END LOOP;
+		
+		DELETE FROM unit where unit_id = arg_unit_id;
+		RAISE NOTICE 'Delete unit success!';
+	END;
+$$ 
+LANGUAGE plpgsql;

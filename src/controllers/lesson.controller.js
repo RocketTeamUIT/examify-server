@@ -82,9 +82,7 @@ module.exports = {
   deleteLesson: async (req, res, next) => {
     try {
       const { id } = req.params;
-      await pool.query(`
-        SELECT fn_delete_lesson(${id})  
-      `);
+      await pool.query(`SELECT fn_delete_lesson(${id})`);
 
       res.status(200).json({
         status: 200,
