@@ -9,6 +9,9 @@ router.get('/popular', checkLogin, courseController.getCoursePopular);
 // [POST] /courses/:id/enroll
 router.post('/:id/enroll', verifyAccessToken, courseController.enrrollCourse);
 
+// [POST] /courses/:id/enroll-charges
+router.post('/:id/enroll-charges', verifyAccessToken, courseController.enrrollChargesCourse);
+
 // GET /courses/:id/unfinished-lesson
 router.get('/:id/unfinished-lesson', verifyAccessToken, courseController.unitInCompleted);
 

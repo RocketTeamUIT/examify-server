@@ -5,6 +5,37 @@ const createError = require('http-errors');
 const { sequelize } = require('../config/connectDB');
 
 module.exports = {
+  enrrollChargesCourse: async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const userId = req?.payload?.userId || 7;
+
+      const data = await pool.query(`SELECT fn_enroll_course_charges(${userId}, ${id}) AS joined`);
+
+      let joined = data.rows[0]['joined'];
+
+      if (joined === true) {
+        res.status(200).json({
+          status: 200,
+          message: 'user enroll course success!',
+          data: {
+            enroll: true,
+          },
+        });
+      } else {
+        res.status(200).json({
+          status: 200,
+          message: 'This is not a charges course',
+          data: {
+            enroll: false,
+          },
+        });
+      }
+    } catch (err) {
+      next(err);
+    }
+  },
+
   enrrollCourse: async (req, res, next) => {
     try {
       const { id } = req.params;

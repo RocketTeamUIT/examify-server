@@ -133,6 +133,27 @@ $$
 LANGUAGE plpgsql; 
 
 
+
+-- Function check Enroll course Charges
+CREATE OR REPLACE FUNCTION fn_enroll_course_charges(arg_user_id int, arg_course_id int)
+RETURNS Boolean	AS
+$$
+DECLARE var_charges Boolean;
+	BEGIN
+	SELECT charges INTO var_charges FROM course WHERE course_id = arg_course_id;
+-- 	Check course charges
+		IF var_charges = TRUE THEN
+			INSERT INTO join_course VALUES(arg_user_id, arg_course_id);
+			RETURN TRUE;
+		ELSE
+			RETURN FALSE;
+		END IF;	
+	END;
+$$
+LANGUAGE plpgsql; 
+
+
+
 -- Function delete one lesson
 CREATE OR REPLACE FUNCTION fn_delete_lesson(arg_lesson_id int) RETURNS void AS 
 $$
