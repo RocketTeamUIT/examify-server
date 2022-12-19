@@ -13,11 +13,13 @@ JoinLesson.init(
     studentId: {
       type: DataTypes.INTEGER,
       field: 'student_id',
+      primaryKey: true,
     },
 
     lessonId: {
       type: DataTypes.INTEGER,
       field: 'lesson_id',
+      primaryKey: true,
     },
 
     createdAt: {
