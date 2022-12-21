@@ -363,85 +363,125 @@ CREATE OR REPLACE TRIGGER update_participants_course
 	AFTER INSERT ON join_course
 	FOR EACH ROW
 	EXECUTE PROCEDURE fn_increase_participants_course();
--- -- Trigger auto increase total_exam after insert exam
--- CREATE OR REPLACE FUNCTION increase_total_exam()
--- 	RETURNS trigger AS
--- $$
--- BEGIN
--- 	UPDATE exam_series SET total_exam = total_exam + 1 WHERE NEW.exam_series_id = exam_series_id;
+-- Trigger auto increase total_exam after insert exam
+CREATE OR REPLACE FUNCTION increase_total_exam()
+	RETURNS trigger AS
+$$
+BEGIN
+	UPDATE exam_series SET total_exam = total_exam + 1 WHERE NEW.exam_series_id = exam_series_id;
 
--- 	RAISE NOTICE 'Auto increase total_exam successfully';
--- 	RETURN NEW;
--- END;
--- $$
--- LANGUAGE 'plpgsql';
-
--- CREATE OR REPLACE TRIGGER create_new_exam
--- 	AFTER INSERT ON exam
--- 	FOR EACH ROW
--- 	EXECUTE PROCEDURE increase_total_exam();  
-
-
--- --Trigger auto decrease total_lesson after delete exam
--- CREATE OR REPLACE FUNCTION decrease_total_exam()
--- 	RETURNS trigger AS
--- $$
--- BEGIN
--- 	UPDATE exam_series SET total_exam = total_exam - 1 WHERE OLD.exam_series_id = exam_series_id;
-
--- 	RAISE NOTICE 'Auto decrease total_exam successfully';
--- 	RETURN NEW;
--- END;
--- $$
--- LANGUAGE 'plpgsql';
-
--- CREATE OR REPLACE TRIGGER delete_exam
--- 	AFTER DELETE ON exam
--- 	FOR EACH ROW
--- 	EXECUTE PROCEDURE decrease_total_exam();
-
-
--- Auto update seq after delete a row
-CREATE OR REPLACE FUNCTION fn_update_order_chapter() RETURNS trigger AS 
-$$BEGIN
-	UPDATE chapter SET numeric_order = numeric_order - 1 WHERE numeric_order > OLD.numeric_order AND course_id = OLD.course_id;
-	RETURN NULL;
-END;$$
+	RAISE NOTICE 'Auto increase total_exam successfully';
+	RETURN NEW;
+END;
+$$
 LANGUAGE 'plpgsql';
 
--- Apply to chapter
-CREATE OR REPLACE TRIGGER update_order_chapter
-	AFTER DELETE 
-	on chapter 
-	FOR EACH ROW 
-	EXECUTE PROCEDURE fn_update_order_chapter(); 
-	
--- Auto update seq after delete a row
-CREATE OR REPLACE FUNCTION fn_update_order_unit() RETURNS trigger AS 
-$$BEGIN
-	UPDATE unit SET numeric_order = numeric_order - 1 WHERE numeric_order > OLD.numeric_order AND chapter_id = OLD.chapter_id;
-	RETURN NULL;
-END;$$
+CREATE OR REPLACE TRIGGER create_new_exam
+	AFTER INSERT ON exam
+	FOR EACH ROW
+	EXECUTE PROCEDURE increase_total_exam()  
+
+
+--Trigger auto decrease total_lesson after delete exam
+CREATE OR REPLACE FUNCTION decrease_total_exam()
+	RETURNS trigger AS
+$$
+BEGIN
+	UPDATE exam_series SET total_exam = total_exam - 1 WHERE OLD.exam_series_id = exam_series_id;
+
+	RAISE NOTICE 'Auto decrease total_exam successfully';
+	RETURN NEW;
+END;
+$$
 LANGUAGE 'plpgsql';
 
--- Apply to unit 
-CREATE OR REPLACE TRIGGER update_order_unit
-	AFTER DELETE 
-	on unit 
-	FOR EACH ROW 
-	EXECUTE PROCEDURE fn_update_order_unit(); 
+CREATE OR REPLACE TRIGGER delete_exam
+	AFTER DELETE ON exam
+	FOR EACH ROW
+	EXECUTE PROCEDURE decrease_total_exam()
 
--- Auto update seq after delete a row
-CREATE OR REPLACE FUNCTION fn_update_order_lesson() RETURNS trigger AS 
-$$BEGIN
-	UPDATE lesson SET numeric_order = numeric_order - 1 WHERE numeric_order > OLD.numeric_order AND unit_id = OLD.unit_id;
+
+
+-- Function auto increase numeric order chapter
+CREATE OR REPLACE FUNCTION fn_update_numeric_order_chapter() RETURNS Trigger AS 
+$$
+DECLARE var_recode RECORD;
+	BEGIN
+		FOR var_recode IN 
+			SELECT chapter_id
+			FROM chapter
+			WHERE course_id = OLD.course_id
+			AND numeric_order > OLD.numeric_order
+			ORDER BY numeric_order ASC
+		 LOOP
+		 	UPDATE chapter SET numeric_order = numeric_order - 1 WHERE chapter_id = var_recode.chapter_id;
+		END LOOP;
+		RAISE NOTICE 'Updated numeric_order in chapter!';
 	RETURN NULL;
-END;$$
-LANGUAGE 'plpgsql';
+	END;
+$$ 
+LANGUAGE plpgsql;
 
--- Apply to lesson
-CREATE OR REPLACE TRIGGER update_order_lesson
-	AFTER DELETE 
-	on lesson 
-	FOR EACH ROW 
-	EXECUTE PROCEDURE fn_update_order_lesson(); 
+
+-- Trigger auto update numeric order when delete one chapter
+CREATE OR REPLACE TRIGGER auto_numeric_order_chapter
+	AFTER DELETE ON chapter
+	FOR EACH ROW
+	EXECUTE PROCEDURE fn_update_numeric_order_chapter();
+
+
+
+-- Function auto increase numeric order unit
+CREATE OR REPLACE FUNCTION fn_update_numeric_order_unit() RETURNS Trigger AS 
+$$
+DECLARE var_recode RECORD;
+	BEGIN
+		FOR var_recode IN 
+			SELECT unit_id
+			FROM unit
+			WHERE chapter_id = OLD.chapter_id
+			AND numeric_order > OLD.numeric_order
+			ORDER BY numeric_order ASC
+		 LOOP
+		 	UPDATE unit SET numeric_order = numeric_order - 1 WHERE unit_id = var_recode.unit_id;
+		END LOOP;
+		RAISE NOTICE 'Updated numeric_order in unit!';
+	RETURN NULL;
+	END;
+$$ 
+LANGUAGE plpgsql;
+
+
+-- Trigger auto update numeric order when delete one unit
+CREATE OR REPLACE TRIGGER auto_numeric_order_unit
+	AFTER DELETE ON unit
+	FOR EACH ROW
+	EXECUTE PROCEDURE fn_update_numeric_order_unit();
+
+
+-- Function auto increase numeric order lesson
+CREATE OR REPLACE FUNCTION fn_update_numeric_order_lesson() RETURNS Trigger AS 
+$$
+DECLARE var_recode RECORD;
+	BEGIN
+		FOR var_recode IN 
+			SELECT lesson_id
+			FROM lesson
+			WHERE unit_id = OLD.unit_id
+			AND numeric_order > OLD.numeric_order
+			ORDER BY numeric_order ASC
+		 LOOP
+		 	UPDATE lesson SET numeric_order = numeric_order - 1 WHERE lesson_id = var_recode.lesson_id;
+		END LOOP;
+		RAISE NOTICE 'Updated numeric_order in lesson!';
+	RETURN NULL;
+	END;
+$$ 
+LANGUAGE plpgsql;
+
+
+-- Trigger auto update numeric order when delete one lesson
+CREATE OR REPLACE TRIGGER auto_numeric_order_lesson
+	AFTER DELETE ON lesson
+	FOR EACH ROW
+	EXECUTE PROCEDURE fn_update_numeric_order_lesson();

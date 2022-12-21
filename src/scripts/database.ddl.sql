@@ -241,7 +241,7 @@ create table slide (
 	lesson_id INTEGER REFERENCES lesson(lesson_id),
 	text TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	UNIQUE(sequence, lesson_id)
 );
 
