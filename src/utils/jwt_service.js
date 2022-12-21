@@ -14,7 +14,7 @@ const signAccessToken = async (userId) => {
 
     // Options
     const options = {
-      expiresIn: '1h',
+      expiresIn: '1d',
     };
 
     // Sign
