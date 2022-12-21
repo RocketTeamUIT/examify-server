@@ -363,39 +363,85 @@ CREATE OR REPLACE TRIGGER update_participants_course
 	AFTER INSERT ON join_course
 	FOR EACH ROW
 	EXECUTE PROCEDURE fn_increase_participants_course();
--- Trigger auto increase total_exam after insert exam
-CREATE OR REPLACE FUNCTION increase_total_exam()
-	RETURNS trigger AS
-$$
-BEGIN
-	UPDATE exam_series SET total_exam = total_exam + 1 WHERE NEW.exam_series_id = exam_series_id;
+-- -- Trigger auto increase total_exam after insert exam
+-- CREATE OR REPLACE FUNCTION increase_total_exam()
+-- 	RETURNS trigger AS
+-- $$
+-- BEGIN
+-- 	UPDATE exam_series SET total_exam = total_exam + 1 WHERE NEW.exam_series_id = exam_series_id;
 
-	RAISE NOTICE 'Auto increase total_exam successfully';
-	RETURN NEW;
-END;
-$$
+-- 	RAISE NOTICE 'Auto increase total_exam successfully';
+-- 	RETURN NEW;
+-- END;
+-- $$
+-- LANGUAGE 'plpgsql';
+
+-- CREATE OR REPLACE TRIGGER create_new_exam
+-- 	AFTER INSERT ON exam
+-- 	FOR EACH ROW
+-- 	EXECUTE PROCEDURE increase_total_exam();  
+
+
+-- --Trigger auto decrease total_lesson after delete exam
+-- CREATE OR REPLACE FUNCTION decrease_total_exam()
+-- 	RETURNS trigger AS
+-- $$
+-- BEGIN
+-- 	UPDATE exam_series SET total_exam = total_exam - 1 WHERE OLD.exam_series_id = exam_series_id;
+
+-- 	RAISE NOTICE 'Auto decrease total_exam successfully';
+-- 	RETURN NEW;
+-- END;
+-- $$
+-- LANGUAGE 'plpgsql';
+
+-- CREATE OR REPLACE TRIGGER delete_exam
+-- 	AFTER DELETE ON exam
+-- 	FOR EACH ROW
+-- 	EXECUTE PROCEDURE decrease_total_exam();
+
+
+-- Auto update seq after delete a row
+CREATE OR REPLACE FUNCTION fn_update_order_chapter() RETURNS trigger AS 
+$$BEGIN
+	UPDATE chapter SET numeric_order = numeric_order - 1 WHERE numeric_order > OLD.numeric_order AND course_id = OLD.course_id;
+	RETURN NULL;
+END;$$
 LANGUAGE 'plpgsql';
 
-CREATE OR REPLACE TRIGGER create_new_exam
-	AFTER INSERT ON exam
-	FOR EACH ROW
-	EXECUTE PROCEDURE increase_total_exam()  
-
-
---Trigger auto decrease total_lesson after delete exam
-CREATE OR REPLACE FUNCTION decrease_total_exam()
-	RETURNS trigger AS
-$$
-BEGIN
-	UPDATE exam_series SET total_exam = total_exam - 1 WHERE OLD.exam_series_id = exam_series_id;
-
-	RAISE NOTICE 'Auto decrease total_exam successfully';
-	RETURN NEW;
-END;
-$$
+-- Apply to chapter
+CREATE OR REPLACE TRIGGER update_order_chapter
+	AFTER DELETE 
+	on chapter 
+	FOR EACH ROW 
+	EXECUTE PROCEDURE fn_update_order_chapter(); 
+	
+-- Auto update seq after delete a row
+CREATE OR REPLACE FUNCTION fn_update_order_unit() RETURNS trigger AS 
+$$BEGIN
+	UPDATE unit SET numeric_order = numeric_order - 1 WHERE numeric_order > OLD.numeric_order AND chapter_id = OLD.chapter_id;
+	RETURN NULL;
+END;$$
 LANGUAGE 'plpgsql';
 
-CREATE OR REPLACE TRIGGER delete_exam
-	AFTER DELETE ON exam
-	FOR EACH ROW
-	EXECUTE PROCEDURE decrease_total_exam()
+-- Apply to unit 
+CREATE OR REPLACE TRIGGER update_order_unit
+	AFTER DELETE 
+	on unit 
+	FOR EACH ROW 
+	EXECUTE PROCEDURE fn_update_order_unit(); 
+
+-- Auto update seq after delete a row
+CREATE OR REPLACE FUNCTION fn_update_order_lesson() RETURNS trigger AS 
+$$BEGIN
+	UPDATE lesson SET numeric_order = numeric_order - 1 WHERE numeric_order > OLD.numeric_order AND unit_id = OLD.unit_id;
+	RETURN NULL;
+END;$$
+LANGUAGE 'plpgsql';
+
+-- Apply to lesson
+CREATE OR REPLACE TRIGGER update_order_lesson
+	AFTER DELETE 
+	on lesson 
+	FOR EACH ROW 
+	EXECUTE PROCEDURE fn_update_order_lesson(); 
