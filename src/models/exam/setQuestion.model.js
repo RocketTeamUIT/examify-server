@@ -33,12 +33,12 @@ SetQuestion.init(
       field: 'numeric_order',
     },
 
-    createAt: {
+    createdAt: {
       type: DataTypes.DATE,
       field: 'created_at',
     },
 
-    updateAt: {
+    updatedAt: {
       type: DataTypes.DATE,
       field: 'updated_at',
     },
