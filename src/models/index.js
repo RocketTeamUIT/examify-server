@@ -2,6 +2,7 @@ const sequelize = require('../config/connectDB');
 
 // object db contain all Model in project
 const db = {
+  // Course Model:
   Rank: require('./rank.model'),
   User: require('./user.model'),
   Course: require('./course.model'),
@@ -17,6 +18,18 @@ const db = {
   Rating: require('./rating.model'),
   Comment: require('./comment.model'),
   Like: require('./like.model'),
+
+  // Exam Model:
+  ExamSeries: require('./exam/examSeries.model'),
+  Exam: require('./exam/exam.model'),
+  ExamTaking: require('./exam/examTaking.model'),
+  Part: require('./exam/part.model'),
+  SetQuestion: require('./exam/setQuestion.model'),
+  Side: require('./exam/side.model'),
+  Hashtag: require('./exam/hashTag.model'),
+  Question: require('./exam/question.model'),
+  Choice: require('./exam/choice.model'),
+  AnswerRecord: require('./exam/answerRecord.model'),
 };
 
 //Excute function associate of model
