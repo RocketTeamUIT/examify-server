@@ -5,6 +5,7 @@ class Part extends Model {
   static associate(models) {
     Part.belongsTo(models.Exam, { foreignKey: 'examId' });
     Part.hasMany(models.SetQuestion, { foreignKey: 'partId' });
+    Part.hasMany(models.PartOption, { foreignKey: 'partId' });
   }
 }
 

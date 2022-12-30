@@ -1752,7 +1752,7 @@ create table answer_record (
     choice_id INTEGER REFERENCES choice(choice_id),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (question_id, choice_id)
+    PRIMARY KEY (exam_taking_id, question_id)
 );
 
 insert into answer_record (exam_taking_id, question_id, choice_id) values (1, 1, 2);
@@ -1957,5 +1957,13 @@ insert into answer_record (exam_taking_id, question_id, choice_id) values (1, 19
 insert into answer_record (exam_taking_id, question_id, choice_id) values (1, 200, 772);
 
 
+
+create table part_option (
+    exam_taking_id INTEGER REFERENCES exam_taking(exam_taking_id),
+    part_id INTEGER REFERENCES part(part_id),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (exam_taking_id, part_id)
+);
 
 

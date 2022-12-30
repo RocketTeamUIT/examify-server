@@ -6,6 +6,7 @@ class ExamTaking extends Model {
     ExamTaking.belongsTo(models.User, { foreignKey: 'userId' });
     ExamTaking.belongsTo(models.Exam, { foreignKey: 'examId' });
     ExamTaking.hasMany(models.AnswerRecord, { foreignKey: 'examTakingId' });
+    ExamTaking.hasMany(models.PartOption, { foreignKey: 'examTakingId' });
   }
 }
 
