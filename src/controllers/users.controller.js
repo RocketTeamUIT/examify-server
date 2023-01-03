@@ -223,9 +223,9 @@ module.exports = {
       res.cookie('refreshToken', refreshToken, {
         secure: true,
         sameSite: 'None',
-        // httpOnly: true,
-        // path: '/',
-        // maxAge: 60 * 60 * 24 * 3600 * 1000,
+        httpOnly: true,
+        path: '/',
+        maxAge: 60 * 60 * 24 * 3600 * 1000,
       });
 
       res.status(200).json({
@@ -341,9 +341,9 @@ module.exports = {
       res.cookie('refreshToken', refToken, {
         secure: true,
         sameSite: 'none',
-        // httpOnly: true,
-        // path: '/',
-        // maxAge: 60 * 60 * 24 * 3600 * 1000,
+        httpOnly: true,
+        path: '/',
+        maxAge: 60 * 60 * 24 * 3600 * 1000,
       });
 
       res.status(200).json({
