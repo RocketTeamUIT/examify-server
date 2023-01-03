@@ -224,7 +224,6 @@ module.exports = {
         httpOnly: true,
         secure: true,
         path: '/',
-        domain: 'examify-server-production.up.railway.app',
         sameSite: 'None',
         maxAge: 60 * 60 * 24 * 3600 * 1000,
       });
