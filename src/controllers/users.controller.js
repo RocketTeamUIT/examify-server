@@ -224,7 +224,6 @@ module.exports = {
         httpOnly: true,
         secure: false,
         path: '/',
-        sameSite: 'strict',
         maxAge: 60 * 60 * 24 * 3600 * 1000,
       });
 
