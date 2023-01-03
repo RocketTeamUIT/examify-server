@@ -40,6 +40,6 @@ app.use((err, req, res, next) => {
 const PORT = process.env.PORT || 5000;
 
 // Server chạy với PORT được gán bên trên
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', 200, () => {
   console.log(`Server has started on port ${PORT}`);
 });
