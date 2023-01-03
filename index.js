@@ -7,6 +7,7 @@ const createError = require('http-errors');
 const { connectDB } = require('./src/config/connectDB');
 
 // Apply middleware
+app.set('trust-proxy', 1);
 app.use(
   cors({
     origin: ['https://examify-ten.vercel.app', 'http://localhost:3000', 'http://localhost:4000'],
@@ -18,7 +19,7 @@ app.use(cookieParser()); // Allow server read cookie
 app.use(express.urlencoded({ extended: true }));
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Credentials', true);
-  res.header('Access-Control-Allow-Origin', ['https://examify-ten.vercel.app']);
+  res.header('Access-Control-Allow-Origin', 'https://examify-ten.vercel.app');
   res.header(
     'Access-Control-Allow-Headers',
     'Origin, X-Requested-With, Content-Type, Accept, Authorization, X-HTTP-Method-Override, Set-Cookie, Cookie',
