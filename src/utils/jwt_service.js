@@ -115,7 +115,7 @@ const verifyRefreshToken = async (refreshToken) => {
         if (err) reject(createError.InternalServerError("Maybe there's something wrong with our server"));
 
         // Check if the RF sent by user matches the RF that exists in the db?
-        if (refreshToken === result.rows[0].refresh_token) {
+        if (refreshToken === result.rows[0]?.refresh_token) {
           resolve(payload);
         }
 
