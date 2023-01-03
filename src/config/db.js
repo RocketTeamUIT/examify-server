@@ -1,7 +1,7 @@
-const Pool = require("pg").Pool;
+const Pool = require('pg').Pool;
 
 // dotenv package cho phép dùng biến môi trường được khai báo trong .env
-require("dotenv").config();
+require('dotenv').config();
 
 const pool = new Pool({
   user: process.env.PG_USER,

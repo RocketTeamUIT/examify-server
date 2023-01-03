@@ -38,8 +38,5 @@ app.use((err, req, res, next) => {
 
 // Kiểm tra biến môi trường có PORT chạy server không? Nếu không lấy PORT 5000
 const PORT = process.env.PORT || 5000;
-
 // Server chạy với PORT được gán bên trên
-app.listen(PORT, '0.0.0.0', 200, () => {
-  console.log(`Server has started on port ${PORT}`);
-});
+app.listen(PORT, '0.0.0.0');
