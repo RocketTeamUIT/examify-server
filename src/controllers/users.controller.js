@@ -221,7 +221,6 @@ module.exports = {
 
       // Store refresh token in cookie
       res.cookie('refreshToken', refreshToken, {
-        httpOnly: true,
         secure: true,
         path: '/',
         sameSite: 'None',
