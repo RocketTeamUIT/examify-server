@@ -221,11 +221,11 @@ module.exports = {
 
       // Store refresh token in cookie
       res.cookie('refreshToken', refreshToken, {
-        httpOnly: true,
         secure: true,
-        path: '/',
         sameSite: 'None',
-        maxAge: 60 * 60 * 24 * 3600 * 1000,
+        // httpOnly: true,
+        // path: '/',
+        // maxAge: 60 * 60 * 24 * 3600 * 1000,
       });
 
       res.status(200).json({
@@ -339,11 +339,11 @@ module.exports = {
 
       // Store refresh token in cookie
       res.cookie('refreshToken', refToken, {
-        httpOnly: true,
-        secure: false,
-        path: '/',
-        sameSite: 'strict',
-        maxAge: 60 * 60 * 24 * 3600 * 1000,
+        secure: true,
+        sameSite: 'none',
+        // httpOnly: true,
+        // path: '/',
+        // maxAge: 60 * 60 * 24 * 3600 * 1000,
       });
 
       res.status(200).json({
