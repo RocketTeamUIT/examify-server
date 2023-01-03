@@ -9,7 +9,7 @@ const { connectDB } = require('./src/config/connectDB');
 // Apply middleware
 app.use(
   cors({
-    origin: ['http://localhost:3000', 'http://localhost:4000'],
+    origin: ['https://examify-ten.vercel.app', 'http://localhost:4000'],
     credentials: true,
   }),
 );
