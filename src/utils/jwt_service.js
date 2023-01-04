@@ -119,6 +119,12 @@ const verifyRefreshToken = async (refreshToken) => {
           resolve(payload);
         }
 
+        console.log(
+          '🚀 ~ file: jwt_service.js:119 ~ pool.query ~ result.rows[0].refresh_token',
+          result.rows[0].refresh_token,
+        );
+        console.log('🚀 ~ file: jwt_service.js:119 ~ pool.query ~ refreshToken', refreshToken);
+
         return reject(createError.Unauthorized('Invalid refresh token'));
       });
     });
