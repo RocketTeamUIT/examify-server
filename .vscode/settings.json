@@ -6,4 +6,7 @@
 
   // Sử dụng Prettier làm tiêu chuẩn format
   "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[sql]": {
+    "editor.defaultFormatter": "adpyke.vscode-sql-formatter"
+  },
 }
