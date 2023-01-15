@@ -23,7 +23,7 @@ create table exam (
 	nums_join INTEGER DEFAULT 0,
 	hashtag TEXT[] DEFAULT ARRAY['Listening', 'Reading'],
 	is_full_explanation BOOLEAN DEFAULT false,
-    exam_time INTEGER DEFAULT 0,
+    duration INTEGER DEFAULT 0,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -136,6 +136,7 @@ create table set_question (
 	title VARCHAR(255) DEFAULT '',
     numeric_order INTEGER NOT NULL,
     -- is_single BOOLEAN DEFAULT true,
+    audio TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     UNIQUE(part_id, numeric_order)

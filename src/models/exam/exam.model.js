@@ -63,9 +63,9 @@ Exam.init(
       field: 'is_full_explanation',
     },
 
-    examTime: {
+    duration: {
       type: DataTypes.INTEGER,
-      field: 'exam_time',
+      field: 'duration',
     },
 
     createdAt: {

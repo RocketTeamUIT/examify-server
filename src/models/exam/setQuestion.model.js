@@ -28,6 +28,11 @@ SetQuestion.init(
       field: 'title',
     },
 
+    audio: {
+      type: DataTypes.STRING,
+      field: 'audio',
+    },
+
     numericOrder: {
       type: DataTypes.INTEGER,
       field: 'numeric_order',
