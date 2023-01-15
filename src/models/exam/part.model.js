@@ -19,22 +19,22 @@ Part.init(
     },
 
     examId: {
-      type: DataTypes.ABSTRACT,
+      type: DataTypes.INTEGER,
       field: 'exam_id',
     },
 
     name: {
-      type: DataTypes.ABSTRACT,
+      type: DataTypes.STRING,
       field: 'name',
     },
 
     totalQuestion: {
-      type: DataTypes.ABSTRACT,
+      type: DataTypes.INTEGER,
       field: 'total_question',
     },
 
     numberOfExplaination: {
-      type: DataTypes.ABSTRACT,
+      type: DataTypes.INTEGER,
       field: 'number_of_explanation',
     },
 

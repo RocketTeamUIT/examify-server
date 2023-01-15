@@ -2,11 +2,11 @@ const JWT = require('jsonwebtoken');
 const createError = require('http-errors');
 const pool = require('../config/db');
 
-const signAccessToken = async (userId) => {
+const signAccessToken = async (user) => {
   return new Promise((resolve, reject) => {
     // Payload
     const payload = {
-      userId,
+      user,
     };
 
     // Secret
@@ -47,6 +47,15 @@ const verifyAccessToken = (req, res, next) => {
     req.payload = payload;
     next();
   });
+};
+
+// (Required) Previous Middleware: verifyAccessToken
+const verifyAdminAccessToken = (req, res, next) => {
+  console.log(req.payload.user);
+  if (req.payload.user.role === 'Admin') next();
+  else {
+    return next(createError.Unauthorized('No permisson to access this resource'));
+  }
 };
 
 // Check if login
@@ -115,7 +124,7 @@ const verifyRefreshToken = async (refreshToken) => {
         if (err) reject(createError.InternalServerError("Maybe there's something wrong with our server"));
 
         // Check if the RF sent by user matches the RF that exists in the db?
-        if (refreshToken === result.rows[0].refresh_token) {
+        if (refreshToken === result.rows[0]?.refresh_token) {
           resolve(payload);
         }
 
@@ -128,6 +137,7 @@ const verifyRefreshToken = async (refreshToken) => {
 module.exports = {
   signAccessToken,
   verifyAccessToken,
+  verifyAdminAccessToken,
   signRefreshToken,
   verifyRefreshToken,
   checkLogin,

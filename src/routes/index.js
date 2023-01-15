@@ -1,3 +1,4 @@
+const authRouter = require('./auth.route');
 const usersRouter = require('./users.route');
 const coursesRouter = require('./courses.route');
 const chapterRouter = require('./chapter.route');
@@ -12,6 +13,7 @@ const ratingRouter = require('./rating.route');
 const examRouter = require('./exam/exam.route');
 
 function route(app) {
+  app.use('/auth', authRouter);
   app.use('/users', usersRouter);
   app.use('/courses', coursesRouter);
   app.use('/chapters', chapterRouter);
