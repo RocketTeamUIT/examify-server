@@ -269,12 +269,12 @@ create table question (
 );
 
 -- Part 1
-insert into question (set_question_id, name, order_qn) values (1, '', 1);
-insert into question (set_question_id, name, order_qn) values (2, '', 2);
-insert into question (set_question_id, name, order_qn) values (3, '', 3);
-insert into question (set_question_id, name, order_qn) values (4, '', 4);
-insert into question (set_question_id, name, order_qn) values (5, '', 5);
-insert into question (set_question_id, name, order_qn) values (6, '', 6);
+insert into question (set_question_id, hashtag_id, name, order_qn) values (1, 1, '', 1);
+insert into question (set_question_id, hashtag_id, name, order_qn) values (1, 2, '', 2);
+insert into question (set_question_id, hashtag_id, name, order_qn) values (1, 3, '', 3);
+insert into question (set_question_id, hashtag_id, name, order_qn) values (2, 4, '', 4);
+insert into question (set_question_id, hashtag_id, name, order_qn) values (2, 5, '', 5);
+insert into question (set_question_id, hashtag_id, name, order_qn) values (2, 6, '', 6);
 
 -- Part 2
 insert into question (set_question_id, name, order_qn) values (7, '', 7);
@@ -1968,3 +1968,7 @@ create table part_option (
 );
 
 
+insert into part_option(exam_taking_id, part_id) values(1, 1);
+insert into part_option(exam_taking_id, part_id) values(1, 2);
+insert into part_option(exam_taking_id, part_id) values(1, 3);
+insert into part_option(exam_taking_id, part_id) values(1, 5);
