@@ -30,6 +30,7 @@ const db = {
   Question: require('./exam/question.model'),
   Choice: require('./exam/choice.model'),
   AnswerRecord: require('./exam/answerRecord.model'),
+  PartOption: require('./exam/partOption.model'),
 };
 
 //Excute function associate of model
