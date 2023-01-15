@@ -17,6 +17,11 @@ const db = {
   Rating: require('./rating.model'),
   Comment: require('./comment.model'),
   Like: require('./like.model'),
+  FlashcardType: require('./flashcardType.model'),
+  FlashcardSet: require('./flashcardSet.model'),
+  Flashcard: require('./flashcard.model'),
+  LearntList: require('./learntList.model'),
+  FlashcardSharePermit: require('./flashcardSharePermit.model'),
 };
 
 //Excute function associate of model

@@ -8,6 +8,8 @@ const testRouter = require('./test.route');
 const meRouter = require('./me.router');
 const noteRouter = require('./note.route');
 const ratingRouter = require('./rating.route');
+const flashcardSetRouter = require('./flashcardSets.route');
+const flashcardRouter = require('./flashcards.route');
 
 function route(app) {
   app.use('/users', usersRouter);
@@ -20,6 +22,8 @@ function route(app) {
   app.use('/rating', ratingRouter);
   app.use('/test', testRouter);
   app.use('/me', meRouter);
+  app.use('/flashcard-sets', flashcardSetRouter);
+  app.use('/flashcards', flashcardRouter);
 }
 
 module.exports = route;
