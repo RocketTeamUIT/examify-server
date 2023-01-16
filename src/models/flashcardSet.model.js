@@ -26,6 +26,10 @@ FlashcardSet.init(
         key: 'fc_type_id',
       },
     },
+    name: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+    },
     description: {
       type: DataTypes.TEXT,
       allowNull: true,

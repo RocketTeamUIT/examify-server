@@ -20,6 +20,7 @@ INSERT INTO flashcard_type(type, description) VALUES('Từ vựng hàng ngày', 
 create table flashcard_set (
   fc_set_id SERIAL PRIMARY KEY,
   fc_type_id INTEGER REFERENCES flashcard_type(fc_type_id) ON DELETE CASCADE,
+	name TEXT NOT NULL,
 	description TEXT,
   words_count INTEGER DEFAULT 0,
 	system_belong BOOLEAN DEFAULT false,
@@ -34,27 +35,26 @@ ON flashcard_set
 FOR EACH ROW
 EXECUTE PROCEDURE update_timestamp();
 
-insert into flashcard_set (description, system_belong, access, views, created_by) values ('Excision of Buccal Mucosa, Percutaneous Approach', false, 'private', 424, 7);
-insert into flashcard_set (description, system_belong, access, views, created_by) values ('Insertion of Radioactive Element into Respiratory Tract, Percutaneous Approach', true, 'private', 957, 9);
-insert into flashcard_set (description, system_belong, access, views, created_by) values ('Restriction of Sigmoid Colon, Via Natural or Artificial Opening Endoscopic', true, 'public', 303, 11);
-insert into flashcard_set (description, system_belong, access, views, created_by) values ('Reposition Left Adrenal Gland, Percutaneous Endoscopic Approach', false, 'public', 304, 17);
-insert into flashcard_set (description, system_belong, access, views, created_by) values ('Excision of Bilateral Fallopian Tubes, Percutaneous Approach, Diagnostic', false, 'private', 455, 14);
-insert into flashcard_set (description, system_belong, access, views, created_by) values ('Extirpation of Matter from Left Ethmoid Bone, Percutaneous Endoscopic Approach', true, 'private', 32, 14);
-insert into flashcard_set (description, system_belong, access, views, created_by) values ('Release Upper Lip, Percutaneous Approach', true, 'public', 975, 17);
-insert into flashcard_set (description, system_belong, access, views, created_by) values ('Replacement of Left Carpal with Synthetic Substitute, Percutaneous Endoscopic Approach', true, 'private', 664, 1);
-insert into flashcard_set (description, system_belong, access, views, created_by) values ('Fusion of Left Tarsal Joint, Percutaneous Approach', false, 'public', 243, 8);
-insert into flashcard_set (description, system_belong, access, views, created_by) values ('Removal of Drainage Device from Left Lower Extremity, Percutaneous Approach', false, 'private', 428, 13);
-insert into flashcard_set (description, system_belong, access, views, created_by) values ('Reposition Right Metatarsal-Tarsal Joint with External Fixation Device, Percutaneous Endoscopic Approach', false, 'public', 148, 12);
-insert into flashcard_set (description, system_belong, access, views, created_by) values ('Alteration of Face, Percutaneous Endoscopic Approach', false, 'public', 111, 6);
-insert into flashcard_set (description, system_belong, access, views, created_by) values ('Insertion of Radioactive Element into Left Nipple, Open Approach', false, 'private', 789, 2);
-insert into flashcard_set (description, system_belong, access, views, created_by) values ('Release Penis, Percutaneous Approach', true, 'public', 452, 19);
-insert into flashcard_set (description, system_belong, access, views, created_by) values ('Insertion of Infusion Device into Intracranial Artery, Percutaneous Endoscopic Approach', true, 'private', 814, 18);
-insert into flashcard_set (description, system_belong, access, views, created_by) values ('High Dose Rate (HDR) Brachytherapy of Right Breast using Cesium 137 (Cs-137)', true, 'public', 63, 9);
-insert into flashcard_set (description, system_belong, access, views, created_by) values ('Revision of Intraluminal Device in Upper Vein, Percutaneous Approach', true, 'public', 631, 17);
-insert into flashcard_set (description, system_belong, access, views, created_by) values ('Insertion of Other Device into Products of Conception, Open Approach', true, 'public', 118, 18);
-insert into flashcard_set (description, system_belong, access, views, created_by) values ('Replacement of Right Pulmonary Vein with Synthetic Substitute, Open Approach', false, 'private', 429, 19);
-insert into flashcard_set (description, system_belong, access, views, created_by) values ('Inspection of Left Buttock, Percutaneous Approach', false, 'public', 475, 7);
-
+insert into flashcard_set (fc_type_id, name, description, system_belong, access, views, created_by) values (1, 'Microcebus murinus', 'Dilation of Face Artery, Bifurcation, with Drug-eluting Intraluminal Device, Open Approach', false, 'private', 846, 11);
+insert into flashcard_set (fc_type_id, name, description, system_belong, access, views, created_by) values (2, 'Naja haje', 'Release Left Inguinal Lymphatic, Open Approach', true, 'private', 739, 7);
+insert into flashcard_set (fc_type_id, name, description, system_belong, access, views, created_by) values (1, 'Petaurus breviceps', 'Fragmentation in Ampulla of Vater, Percutaneous Approach', false, 'public', 265, 12);
+insert into flashcard_set (fc_type_id, name, description, system_belong, access, views, created_by) values (2, 'Phalaropus lobatus', 'Dilation of Right Ureter with Intraluminal Device, Percutaneous Approach', false, 'public', 967, 4);
+insert into flashcard_set (fc_type_id, name, description, system_belong, access, views, created_by) values (2, 'Alligator mississippiensis', 'Insertion of Infusion Device into Lumbar Vertebral Joint, Open Approach', true, 'private', 254, 8);
+insert into flashcard_set (fc_type_id, name, description, system_belong, access, views, created_by) values (1, 'Paraxerus cepapi', 'Replacement of Lower Artery with Nonautologous Tissue Substitute, Open Approach', true, 'public', 22, 13);
+insert into flashcard_set (fc_type_id, name, description, system_belong, access, views, created_by) values (2, 'Crocuta crocuta', 'Dilation of Right Radial Artery with Two Intraluminal Devices, Open Approach', true, 'private', 995, 17);
+insert into flashcard_set (fc_type_id, name, description, system_belong, access, views, created_by) values (2, 'Choloepus hoffmani', 'Urinary System, Bypass', false, 'private', 446, 17);
+insert into flashcard_set (fc_type_id, name, description, system_belong, access, views, created_by) values (1, 'unavailable', 'Bypass Left Lesser Saphenous Vein to Lower Vein with Autologous Arterial Tissue, Open Approach', false, 'public', 969, 5);
+insert into flashcard_set (fc_type_id, name, description, system_belong, access, views, created_by) values (2, 'Raphicerus campestris', 'Division of Left Upper Leg Subcutaneous Tissue and Fascia, Percutaneous Approach', false, 'private', 419, 4);
+insert into flashcard_set (fc_type_id, name, description, system_belong, access, views, created_by) values (2, 'Phalacrocorax varius', 'Therapeutic Exercise Treatment of Integumentary System - Lower Back / Lower Extremity using Other Equipment', true, 'public', 437, 9);
+insert into flashcard_set (fc_type_id, name, description, system_belong, access, views, created_by) values (3, 'Bubalus arnee', 'Plain Radiography of Vasa Vasorum using Low Osmolar Contrast', true, 'private', 268, 8);
+insert into flashcard_set (fc_type_id, name, description, system_belong, access, views, created_by) values (1, 'Phalaropus fulicarius', 'Extraction of Left Shoulder Bursa and Ligament, Open Approach', false, 'private', 198, 12);
+insert into flashcard_set (fc_type_id, name, description, system_belong, access, views, created_by) values (3, 'Heloderma horridum', 'Lower Arteries, Drainage', false, 'public', 441, 7);
+insert into flashcard_set (fc_type_id, name, description, system_belong, access, views, created_by) values (1, 'Columba palumbus', 'Replacement of Left Hand Artery with Nonautologous Tissue Substitute, Percutaneous Endoscopic Approach', false, 'public', 360, 2);
+insert into flashcard_set (fc_type_id, name, description, system_belong, access, views, created_by) values (2, 'Felis wiedi or Leopardus weidi', 'Extirpation of Matter from Right Hip Joint, Percutaneous Endoscopic Approach', true, 'private', 309, 11);
+insert into flashcard_set (fc_type_id, name, description, system_belong, access, views, created_by) values (2, 'Crotaphytus collaris', 'Revision of Synthetic Substitute in Left Breast, Via Natural or Artificial Opening Endoscopic', false, 'private', 177, 12);
+insert into flashcard_set (fc_type_id, name, description, system_belong, access, views, created_by) values (3, 'Lamprotornis nitens', 'Drainage of Right Thumb Phalanx, Percutaneous Approach', false, 'public', 960, 7);
+insert into flashcard_set (fc_type_id, name, description, system_belong, access, views, created_by) values (3, 'Psophia viridis', 'Bypass Left Ureter to Cutaneous with Autologous Tissue Substitute, Percutaneous Endoscopic Approach', false, 'private', 221, 15);
+insert into flashcard_set (fc_type_id, name, description, system_belong, access, views, created_by) values (3, 'Tayassu tajacu', 'Supplement Right Thyroid Artery with Nonautologous Tissue Substitute, Percutaneous Approach', true, 'private', 876, 3);
 
 -- Flashcard
 create table flashcard (
@@ -75,6 +75,33 @@ CREATE TRIGGER update_db_timestamp BEFORE UPDATE
 ON flashcard
 FOR EACH ROW
 EXECUTE PROCEDURE update_timestamp();
+
+-- TRIGGER
+CREATE OR REPLACE FUNCTION update_words_count()
+RETURNS trigger AS 
+$$
+	DECLARE update_count INT; set_id INT;
+	BEGIN
+		IF TG_OP = 'INSERT' THEN	
+			set_id = NEW.fc_set_id;
+		ELSE
+			set_id = OLD.fc_set_id;
+		END IF;
+
+		update_count = (SELECT COUNT(*) FROM flashcard f WHERE f.fc_set_id = set_id);
+		UPDATE flashcard_set fs SET words_count = update_count WHERE fs.fc_set_id = set_id;
+		RAISE NOTICE 'Value: %', set_id;
+
+		RETURN NULL;
+	END;
+$$
+LANGUAGE 'plpgsql';
+
+-- Create trigger
+CREATE TRIGGER update_words_count_trigger
+AFTER INSERT OR DELETE ON flashcard
+FOR EACH ROW
+EXECUTE FUNCTION update_words_count();
 
 insert into flashcard (fc_set_id, word, meaning, type_of_word, pronounce, example, note, image, created_by) values (13, 'euismod', 'Acquired clawhand, left hand', 'id', 'Unspecified injury of flexor muscle, fascia and tendon of left index finger at wrist and hand level, sequela', 'Drowning and submersion due to other accident to canoe or kayak', null, null, 17);
 insert into flashcard (fc_set_id, word, meaning, type_of_word, pronounce, example, note, image, created_by) values (8, 'primis', 'Epiphora due to insufficient drainage', 'odio', 'Malignant poorly differentiated neuroendocrine tumors', 'Corrosion of unspecified degree of multiple left fingers (nail), not including thumb', 'Displaced comminuted fracture of shaft of left femur, subsequent encounter for closed fracture with routine healing', 'http://dummyimage.com/178x100.png/cc0000/ffffff', 12);

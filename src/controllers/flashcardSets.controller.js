@@ -1,12 +1,89 @@
+const { sequelize } = require('../config/connectDB');
 const db = require('../models/index');
 
 module.exports = {
   getAllFlashcardSets: async (req, res, next) => {
     try {
-      const flashcardSets = await db.FlashcardSet.findAll({});
+      const { typeId } = req.params;
+
+      const options = {
+        where: { access: 'public' },
+      };
+
+      if (typeId !== undefined) {
+        options.where = {
+          ...options.where,
+          fc_type_id: typeId,
+        };
+      }
+
+      const flashcardSets = await db.FlashcardSet.findAll(options);
       res.status(200).json({
         status: 200,
         data: flashcardSets,
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  getFlashcardSetsByType: async (req, res, next) => {
+    try {
+      const flashcardSetsByType = await db.FlashcardType.findAll({
+        include: [
+          {
+            model: db.FlashcardSet,
+            as: 'fc_set',
+            required: false,
+          },
+        ],
+        order: [['created_at', 'ASC']],
+      });
+
+      res.status(200).json({
+        data: flashcardSetsByType,
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  // Get flashcard set detail
+  getFlashcardSetDetail: async (req, res, next) => {
+    try {
+      const userId = req?.payload?.userId || -1;
+      const { id } = req.params;
+      const flashcardSetDetail = await db.FlashcardSet.findOne({
+        where: {
+          fc_set_id: id,
+        },
+        attributes: Object.keys(db.FlashcardSet.getAttributes()).concat([
+          [
+            sequelize.cast(
+              sequelize.literal(
+                `(SELECT COUNT(*) FROM flashcard f LEFT JOIN learnt_list ll ON f.fc_id = ll.fc_id WHERE f.fc_set_id = "flashcardSet".fc_set_id AND ll.user_id = ${userId})`,
+              ),
+              'INT',
+            ),
+            'learnt_count',
+          ],
+        ]),
+        include: [
+          {
+            model: db.Flashcard,
+            as: 'flashcards',
+            order: [['created_at', 'ASC']],
+          },
+          {
+            model: db.FlashcardType,
+            as: 'fc_type',
+            attributes: ['type'],
+          },
+        ],
+      });
+
+      res.status(200).json({
+        data: flashcardSetDetail,
       });
     } catch (error) {
       next(error);

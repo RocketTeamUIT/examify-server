@@ -3,13 +3,13 @@ const { sequelize } = require('../config/connectDB');
 
 class FlashcardType extends Model {
   static associate(models) {
-    FlashcardType.hasMany(models.FlashcardSet, { as: 'flashcardType', foreignKey: 'fc_set_id' });
+    FlashcardType.hasMany(models.FlashcardSet, { as: 'fc_set', foreignKey: 'fc_type_id' });
   }
 }
 
 FlashcardType.init(
   {
-    id: {
+    fc_type_id: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
