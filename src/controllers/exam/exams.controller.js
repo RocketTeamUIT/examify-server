@@ -47,6 +47,7 @@ module.exports = {
         include: [
           {
             model: db.ExamTaking,
+            as: 'historyTaking',
             where: {
               userId: userId,
             },
@@ -60,7 +61,7 @@ module.exports = {
                   FROM part_option, part, exam_taking
                   WHERE part_option.part_id = part.part_id
                   AND part_option.exam_taking_id = exam_taking.exam_taking_id
-                  AND part_option.exam_taking_id = "ExamTakings".exam_taking_id
+                  AND part_option.exam_taking_id = "historyTaking".exam_taking_id
                 )`),
                   'PartOptions',
                 ],
@@ -69,6 +70,7 @@ module.exports = {
           },
           {
             model: db.Part,
+            as: 'parts',
             attributes: {
               exclude: ['examId', 'totalQuestion', 'numberOfExplaination', 'numericOrder', 'createdAt', 'updatedAt'],
               include: [
@@ -78,7 +80,7 @@ module.exports = {
                     FROM part LEFT JOIN set_question ON part.part_id = set_question.part_id
                     LEFT JOIN question ON set_question.set_question_id = question.set_question_id
                     LEFT JOIN hashtag ON question.hashtag_id = hashtag.hashtag_id
-                    WHERE part.part_id = "Parts".part_id
+                    WHERE part.part_id = "parts".part_id
                 )`),
                   'listHashtag',
                 ],
