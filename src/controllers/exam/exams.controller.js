@@ -99,4 +99,30 @@ module.exports = {
       next(err);
     }
   },
+
+  examTaking: async (req, res, next) => {
+    try {
+      const userId = req?.payload?.userId || -1;
+      const { examId, timeFinished, partIds } = req.body;
+
+      const examTaking = await db.ExamTaking.create({ examId, userId, timeFinished });
+
+      await db.PartOption.bulkCreate(
+        partIds.map((partId) => ({
+          examTakingId: examTaking.id,
+          partId,
+        })),
+      );
+
+      res.status(200).json({
+        status: 200,
+        message: 'create new examTaking successfully!',
+        data: {
+          examTakingId: examTaking.id,
+        },
+      });
+    } catch (err) {
+      next(err);
+    }
+  },
 };

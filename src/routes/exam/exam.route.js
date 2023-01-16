@@ -9,4 +9,7 @@ router.get('/:id', checkLogin, examsController.getDetailExam);
 // [GET]  /exams   ->   get all exam
 router.get('/', checkLogin, examsController.getAllExam);
 
+// [POST] /exams/taking
+router.post('/taking', checkLogin, examsController.examTaking);
+
 module.exports = router;
