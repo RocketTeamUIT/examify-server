@@ -10,6 +10,6 @@ router.get('/:id', checkLogin, examsController.getDetailExam);
 router.get('/', checkLogin, examsController.getAllExam);
 
 // [POST] /exams/taking
-router.post('/taking', checkLogin, examsController.examTaking);
+router.post('/taking', verifyAccessToken, examsController.examTaking);
 
 module.exports = router;

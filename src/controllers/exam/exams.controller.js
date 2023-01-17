@@ -1,8 +1,9 @@
-const Op = require('sequelize');
+const Op = require('sequelize').Op;
 const db = require('../../models/index');
 const pool = require('../../config/db');
 const createError = require('http-errors');
 const { sequelize } = require('../../config/connectDB');
+const { where } = require('sequelize');
 
 module.exports = {
   getAllExam: async (req, res, next) => {
@@ -105,21 +106,55 @@ module.exports = {
       const userId = req?.payload?.userId || -1;
       const { examId, timeFinished, partIds } = req.body;
 
-      const examTaking = await db.ExamTaking.create({ examId, userId, timeFinished });
+      // task create an exam taking
+      let createExamTaking = new Promise(async function (resolve) {
+        const examTaking = await db.ExamTaking.create({ examId, userId, timeFinished });
+        resolve(examTaking.id);
+      });
 
-      await db.PartOption.bulkCreate(
-        partIds.map((partId) => ({
-          examTakingId: examTaking.id,
-          partId,
-        })),
-      );
+      // task calculate total question belongs to list part
+      let getTotalQuestion = new Promise(async function (resolve) {
+        const totalQuestion = await db.Question.count({
+          include: {
+            model: db.SetQuestion,
+            where: {
+              partId: {
+                [Op.in]: partIds,
+              },
+            },
+          },
+        });
+        resolve(totalQuestion);
+      });
 
-      res.status(200).json({
-        status: 200,
-        message: 'create new examTaking successfully!',
-        data: {
-          examTakingId: examTaking.id,
-        },
+      await Promise.all([createExamTaking, getTotalQuestion]).then(([examTakingId, totalQuestion]) => {
+        // create list part option
+        db.PartOption.bulkCreate(
+          partIds.map((partId) => ({
+            examTakingId: examTakingId,
+            partId,
+          })),
+        );
+
+        // update total question in examTaking
+        db.ExamTaking.update(
+          {
+            totalQuestion,
+          },
+          {
+            where: {
+              id: examTakingId,
+            },
+          },
+        );
+
+        res.status(200).json({
+          status: 200,
+          message: 'create new examTaking successfully!',
+          data: {
+            examTakingId,
+          },
+        });
       });
     } catch (err) {
       next(err);
