@@ -197,3 +197,22 @@ CREATE OR REPLACE TRIGGER update_decrement_total_question_part
 	AFTER DELETE ON question
 	FOR EACH ROW
 	EXECUTE PROCEDURE fn_decrease_total_question_part();
+
+
+-- Function create an user_to_role
+CREATE OR REPLACE FUNCTION fn_create_a_role_user() RETURNS Trigger AS 
+$$
+	BEGIN
+		INSERT INTO user_to_role(user_id, role_id) VALUES(NEW.user_id, 4);
+		RAISE NOTICE 'Create a new user_to_role for user!';
+	RETURN NULL;
+	END;
+$$ 
+LANGUAGE plpgsql;
+
+
+-- Trigger create a role when create an user
+CREATE OR REPLACE TRIGGER auto_create_user_to_role
+	AFTER INSERT ON users
+	FOR EACH ROW
+	EXECUTE PROCEDURE fn_create_a_role_user();
