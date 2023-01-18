@@ -9,6 +9,9 @@ router.get('/get-from-set/:flashcardSetId', checkLogin, flashcardController.getF
 // Create flashcard
 router.post('/create', verifyAccessToken, flashcardController.createFlashcard);
 
+// Create multiple flashcard
+router.post('/create-bulk', verifyAccessToken, flashcardController.createMultipleFlashcard);
+
 // Update flashcard
 router.put('/update/:id', verifyAccessToken, flashcardController.updateFlashcard);
 

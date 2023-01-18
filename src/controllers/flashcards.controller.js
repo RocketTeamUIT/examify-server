@@ -1,3 +1,4 @@
+const createHttpError = require('http-errors');
 const { sequelize } = require('../config/connectDB');
 const db = require('../models/index');
 const Op = require('sequelize').Op;
@@ -59,6 +60,33 @@ module.exports = {
       });
       res.status(201).json({
         data: newFlashcard,
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  //
+  createMultipleFlashcard: async (req, res, next) => {
+    try {
+      const userId = req?.payload?.userId || -1;
+      if (!Array.isArray(req.body)) {
+        next(createHttpError.BadRequest);
+        return;
+      }
+      const formattedList = req.body.map((item) => {
+        const { flashcardSetId, typeOfWord, ...rest } = item;
+        return {
+          ...rest,
+          fc_set_id: flashcardSetId,
+          type_of_word: typeOfWord,
+          created_by: userId,
+        };
+      });
+
+      await db.Flashcard.bulkCreate(formattedList);
+      res.status(201).json({
+        message: 'Added flashcards successfully',
       });
     } catch (error) {
       next(error);
