@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const flashcardController = require('../controllers/flashcards.controller');
-const { verifyAccessToken } = require('../utils/jwt_service');
+const { verifyAccessToken, checkLogin } = require('../utils/jwt_service');
 
 // Get all flashcards in set
-router.get('/get-from-set/:flashcardSetId', flashcardController.getAllFlashcardInSet);
+router.get('/get-from-set/:flashcardSetId', checkLogin, flashcardController.getFlashcardsInSet);
 
 // Create flashcard
 router.post('/create', verifyAccessToken, flashcardController.createFlashcard);

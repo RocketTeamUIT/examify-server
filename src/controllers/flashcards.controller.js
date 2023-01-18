@@ -3,13 +3,33 @@ const db = require('../models/index');
 const Op = require('sequelize').Op;
 
 module.exports = {
-  getAllFlashcardInSet: async (req, res, next) => {
+  getFlashcardsInSet: async (req, res, next) => {
     try {
+      const userId = req?.payload?.userId || -1;
       const { flashcardSetId } = req.params;
-      const flashcards = await db.Flashcard.findAll({
+      const page = req.query.page || 1;
+
+      const options = {
         where: {
           fc_set_id: flashcardSetId,
         },
+      };
+
+      if (page > 0) {
+        (options.limit = 10), (options.offset = (page - 1) * 10);
+      }
+
+      const flashcards = await db.Flashcard.findAll({
+        ...options,
+        attributes: Object.keys(db.Flashcard.getAttributes()).concat([
+          [
+            sequelize.literal(
+              `(SELECT true FROM learnt_list ll WHERE ll.fc_id = "flashcard".fc_id AND user_id = ${userId})`,
+            ),
+            'learnt',
+          ],
+        ]),
+        order: [['fc_id', 'ASC']],
       });
       res.status(200).json({
         status: 200,

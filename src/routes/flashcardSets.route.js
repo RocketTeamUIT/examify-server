@@ -9,6 +9,9 @@ router.get('/', flashcardSetController.getAllFlashcardSets);
 // Get all flashcard sets by type
 router.get('/by-type', flashcardSetController.getFlashcardSetsByType);
 
+// Get my flashcard sets
+router.get('/my', checkLogin, flashcardSetController.getMyFlashcard);
+
 // Get flashcard set detail
 router.get('/:id', checkLogin, flashcardSetController.getFlashcardSetDetail);
 

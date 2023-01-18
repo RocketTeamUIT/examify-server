@@ -1,3 +1,9 @@
+-- DROP TABLE learnt_list;
+-- DROP TABLE flashcard_share_permit;
+-- DROP TABLE flashcard;
+-- DROP TABLE flashcard_set;
+-- DROP TABLE flashcard_type;
+
 -- Flashcard type
 CREATE TABLE flashcard_type (
   fc_type_id SERIAL PRIMARY KEY,
@@ -67,7 +73,7 @@ create table flashcard (
 	example TEXT,
 	note TEXT,
 	image TEXT,
-	created_by INTEGER REFERENCES users(user_id) ON DELETE CASCADE,
+	created_by INTEGER NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

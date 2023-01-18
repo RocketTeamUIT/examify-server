@@ -35,13 +35,32 @@ module.exports = {
             model: db.FlashcardSet,
             as: 'fc_set',
             required: false,
+            separate: true,
+            order: [['fc_set_id', 'ASC']],
           },
         ],
-        order: [['created_at', 'ASC']],
       });
 
       res.status(200).json({
         data: flashcardSetsByType,
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  // Get user's flashcard sets
+  getMyFlashcard: async (req, res, next) => {
+    try {
+      const userId = req?.payload?.userId || -1;
+      const flashcardSets = await db.FlashcardSet.findAll({
+        where: {
+          created_by: userId,
+        },
+      });
+
+      res.status(200).json({
+        data: flashcardSets,
       });
     } catch (error) {
       next(error);
@@ -70,17 +89,18 @@ module.exports = {
         ]),
         include: [
           {
-            model: db.Flashcard,
-            as: 'flashcards',
-            order: [['created_at', 'ASC']],
-          },
-          {
             model: db.FlashcardType,
             as: 'fc_type',
             attributes: ['type'],
           },
         ],
       });
+
+      if (flashcardSetDetail.created_by === userId) {
+        flashcardSetDetail.dataValues.isOwner = true;
+      } else {
+        flashcardSetDetail.dataValues.isOwner = false;
+      }
 
       res.status(200).json({
         data: flashcardSetDetail,
@@ -94,8 +114,9 @@ module.exports = {
   createFlashcardSet: async (req, res, next) => {
     try {
       const userId = req?.payload?.userId || -1;
-      const { description, access } = req.body;
+      const { name, description, access } = req.body;
       const newFlashcardSet = await db.FlashcardSet.create({
+        name,
         description,
         access,
         created_by: userId,
