@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const { sequelize } = require('../config/connectDB');
 const db = require('../models/index');
 
@@ -188,6 +189,36 @@ module.exports = {
     }
   },
 
+  getFlashcardShare: async (req, res, next) => {
+    try {
+      const id = req.params.id || -1;
+      const result = await db.FlashcardSharePermit.findAll({
+        attributes: Object.keys(db.FlashcardSharePermit.getAttributes()).concat([
+          [sequelize.col('mail'), 'email'],
+          [sequelize.col('avt'), 'avt'],
+          [sequelize.col('first_name'), 'firstName'],
+          [sequelize.col('last_name'), 'lastName'],
+        ]),
+        where: {
+          fc_set_id: id,
+        },
+        include: [
+          {
+            model: db.User,
+            as: 'user',
+            required: false,
+            attributes: [],
+          },
+        ],
+      });
+      res.status(200).json({
+        data: result,
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
+
   addFlashcardShare: async (req, res, next) => {
     try {
       const { flashcardSetId, userId } = req.body;
@@ -211,6 +242,46 @@ module.exports = {
       });
       res.status(200).json({
         message: 'Removed person from flashcard share list successfully',
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  searchSharePerson: async (req, res, next) => {
+    try {
+      const { value, flashcardSetId } = req.query;
+      const result = await db.User.findAll({
+        where: {
+          [Op.or]: [
+            {
+              email: {
+                [Op.like]: `%${value}%`,
+              },
+            },
+            {
+              firstName: {
+                [Op.like]: `%${value}%`,
+              },
+            },
+            {
+              lastName: {
+                [Op.like]: `%${value}%`,
+              },
+            },
+          ],
+          [Op.and]: [
+            sequelize.literal(
+              `NOT EXISTS (SELECT 1 FROM flashcard_share_permit fp WHERE fp.user_id = "User".user_id AND fp.fc_set_id = ${flashcardSetId})`,
+            ),
+          ],
+        },
+
+        limit: 8,
+      });
+
+      res.status(200).json({
+        data: result,
       });
     } catch (error) {
       next(error);

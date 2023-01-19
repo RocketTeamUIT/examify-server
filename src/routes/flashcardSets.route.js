@@ -12,6 +12,9 @@ router.get('/by-type', flashcardSetController.getFlashcardSetsByType);
 // Get my flashcard sets
 router.get('/my', checkLogin, flashcardSetController.getMyFlashcard);
 
+// Search user to share flashcard set
+router.get('/search', verifyAccessToken, flashcardSetController.searchSharePerson);
+
 // Get flashcard set detail
 router.get('/:id', checkLogin, flashcardSetController.getFlashcardSetDetail);
 
@@ -26,6 +29,9 @@ router.patch('/update/:id', verifyAccessToken, flashcardSetController.updateFlas
 
 // Update flashcard set
 router.delete('/delete/:id', verifyAccessToken, flashcardSetController.deleteFlashcardSet);
+
+// Get flashcard share list
+router.get('/share/:id', verifyAccessToken, flashcardSetController.getFlashcardShare);
 
 // Add to share list
 router.post('/share', verifyAccessToken, flashcardSetController.addFlashcardShare);
