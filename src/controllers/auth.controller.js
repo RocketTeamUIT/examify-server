@@ -118,8 +118,8 @@ module.exports = {
       }
 
       // Verify refresh token & remove refresh token in DB
-      const { userId } = await verifyRefreshToken(refreshToken);
-      pool.query('UPDATE users SET refresh_token = $1 WHERE user_id = $2', ['', userId], (err, result) => {
+      const { user } = await verifyRefreshToken(refreshToken);
+      pool.query('UPDATE users SET refresh_token = $1 WHERE user_id = $2', ['', user.id], (err, result) => {
         if (err) {
           throw createError.InternalServerError("Maybe there's something wrong with our server");
         }
@@ -145,11 +145,11 @@ module.exports = {
       if (!refreshToken) throw createError.BadRequest('No refresh token in cookies');
 
       // Check proper user
-      const { userId } = await verifyRefreshToken(refreshToken);
+      const { user } = await verifyRefreshToken(refreshToken);
 
       // Create new access token & refresh token, then send it to user
-      const accessToken = await signAccessToken(userId);
-      const refToken = await signRefreshToken(userId);
+      const accessToken = await signAccessToken(user);
+      const refToken = await signRefreshToken(user);
 
       // Store refresh token in cookie
       res.cookie('refreshToken', refToken, {
@@ -163,7 +163,6 @@ module.exports = {
       res.status(200).json({
         status: 200,
         accessToken,
-        refreshToken: refToken,
       });
     } catch (error) {
       next(error);

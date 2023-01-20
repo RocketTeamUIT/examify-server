@@ -4,7 +4,7 @@ const sequelize = require('../config/connectDB');
 module.exports = {
   getRatingCourse: async (req, res, next) => {
     try {
-      const userId = req?.payload?.userId || -1;
+      const userId = req?.payload?.user?.id || -1;
       const { courseId } = req.params;
 
       const rated = await db.Rating.findOne({
@@ -28,7 +28,7 @@ module.exports = {
 
   ratingCourse: async (req, res, next) => {
     try {
-      const userId = req?.payload?.userId || -1;
+      const userId = req?.payload?.user?.id || -1;
       const { courseId } = req.params;
       const { rate } = req.body;
 
@@ -49,7 +49,7 @@ module.exports = {
 
   changeRating: async (req, res, next) => {
     try {
-      const userId = req?.payload?.userId || -1;
+      const userId = req?.payload?.user?.id || -1;
       const { courseId } = req.params;
       const { rate } = req.body;
 
@@ -74,7 +74,7 @@ module.exports = {
 
   clearRating: async (req, res, next) => {
     try {
-      const userId = req?.payload?.userId || -1;
+      const userId = req?.payload?.user?.id || -1;
       const { courseId } = req.params;
 
       await db.Rating.destroy({
