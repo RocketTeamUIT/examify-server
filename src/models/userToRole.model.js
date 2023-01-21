@@ -4,26 +4,21 @@ const { sequelize } = require('../config/connectDB');
 class UserToRole extends Model {
   static associate(models) {
     UserToRole.belongsTo(models.Roles, { foreignKey: 'roleId' });
-    // UserToRole.belongsTo(models.User, { foreignKey: 'userId' });
+    UserToRole.belongsTo(models.User, { foreignKey: 'userId' });
   }
 }
 
 UserToRole.init(
   {
-    id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true,
-      field: 'user_to_role_id',
-    },
-
     userId: {
       type: DataTypes.INTEGER,
+      primaryKey: true,
       field: 'user_id',
     },
 
     roleId: {
       type: DataTypes.INTEGER,
+      primaryKey: true,
       field: 'role_id',
     },
 

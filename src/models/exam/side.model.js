@@ -1,24 +1,29 @@
 const { Model, DataTypes } = require('sequelize');
-const { sequelize } = require('../config/connectDB');
+const { sequelize } = require('../../config/connectDB');
 
-class Roles extends Model {
+class Side extends Model {
   static associate(models) {
-    Roles.belongsToMany(models.User, { through: models.UserToRole, foreignKey: 'roleId' });
+    Side.belongsTo(models.SetQuestion, { foreignKey: 'setQuestionId' });
   }
 }
 
-Roles.init(
+Side.init(
   {
     id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
-      field: 'role_id',
+      field: 'side_id',
     },
 
-    roleName: {
+    setQuestionId: {
+      type: DataTypes.INTEGER,
+      field: 'set_question_id',
+    },
+
+    paragraph: {
       type: DataTypes.STRING,
-      field: 'role_name',
+      field: 'paragraph',
     },
 
     createdAt: {
@@ -33,9 +38,9 @@ Roles.init(
   },
   {
     sequelize,
-    modelName: 'Roles',
-    tableName: 'roles',
+    modelName: 'Side',
+    tableName: 'side',
   },
 );
 
-module.exports = Roles;
+module.exports = Side;

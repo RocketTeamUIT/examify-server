@@ -17,6 +17,7 @@ class User extends Model {
       otherKey: 'fc_id',
     });
     User.hasMany(models.FlashcardSharePermit, { as: 'flashcard_share_permits', foreignKey: 'user_id' });
+    User.belongsToMany(models.Roles, { through: models.UserToRole, foreignKey: 'userId', as: 'role' });
   }
 }
 

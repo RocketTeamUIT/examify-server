@@ -6,7 +6,7 @@ const { sequelize } = require('../config/connectDB');
 module.exports = {
   getQuantityCourse: async (req, res, next) => {
     try {
-      const userId = req?.payload?.userId || -1;
+      const userId = req?.payload?.user?.id || -1;
       const courseQnt = await db.JoinCourse.count({
         where: {
           studentId: userId,
@@ -25,7 +25,7 @@ module.exports = {
   getMyCourses: async (req, res, next) => {
     try {
       // Get userId from middleware check login
-      const userId = req?.payload?.userId || -1;
+      const userId = req?.payload?.user?.id || -1;
       // Query get all course from DB
       const courseList = await db.Course.findAll({
         where: {

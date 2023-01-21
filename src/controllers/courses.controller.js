@@ -7,7 +7,7 @@ const { sequelize } = require('../config/connectDB');
 module.exports = {
   searchCourse: async (req, res, next) => {
     try {
-      const userId = req?.payload?.userId || -1;
+      const userId = req?.payload?.user?.id || -1;
       const key = req?.query?.key;
       // limit == null: get all result
       const limit = req?.query?.limit || null;
@@ -40,7 +40,7 @@ module.exports = {
   enrrollChargesCourse: async (req, res, next) => {
     try {
       const { id } = req.params;
-      const userId = req?.payload?.userId;
+      const userId = req?.payload?.user?.id;
 
       const data = await pool.query(`SELECT fn_enroll_course_charges(${userId}, ${id}) AS joined`);
 
@@ -71,7 +71,7 @@ module.exports = {
   enrrollCourse: async (req, res, next) => {
     try {
       const { id } = req.params;
-      const userId = req?.payload?.userId || -1;
+      const userId = req?.payload?.user?.id || -1;
 
       const data = await pool.query(`
         SELECT fn_enroll_course(${userId}, ${Number(id)}) AS joined
@@ -105,7 +105,7 @@ module.exports = {
   unitInCompleted: async (req, res, next) => {
     try {
       const { id } = req.params;
-      const userId = req?.payload?.userId || -1;
+      const userId = req?.payload?.user?.id || -1;
       const listInCompeleted = await db.Unit.findAll({
         attributes: ['id', 'name'],
         // Get unitId that user is not completed
@@ -163,7 +163,7 @@ module.exports = {
   lessonQntInWeek: async (req, res, next) => {
     try {
       const { id } = req.params;
-      const userId = req?.payload?.userId || -1;
+      const userId = req?.payload?.user?.id || -1;
       const learned = {
         videoLessonQnt: 0,
         textLessonQnt: 0,
@@ -213,7 +213,7 @@ module.exports = {
   getCourse: async (req, res, next) => {
     try {
       let { id } = req.params;
-      const userId = req?.payload?.userId || -1;
+      const userId = req?.payload?.user?.id || -1;
       let depth = req?.query?.depth || '1';
       let course = {};
 
@@ -450,7 +450,7 @@ module.exports = {
   getAllCourses: async (req, res, next) => {
     try {
       // Get userId from middleware check login
-      const userId = req?.payload?.userId || -1;
+      const userId = req?.payload?.user?.id || -1;
       // Query get all course from DB
       const courseList = await db.Course.findAll({
         attributes: {
@@ -477,7 +477,7 @@ module.exports = {
   getCoursePopular: async (req, res, next) => {
     try {
       // Get userId from middleware check login
-      const userId = req?.payload?.userId || -1;
+      const userId = req?.payload?.user?.id || -1;
       // Get limit from query parameter
       const limit = req?.query?.limit || 4;
 

@@ -1,7 +1,5 @@
 const { Model, DataTypes } = require('sequelize');
 const { sequelize } = require('../config/connectDB');
-const UserModel = require('./user.model');
-const CommentModel = require('./comment.model');
 
 class Like extends Model {
   // Add associate here...
@@ -17,11 +15,6 @@ Like.init(
       type: DataTypes.INTEGER,
       primaryKey: true,
       field: 'user_id',
-      references: {
-        type: DataTypes.INTEGER,
-        model: 'User',
-        key: 'userId',
-      },
     },
 
     commentId: {
