@@ -54,7 +54,6 @@ module.exports = {
   getMyFlashcard: async (req, res, next) => {
     try {
       const userId = req?.payload?.user?.id || -1;
-      console.log('ABCEFAEF: ', userId);
       const flashcardSets = await db.FlashcardSet.findAll({
         where: {
           created_by: userId,
