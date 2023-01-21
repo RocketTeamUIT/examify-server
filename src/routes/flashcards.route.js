@@ -19,7 +19,7 @@ router.put('/update/:id', verifyAccessToken, flashcardController.updateFlashcard
 router.delete('/delete/:id', verifyAccessToken, flashcardController.deleteFlashcard);
 
 // Get random practice flashcard
-router.get('/practice/:flashcardSetId', verifyAccessToken, flashcardController.getPracticeFlashcard);
+router.get('/practice/:flashcardSetId', checkLogin, flashcardController.getPracticeFlashcard);
 
 // Mark as learnt
 router.post('/mark-learnt/:id', verifyAccessToken, flashcardController.markFlashcardAsLearnt);

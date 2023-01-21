@@ -27,7 +27,7 @@ router.post('/create-system', verifyAccessToken, flashcardSetController.createSy
 // Update flashcard set
 router.patch('/update/:id', verifyAccessToken, flashcardSetController.updateFlashcardSet);
 
-// Update flashcard set
+// Delete flashcard set
 router.delete('/delete/:id', verifyAccessToken, flashcardSetController.deleteFlashcardSet);
 
 // Get flashcard share list

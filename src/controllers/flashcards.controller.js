@@ -13,6 +13,7 @@ module.exports = {
       const options = {
         where: {
           fc_set_id: flashcardSetId,
+          [Op.and]: [sequelize.literal(`check_flashcard_permission(${userId}, ${flashcardSetId}) = TRUE`)],
         },
       };
 
@@ -45,7 +46,7 @@ module.exports = {
   createFlashcard: async (req, res, next) => {
     try {
       const userId = req?.payload?.userId || -1;
-      const { flashcardSetId, word, meaning, typeOfWord, pronounce, example, note, image } = req.body;
+      const { flashcardSetId, word, meaning, typeOfWord, pronounce, example, note, image, audio } = req.body;
 
       const newFlashcard = await db.Flashcard.create({
         fc_set_id: flashcardSetId,
@@ -56,6 +57,7 @@ module.exports = {
         example,
         note,
         image,
+        audio,
         created_by: userId,
       });
       res.status(201).json({
@@ -96,13 +98,14 @@ module.exports = {
   updateFlashcard: async (req, res, next) => {
     try {
       const { id } = req.params;
-      const { word, meaning, typeOfWord, pronounce, example, note, image } = req.body;
+      const { word, meaning, typeOfWord, pronounce, example, note, image, audio } = req.body;
       await db.Flashcard.update(
         {
           word,
           meaning,
           type_of_word: typeOfWord,
           pronounce,
+          audio,
           example,
           note,
           image,
@@ -141,7 +144,7 @@ module.exports = {
     try {
       const userId = req?.payload?.userId || -1;
       const { flashcardSetId } = req.params;
-      const flashcard = await db.Flashcard.findAll({
+      const flashcard = await db.Flashcard.findOne({
         where: {
           fc_set_id: flashcardSetId,
           [Op.and]: sequelize.literal(
@@ -149,7 +152,6 @@ module.exports = {
           ),
         },
         order: sequelize.literal('random()'),
-        limit: 1,
       });
       res.status(200).json({
         data: flashcard,

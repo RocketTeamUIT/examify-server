@@ -73,9 +73,10 @@ module.exports = {
     try {
       const userId = req?.payload?.userId || -1;
       const { id } = req.params;
-      const flashcardSetDetail = await db.FlashcardSet.findOne({
+      let flashcardSetDetail = await db.FlashcardSet.findOne({
         where: {
           fc_set_id: id,
+          [Op.and]: [sequelize.literal(`check_flashcard_permission(${userId}, ${id}) = TRUE`)],
         },
         attributes: Object.keys(db.FlashcardSet.getAttributes()).concat([
           [
@@ -97,10 +98,14 @@ module.exports = {
         ],
       });
 
-      if (flashcardSetDetail.created_by === userId) {
-        flashcardSetDetail.dataValues.isOwner = true;
+      if (flashcardSetDetail) {
+        if (flashcardSetDetail.created_by === userId) {
+          flashcardSetDetail.dataValues.isOwner = true;
+        } else {
+          flashcardSetDetail.dataValues.isOwner = false;
+        }
       } else {
-        flashcardSetDetail.dataValues.isOwner = false;
+        flashcardSetDetail = {};
       }
 
       res.status(200).json({
@@ -194,6 +199,7 @@ module.exports = {
       const id = req.params.id || -1;
       const result = await db.FlashcardSharePermit.findAll({
         attributes: Object.keys(db.FlashcardSharePermit.getAttributes()).concat([
+          [sequelize.col('user.user_id'), 'id'],
           [sequelize.col('mail'), 'email'],
           [sequelize.col('avt'), 'avt'],
           [sequelize.col('first_name'), 'firstName'],
@@ -236,9 +242,9 @@ module.exports = {
 
   removeFlashcardShare: async (req, res, next) => {
     try {
-      const { flashcardSetId, userId } = req.body;
+      const { set_id, user_id } = req.query;
       await db.FlashcardSharePermit.destroy({
-        where: { fc_set_id: flashcardSetId, user_id: userId },
+        where: { fc_set_id: set_id, user_id: user_id },
       });
       res.status(200).json({
         message: 'Removed person from flashcard share list successfully',

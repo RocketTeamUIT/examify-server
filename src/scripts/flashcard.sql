@@ -70,6 +70,7 @@ create table flashcard (
 	meaning TEXT NOT NULL,
 	type_of_word VARCHAR(15) NOT NULL,
 	pronounce TEXT,
+	audio TEXT,
 	example TEXT,
 	note TEXT,
 	image TEXT,
@@ -428,3 +429,30 @@ CREATE TABLE flashcard_share_permit (
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY (user_id, fc_set_id)
 );
+
+
+
+-- FUNCTION
+CREATE OR REPLACE FUNCTION check_flashcard_permission(arg_user_id INT, arg_fc_set_id INT) RETURNS BOOLEAN AS 
+$$
+	DECLARE 
+		isAllow boolean;
+	BEGIN
+		SELECT CASE 
+			WHEN 
+				EXISTS (
+					SELECT 1 FROM flashcard_share_permit 
+					WHERE fc_set_id = arg_fc_set_id AND user_id = arg_user_id
+				) 
+				OR 
+				EXISTS (                                                                       
+					SELECT 1 FROM flashcard_set
+					WHERE fc_set_id = arg_fc_set_id AND (created_by = arg_user_id OR access = 'public')
+				)
+			THEN true ELSE false 
+		END INTO isAllow;
+
+		RETURN isAllow;
+	END;
+$$ 
+LANGUAGE plpgsql;

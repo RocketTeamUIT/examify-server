@@ -47,6 +47,10 @@ Flashcard.init(
       type: DataTypes.TEXT,
       allowNull: true,
     },
+    audio: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
     example: {
       type: DataTypes.TEXT,
       allowNull: true,
