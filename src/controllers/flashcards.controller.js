@@ -6,7 +6,7 @@ const Op = require('sequelize').Op;
 module.exports = {
   getFlashcardsInSet: async (req, res, next) => {
     try {
-      const userId = req?.payload?.userId || -1;
+      const userId = req?.payload?.user?.id || -1;
       const { flashcardSetId } = req.params;
       const page = req.query.page || 1;
 
@@ -45,7 +45,7 @@ module.exports = {
   // Student creates flashcard set
   createFlashcard: async (req, res, next) => {
     try {
-      const userId = req?.payload?.userId || -1;
+      const userId = req?.payload?.user?.id || -1;
       const { flashcardSetId, word, meaning, typeOfWord, pronounce, example, note, image, audio } = req.body;
 
       const newFlashcard = await db.Flashcard.create({
@@ -71,7 +71,7 @@ module.exports = {
   //
   createMultipleFlashcard: async (req, res, next) => {
     try {
-      const userId = req?.payload?.userId || -1;
+      const userId = req?.payload?.user?.id || -1;
       if (!Array.isArray(req.body)) {
         next(createHttpError.BadRequest);
         return;
@@ -142,7 +142,7 @@ module.exports = {
 
   getPracticeFlashcard: async (req, res, next) => {
     try {
-      const userId = req?.payload?.userId || -1;
+      const userId = req?.payload?.user?.id || -1;
       const { flashcardSetId } = req.params;
       const flashcard = await db.Flashcard.findOne({
         where: {
@@ -163,7 +163,7 @@ module.exports = {
 
   markFlashcardAsLearnt: async (req, res, next) => {
     try {
-      const userId = req?.payload?.userId || -1;
+      const userId = req?.payload?.user?.id || -1;
       const { id } = req.params;
       await db.LearntList.create({
         fc_id: id,
@@ -179,7 +179,7 @@ module.exports = {
 
   markFlashcardAsUnlearnt: async (req, res, next) => {
     try {
-      const userId = req?.payload?.userId || -1;
+      const userId = req?.payload?.user?.id || -1;
       const { id } = req.params;
       await db.LearntList.destroy({
         where: {

@@ -53,7 +53,8 @@ module.exports = {
   // Get user's flashcard sets
   getMyFlashcard: async (req, res, next) => {
     try {
-      const userId = req?.payload?.userId || -1;
+      const userId = req?.payload?.user?.id || -1;
+      console.log('ABCEFAEF: ', userId);
       const flashcardSets = await db.FlashcardSet.findAll({
         where: {
           created_by: userId,
@@ -71,7 +72,7 @@ module.exports = {
   // Get flashcard set detail
   getFlashcardSetDetail: async (req, res, next) => {
     try {
-      const userId = req?.payload?.userId || -1;
+      const userId = req?.payload?.user?.id || -1;
       const { id } = req.params;
       let flashcardSetDetail = await db.FlashcardSet.findOne({
         where: {
@@ -119,7 +120,7 @@ module.exports = {
   // Student creates flashcard set
   createFlashcardSet: async (req, res, next) => {
     try {
-      const userId = req?.payload?.userId || -1;
+      const userId = req?.payload?.user?.id || -1;
       const { name, description, access } = req.body;
       const newFlashcardSet = await db.FlashcardSet.create({
         name,
@@ -138,7 +139,7 @@ module.exports = {
   // Teaching staff / admin create flashcard set
   createSystemFlashcardSet: async (req, res, next) => {
     try {
-      const userId = req?.payload?.userId || -1;
+      const userId = req?.payload?.user?.id || -1;
       const { description, flashcardTypeId } = req.body;
       const newSystemFlashcardSet = await db.FlashcardSet.create({
         description,
