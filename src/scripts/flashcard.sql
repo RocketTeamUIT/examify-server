@@ -41,6 +41,35 @@ ON flashcard_set
 FOR EACH ROW
 EXECUTE PROCEDURE update_timestamp();
 
+
+-- TRIGGER
+CREATE OR REPLACE FUNCTION update_sets_count()
+RETURNS trigger AS 
+$$
+	DECLARE update_count INT; type_id INT;
+	BEGIN
+		IF TG_OP = 'INSERT' THEN	
+			type_id = NEW.fc_type_id;
+		ELSE
+			type_id = OLD.fc_type_id;
+		END IF;
+
+		update_count = (SELECT COUNT(*) FROM flashcard_set fs WHERE fs.fc_type_id = type_id);
+		UPDATE flashcard_type ft SET sets_count = update_count WHERE ft.fc_type_id = type_id;
+		RAISE NOTICE 'Update sets count of type: %', type_id;
+
+		RETURN NULL;
+	END;
+$$
+LANGUAGE 'plpgsql';
+
+-- Create trigger
+CREATE TRIGGER update_sets_count_trigger
+AFTER INSERT OR DELETE ON flashcard_set
+FOR EACH ROW
+EXECUTE FUNCTION update_sets_count();
+
+
 insert into flashcard_set (fc_type_id, name, description, system_belong, access, views, created_by) values (1, 'Microcebus murinus', 'Dilation of Face Artery, Bifurcation, with Drug-eluting Intraluminal Device, Open Approach', false, 'private', 846, 11);
 insert into flashcard_set (fc_type_id, name, description, system_belong, access, views, created_by) values (2, 'Naja haje', 'Release Left Inguinal Lymphatic, Open Approach', true, 'private', 739, 7);
 insert into flashcard_set (fc_type_id, name, description, system_belong, access, views, created_by) values (1, 'Petaurus breviceps', 'Fragmentation in Ampulla of Vater, Percutaneous Approach', false, 'public', 265, 12);

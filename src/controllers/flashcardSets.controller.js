@@ -59,9 +59,24 @@ module.exports = {
           created_by: userId,
         },
       });
+      const recent = await sequelize.query(
+        `
+        SELECT DISTINCT fs.fc_set_id, fs.fc_type_id, type, name, fs.description, words_count, system_belong, access, views, fs.created_by, fs.created_at, fs.updated_at, user_id, MAX(ll.created_at) learnt_time, 
+        (SELECT COUNT(*) learnt_count FROM flashcard_set fs2, flashcard f2, learnt_list ll2 WHERE fs2.fc_set_id = f2.fc_set_id AND f2.fc_id = ll2.fc_id AND user_id = 21 AND fs2.fc_set_id = fs.fc_set_id) 
+        FROM flashcard_set fs LEFT JOIN flashcard_type ft ON ft.fc_type_id = fs.fc_type_id 
+        INNER JOIN flashcard f ON f.fc_set_id = fs.fc_set_id 
+        INNER JOIN learnt_list ll ON ll.fc_id = f.fc_id AND user_id = 21
+        GROUP BY fs.fc_set_id, fs.fc_type_id, type, name, fs.description, words_count, system_belong, access, views, fs.created_by, fs.created_at, fs.updated_at, user_id
+        ORDER BY MAX(ll.created_at) DESC
+        LIMIT 8
+        `,
+      );
 
       res.status(200).json({
-        data: flashcardSets,
+        data: {
+          sets: flashcardSets,
+          recent: recent[0],
+        },
       });
     } catch (error) {
       next(error);
