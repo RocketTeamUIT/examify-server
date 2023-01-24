@@ -86,6 +86,7 @@ module.exports = {
     try {
       const userId = req?.payload?.user?.id || -1;
       const { id } = req.params;
+      const { addView } = req.query;
       const where = {
         fc_set_id: id,
       };
@@ -113,6 +114,19 @@ module.exports = {
           },
         ],
       });
+
+      if (addView) {
+        await db.FlashcardSet.update(
+          {
+            views: sequelize.literal('views + 1'),
+          },
+          {
+            where: {
+              fc_set_id: id,
+            },
+          },
+        );
+      }
 
       if (flashcardSetDetail) {
         if (flashcardSetDetail.created_by === userId) {
