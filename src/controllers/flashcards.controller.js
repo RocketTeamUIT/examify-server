@@ -7,17 +7,24 @@ module.exports = {
   getFlashcardsInSet: async (req, res, next) => {
     try {
       const userId = req?.payload?.user?.id || -1;
+      const role = req?.payload?.user?.role || '';
       const { flashcardSetId } = req.params;
       const page = req.query.page || 1;
 
       const options = {
         where: {
           fc_set_id: flashcardSetId,
-          [Op.and]: [sequelize.literal(`check_flashcard_permission(${userId}, ${flashcardSetId}) = TRUE`)],
         },
       };
 
-      if (page > 0) {
+      if (role !== 'Admin' && role !== 'Teaching Staff') {
+        options.where = {
+          ...options.where,
+          [Op.and]: [sequelize.literal(`check_flashcard_permission(${userId}, ${flashcardSetId}) = TRUE`)],
+        };
+      }
+
+      if (page > 0 && role !== 'Admin' && role !== 'Teaching Staff') {
         (options.limit = 10), (options.offset = (page - 1) * 10);
       }
 
@@ -31,6 +38,13 @@ module.exports = {
             'learnt',
           ],
         ]),
+        include: [
+          {
+            model: db.LearntList,
+            as: 'learnt_lists',
+            required: false,
+          },
+        ],
         order: [['fc_id', 'ASC']],
       });
       res.status(200).json({

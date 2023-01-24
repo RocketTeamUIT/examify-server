@@ -5,20 +5,18 @@ const db = require('../models/index');
 module.exports = {
   getAllFlashcardSets: async (req, res, next) => {
     try {
-      const { typeId } = req.params;
-
-      const options = {
-        where: { access: 'public' },
-      };
-
-      if (typeId !== undefined) {
-        options.where = {
-          ...options.where,
-          fc_type_id: typeId,
-        };
-      }
-
-      const flashcardSets = await db.FlashcardSet.findAll(options);
+      const flashcardSets = await db.FlashcardSet.findAll({
+        attributes: Object.keys(db.FlashcardSet.getAttributes()).concat([[sequelize.col('type'), 'type']]),
+        include: [
+          {
+            model: db.FlashcardType,
+            as: 'fc_type',
+            required: false,
+            attributes: [],
+          },
+        ],
+        order: [['fc_set_id', 'ASC']],
+      });
       res.status(200).json({
         status: 200,
         data: flashcardSets,
@@ -59,9 +57,24 @@ module.exports = {
           created_by: userId,
         },
       });
+      const recent = await sequelize.query(
+        `
+        SELECT DISTINCT fs.fc_set_id, fs.fc_type_id, type, name, fs.description, words_count, system_belong, access, views, fs.created_by, fs.created_at, fs.updated_at, user_id, MAX(ll.created_at) learnt_time, 
+        (SELECT COUNT(*) learnt_count FROM flashcard_set fs2, flashcard f2, learnt_list ll2 WHERE fs2.fc_set_id = f2.fc_set_id AND f2.fc_id = ll2.fc_id AND user_id = 21 AND fs2.fc_set_id = fs.fc_set_id) 
+        FROM flashcard_set fs LEFT JOIN flashcard_type ft ON ft.fc_type_id = fs.fc_type_id 
+        INNER JOIN flashcard f ON f.fc_set_id = fs.fc_set_id 
+        INNER JOIN learnt_list ll ON ll.fc_id = f.fc_id AND user_id = 21
+        GROUP BY fs.fc_set_id, fs.fc_type_id, type, name, fs.description, words_count, system_belong, access, views, fs.created_by, fs.created_at, fs.updated_at, user_id
+        ORDER BY MAX(ll.created_at) DESC
+        LIMIT 8
+        `,
+      );
 
       res.status(200).json({
-        data: flashcardSets,
+        data: {
+          sets: flashcardSets,
+          recent: recent[0],
+        },
       });
     } catch (error) {
       next(error);
@@ -73,11 +86,14 @@ module.exports = {
     try {
       const userId = req?.payload?.user?.id || -1;
       const { id } = req.params;
+      const where = {
+        fc_set_id: id,
+      };
+      if (userId !== -1) {
+        where[Op.and] = [sequelize.literal(`check_flashcard_permission(${userId}, ${id}) = TRUE`)];
+      }
       let flashcardSetDetail = await db.FlashcardSet.findOne({
-        where: {
-          fc_set_id: id,
-          [Op.and]: [sequelize.literal(`check_flashcard_permission(${userId}, ${id}) = TRUE`)],
-        },
+        where,
         attributes: Object.keys(db.FlashcardSet.getAttributes()).concat([
           [
             sequelize.cast(
@@ -139,16 +155,25 @@ module.exports = {
   createSystemFlashcardSet: async (req, res, next) => {
     try {
       const userId = req?.payload?.user?.id || -1;
-      const { description, flashcardTypeId } = req.body;
+      const { name, description, flashcardTypeId } = req.body;
       const newSystemFlashcardSet = await db.FlashcardSet.create({
+        name: name,
         description,
         fc_type_id: flashcardTypeId,
         system_belong: true,
         access: 'public',
         created_by: userId,
       });
+      const type = await db.FlashcardType.findOne({
+        attributes: ['type'],
+        where: {
+          fc_type_id: flashcardTypeId,
+        },
+      });
+      const result = newSystemFlashcardSet.toJSON();
+      result.type = type.type;
       res.status(201).json({
-        data: newSystemFlashcardSet,
+        data: result,
       });
     } catch (error) {
       next(error);
@@ -158,18 +183,18 @@ module.exports = {
   updateFlashcardSet: async (req, res, next) => {
     try {
       const { id } = req.params;
-      const { description, access } = req.body;
-      await db.FlashcardSet.update(
-        {
-          description,
-          access,
+      const { description, access, flashcardTypeId, name } = req.body;
+      const updateValues = {
+        name,
+        description,
+        access,
+      };
+      if (flashcardTypeId) updateValues.fc_type_id = flashcardTypeId;
+      await db.FlashcardSet.update(updateValues, {
+        where: {
+          fc_set_id: id,
         },
-        {
-          where: {
-            fc_set_id: id,
-          },
-        },
-      );
+      });
       res.status(200).json({
         message: 'Flashcard set updated successfully!',
       });
