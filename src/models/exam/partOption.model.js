@@ -13,11 +13,13 @@ PartOption.init(
     examTakingId: {
       type: DataTypes.INTEGER,
       field: 'exam_taking_id',
+      primaryKey: true,
     },
 
     partId: {
       type: DataTypes.INTEGER,
       field: 'part_id',
+      primaryKey: true,
     },
 
     createdAt: {
