@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const route = require('./src/routes');
 const createError = require('http-errors');
 const { connectDB } = require('./src/config/connectDB');
+const errorHandler = require('./src/middlewares/errorHandler');
 
 // Apply middleware
 app.use(
@@ -27,6 +28,8 @@ route(app);
 app.use((req, res, next) => {
   next(createError.NotFound('This route does not exist.'));
 });
+
+app.use(errorHandler);
 
 app.use((err, req, res, next) => {
   res.status(err.status || 500).json({

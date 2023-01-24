@@ -19,6 +19,13 @@ const db = {
   Comment: require('./comment.model'),
   Like: require('./like.model'),
 
+  // Flashcard Model
+  FlashcardType: require('./flashcardType.model'),
+  FlashcardSet: require('./flashcardSet.model'),
+  Flashcard: require('./flashcard.model'),
+  LearntList: require('./learntList.model'),
+  FlashcardSharePermit: require('./flashcardSharePermit.model'),
+
   // Exam Model:
   ExamSeries: require('./exam/examSeries.model'),
   Exam: require('./exam/exam.model'),

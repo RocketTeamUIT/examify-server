@@ -51,7 +51,6 @@ const verifyAccessToken = (req, res, next) => {
 
 // (Required) Previous Middleware: verifyAccessToken
 const verifyAdminAccessToken = (req, res, next) => {
-  console.log(req.payload.user);
   if (req.payload.user.role === 'Admin') next();
   else {
     return next(createError.Unauthorized('No permisson to access this resource'));
@@ -81,11 +80,11 @@ const checkLogin = (req, res, next) => {
   });
 };
 
-const signRefreshToken = async (userId) => {
+const signRefreshToken = async (user) => {
   return new Promise((resolve, reject) => {
     // Payload
     const payload = {
-      userId,
+      user,
     };
 
     // Secret
@@ -101,7 +100,7 @@ const signRefreshToken = async (userId) => {
       if (err) reject(err);
 
       // Save refresh token to DB
-      pool.query('UPDATE users SET refresh_token = $1 WHERE user_id = $2', [token, userId], (err, result) => {
+      pool.query('UPDATE users SET refresh_token = $1 WHERE user_id = $2', [token, user.id], (err, result) => {
         if (err) {
           return reject(createError.InternalServerError("Maybe there's something wrong with our server"));
         }
@@ -120,7 +119,7 @@ const verifyRefreshToken = async (refreshToken) => {
       }
 
       // Get refresh token from db
-      pool.query('SELECT refresh_token FROM users WHERE user_id = $1', [payload.userId], (err, result) => {
+      pool.query('SELECT refresh_token FROM users WHERE user_id = $1', [payload.user.id], (err, result) => {
         if (err) reject(createError.InternalServerError("Maybe there's something wrong with our server"));
 
         // Check if the RF sent by user matches the RF that exists in the db?

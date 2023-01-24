@@ -9,7 +9,7 @@ module.exports = {
   getUnit: async (req, res, next) => {
     try {
       let { id } = req.params;
-      const userId = req?.payload?.userId || -1;
+      const userId = req?.payload?.user?.id || -1;
       let depth = req.query.depth || '1';
       let unit = {};
 

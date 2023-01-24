@@ -7,6 +7,16 @@ class User extends Model {
     User.belongsTo(models.Rank, { foreignKey: 'rankId', as: 'rank' });
     User.belongsToMany(models.Course, { through: models.Comment, foreignKey: 'userId' });
     User.belongsToMany(models.Comment, { through: models.Like, foreignKey: 'userId' });
+    User.hasMany(models.LearntList, { as: 'learnt_lists', foreignKey: 'user_id' });
+    User.hasMany(models.Flashcard, { as: 'flashcards', foreignKey: 'created_by' });
+    User.hasMany(models.FlashcardSet, { as: 'flashcard_sets', foreignKey: 'created_by' });
+    User.belongsToMany(models.Flashcard, {
+      as: 'fc_id_flashcards',
+      through: models.LearntList,
+      foreignKey: 'user_id',
+      otherKey: 'fc_id',
+    });
+    User.hasMany(models.FlashcardSharePermit, { as: 'flashcard_share_permits', foreignKey: 'user_id' });
     User.belongsToMany(models.Roles, { through: models.UserToRole, foreignKey: 'userId', as: 'role' });
   }
 }

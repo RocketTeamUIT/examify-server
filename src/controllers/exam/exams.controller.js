@@ -8,7 +8,7 @@ const { where } = require('sequelize');
 module.exports = {
   getAllExam: async (req, res, next) => {
     try {
-      const userId = req?.payload?.userId || -1;
+      const userId = req?.payload?.user?.id || -1;
 
       const listExam = await db.Exam.findAll({
         attributes: {
