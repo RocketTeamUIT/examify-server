@@ -24,6 +24,7 @@ create table exam (
 	hashtag TEXT[] DEFAULT ARRAY['Listening', 'Reading'],
 	is_full_explanation BOOLEAN DEFAULT false,
     duration INTEGER DEFAULT 0,
+    file_download TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -1737,7 +1738,7 @@ create table exam_taking (
     exam_taking_id SERIAL PRIMARY KEY,
     exam_id INTEGER NOT NULL REFERENCES exam(exam_id),
     user_id INTEGER NOT NULL REFERENCES users(user_id),
-    time_finished INTEGER NOT NULL,
+    time_finished INTEGER NOT NULL DEFAULT 0,
     nums_of_correct_qn INTEGER NOT NULL DEFAULT 0,
     total_question INTEGER NOT NULL DEFAULT 0,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

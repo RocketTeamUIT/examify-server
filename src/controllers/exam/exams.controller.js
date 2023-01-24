@@ -104,11 +104,11 @@ module.exports = {
   examTaking: async (req, res, next) => {
     try {
       const userId = req?.payload?.userId || -1;
-      const { examId, timeFinished, partIds } = req.body;
+      const { examId, partIds } = req.body;
 
       // task create an exam taking
       let createExamTaking = new Promise(async function (resolve) {
-        const examTaking = await db.ExamTaking.create({ examId, userId, timeFinished });
+        const examTaking = await db.ExamTaking.create({ examId, userId });
         resolve(examTaking.id);
       });
 
