@@ -38,7 +38,7 @@ module.exports = {
 
   getDetailExam: async (req, res, next) => {
     try {
-      const userId = req?.payload?.userId || -1;
+      const userId = req?.payload?.user?.id || -1;
       const { id } = req.params;
 
       const exam = await db.Exam.findOne({
@@ -103,7 +103,7 @@ module.exports = {
 
   examTaking: async (req, res, next) => {
     try {
-      const userId = req?.payload?.userId || -1;
+      const userId = req?.payload?.user?.id || -1;
       const { examId, partIds } = req.body;
 
       // task create an exam taking
