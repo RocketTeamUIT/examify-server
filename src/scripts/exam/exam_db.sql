@@ -23,6 +23,7 @@ create table exam (
 	nums_join INTEGER DEFAULT 0,
 	hashtag TEXT[] DEFAULT ARRAY['Listening', 'Reading'],
 	is_full_explanation BOOLEAN DEFAULT false,
+    audio TEXT,
     duration INTEGER DEFAULT 0,
     file_download TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

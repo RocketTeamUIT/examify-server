@@ -5,7 +5,7 @@ class SetQuestion extends Model {
   static associate(models) {
     SetQuestion.belongsTo(models.Part, { foreignKey: 'partId' });
     SetQuestion.hasMany(models.Side, { foreignKey: 'setQuestionId', as: 'side' });
-    SetQuestion.hasMany(models.Question, { foreignKey: 'setQuestionId', as: 'questionList' });
+    SetQuestion.hasMany(models.Question, { foreignKey: 'setQuestionId', as: 'setQuestion' });
   }
 }
 

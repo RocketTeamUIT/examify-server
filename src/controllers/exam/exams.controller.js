@@ -167,11 +167,11 @@ module.exports = {
 
       // get name exam and exam series
       const examName = await sequelize.query(`
-        SELECT exam.name AS exam, exam_series.name AS examSeries
+        SELECT exam.name AS "examName", exam_series.name AS "examSeriesName", audio
         FROM exam_taking, exam, exam_series
         WHERE exam_taking.exam_id = exam.exam_id
         AND exam.exam_series_id = exam_series.exam_series_id 
-        AND exam_taking.exam_taking_id = 1`);
+        AND exam_taking.exam_taking_id = ${examTakingId}`);
 
       // get list part id
       let listPartId = await db.PartOption.findAll({
@@ -206,7 +206,7 @@ module.exports = {
               // include model Question
               {
                 model: db.Question,
-                as: 'questionList',
+                as: 'setQuestion',
                 attributes: ['id', ['order_qn', 'seq'], 'name'],
                 include: [
                   // include model Choice
@@ -230,14 +230,14 @@ module.exports = {
           // order in model Question
           [
             { model: db.SetQuestion, as: 'setQuestionList' },
-            { model: db.Question, as: 'questionList' },
+            { model: db.Question, as: 'setQuestion' },
             'order_qn',
             'ASC',
           ],
           // order in model Choice
           [
             { model: db.SetQuestion, as: 'setQuestionList' },
-            { model: db.Question, as: 'questionList' },
+            { model: db.Question, as: 'setQuestion' },
             { model: db.Choice, as: 'choiceList' },
             'order_choice',
             'ASC',
@@ -247,10 +247,8 @@ module.exports = {
 
       res.status(200).json({
         status: 200,
-        data: {
-          ...examName[0][0],
-          contentTaking,
-        },
+        ...examName[0][0],
+        data: contentTaking,
       });
     } catch (err) {
       next(err);
