@@ -5,7 +5,7 @@ class Question extends Model {
   static associate(models) {
     Question.belongsTo(models.SetQuestion, { foreignKey: 'setQuestionId' });
     Question.belongsTo(models.Hashtag, { foreignKey: 'hastagId' });
-    Question.hasMany(models.Choice, { foreignKey: 'questionId' });
+    Question.hasMany(models.Choice, { foreignKey: 'questionId', as: 'choiceList' });
     Question.hasMany(models.AnswerRecord, { foreignKey: 'questionId' });
   }
 }
