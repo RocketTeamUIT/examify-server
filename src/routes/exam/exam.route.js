@@ -3,6 +3,9 @@ const router = express.Router();
 const examsController = require('../../controllers/exam/exams.controller');
 const { checkLogin, verifyAccessToken } = require('../../utils/jwt_service');
 
+// [POST] /exams/finished-taking/:id    -> finished an exam taking
+router.post('/finished-taking/:id', verifyAccessToken, examsController.saveAnswer);
+
 // [GET] /exams/exam-taking/:id    -> get content of exam
 router.get('/exam-taking/:id', examsController.getExamTaking);
 

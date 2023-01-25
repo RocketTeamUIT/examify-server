@@ -11,21 +11,16 @@ class AnswerRecord extends Model {
 
 AnswerRecord.init(
   {
-    id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true,
-      field: 'answer_record_id',
-    },
-
     examTakingId: {
       type: DataTypes.INTEGER,
       field: 'exam_taking_id',
+      primaryKey: true,
     },
 
     questionId: {
       type: DataTypes.INTEGER,
       field: 'question_id',
+      primaryKey: true,
     },
 
     choiceId: {
