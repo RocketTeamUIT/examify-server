@@ -104,11 +104,11 @@ module.exports = {
   examTaking: async (req, res, next) => {
     try {
       const userId = req?.payload?.userId || -1;
-      const { examId, timeFinished, partIds } = req.body;
+      const { examId, partIds } = req.body;
 
       // task create an exam taking
       let createExamTaking = new Promise(async function (resolve) {
-        const examTaking = await db.ExamTaking.create({ examId, userId, timeFinished });
+        const examTaking = await db.ExamTaking.create({ examId, userId });
         resolve(examTaking.id);
       });
 
@@ -155,6 +155,100 @@ module.exports = {
             examTakingId,
           },
         });
+      });
+    } catch (err) {
+      next(err);
+    }
+  },
+
+  getExamTaking: async (req, res, next) => {
+    try {
+      const examTakingId = req.params?.id;
+
+      // get name exam and exam series
+      const examName = await sequelize.query(`
+        SELECT exam.name AS "examName", exam_series.name AS "examSeriesName", audio
+        FROM exam_taking, exam, exam_series
+        WHERE exam_taking.exam_id = exam.exam_id
+        AND exam.exam_series_id = exam_series.exam_series_id 
+        AND exam_taking.exam_taking_id = ${examTakingId}`);
+
+      // get list part id
+      let listPartId = await db.PartOption.findAll({
+        where: {
+          examTakingId,
+        },
+        attributes: ['partId'],
+      });
+
+      listPartId = listPartId.map((object) => object.partId);
+
+      // get content of exam
+      const contentTaking = await db.Part.findAll({
+        where: {
+          id: {
+            [Op.in]: listPartId,
+          },
+        },
+        attributes: ['id', ['name', 'part']],
+        include: [
+          {
+            model: db.SetQuestion,
+            as: 'setQuestionList',
+            attributes: ['id', 'title', 'audio'],
+            include: [
+              // include model Side
+              {
+                model: db.Side,
+                as: 'side',
+                attributes: ['seq', ['paragraph', 'content']],
+              },
+              // include model Question
+              {
+                model: db.Question,
+                as: 'setQuestion',
+                attributes: ['id', ['order_qn', 'seq'], 'name'],
+                include: [
+                  // include model Choice
+                  {
+                    model: db.Choice,
+                    as: 'choiceList',
+                    attributes: ['id', ['order_choice', 'seq'], ['name', 'content']],
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+        order: [
+          // order in model Part
+          [['numeric_order', 'ASC']],
+          // order in model setQuestion
+          [{ model: db.SetQuestion, as: 'setQuestionList' }, 'numeric_order', 'ASC'],
+          // order in model Side
+          [{ model: db.SetQuestion, as: 'setQuestionList' }, { model: db.Side, as: 'side' }, 'seq', 'ASC'],
+          // order in model Question
+          [
+            { model: db.SetQuestion, as: 'setQuestionList' },
+            { model: db.Question, as: 'setQuestion' },
+            'order_qn',
+            'ASC',
+          ],
+          // order in model Choice
+          [
+            { model: db.SetQuestion, as: 'setQuestionList' },
+            { model: db.Question, as: 'setQuestion' },
+            { model: db.Choice, as: 'choiceList' },
+            'order_choice',
+            'ASC',
+          ],
+        ],
+      });
+
+      res.status(200).json({
+        status: 200,
+        ...examName[0][0],
+        data: contentTaking,
       });
     } catch (err) {
       next(err);

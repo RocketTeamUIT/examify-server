@@ -23,7 +23,9 @@ create table exam (
 	nums_join INTEGER DEFAULT 0,
 	hashtag TEXT[] DEFAULT ARRAY['Listening', 'Reading'],
 	is_full_explanation BOOLEAN DEFAULT false,
+    audio TEXT,
     duration INTEGER DEFAULT 0,
+    file_download TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -1479,35 +1481,37 @@ create table side (
     side_id SERIAL PRIMARY KEY,
     set_question_id INTEGER REFERENCES set_question(set_question_id),
     paragraph TEXT NOT NULL,
+    seq INTEGER NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE(seq, set_question_id)
 );
 
-insert into side (set_question_id, paragraph) values (1, 'https://study4.com/media/tez_media1/img/ets_toeic_2022_test_1_1.png');
-insert into side (set_question_id, paragraph) values (2, 'https://study4.com/media/tez_media1/img/ets_toeic_2022_test_1_1.png');
-insert into side (set_question_id, paragraph) values (3, 'https://study4.com/media/tez_media1/img/ets_toeic_2022_test_1_1.png');
-insert into side (set_question_id, paragraph) values (4, 'https://study4.com/media/tez_media1/img/ets_toeic_2022_test_1_1.png');
-insert into side (set_question_id, paragraph) values (5, 'https://study4.com/media/tez_media1/img/ets_toeic_2022_test_1_1.png');
-insert into side (set_question_id, paragraph) values (6, 'https://study4.com/media/tez_media1/img/ets_toeic_2022_test_1_1.png');
-insert into side (set_question_id, paragraph) values (42, 'https://lh6.googleusercontent.com/AWbPfUpA0bKxy18rFIqOUN4vLDdpAB5aQAd99f09lqW30z5ZUsjQ7zulKtvVYspp7rCPZDWJeIeVS_MVvYjJehGoNdnxSKxaMhy0eVhtRUPFzP8qCWKqG-KAeZZ38wqzajPV1zjOnOOdDI5vtQ');
-insert into side (set_question_id, paragraph) values (43, 'https://study4.com/media/tez_media1/img/ets_toeic_2022_test_1_65_67.png');
-insert into side (set_question_id, paragraph) values (53, 'https://study4.com/media/tez_media1/img/ets_toeic_2022_test_1_68_70.png');
-insert into side (set_question_id, paragraph) values (54, 'https://study4.com/media/tez_media1/img/ets_toeic_2022_test_1_98_100.png');
-insert into side (set_question_id, paragraph) values (85, 'NOTICE
+insert into side (set_question_id, paragraph, seq) values (1, 'https://study4.com/media/tez_media1/img/ets_toeic_2022_test_1_1.png', 1);
+insert into side (set_question_id, paragraph, seq) values (2, 'https://study4.com/media/tez_media1/img/ets_toeic_2022_test_1_1.png', 1);
+insert into side (set_question_id, paragraph, seq) values (3, 'https://study4.com/media/tez_media1/img/ets_toeic_2022_test_1_1.png', 1);
+insert into side (set_question_id, paragraph, seq) values (4, 'https://study4.com/media/tez_media1/img/ets_toeic_2022_test_1_1.png', 1);
+insert into side (set_question_id, paragraph, seq) values (5, 'https://study4.com/media/tez_media1/img/ets_toeic_2022_test_1_1.png', 1);
+insert into side (set_question_id, paragraph, seq) values (6, 'https://study4.com/media/tez_media1/img/ets_toeic_2022_test_1_1.png', 1);
+insert into side (set_question_id, paragraph, seq) values (42, 'https://lh6.googleusercontent.com/AWbPfUpA0bKxy18rFIqOUN4vLDdpAB5aQAd99f09lqW30z5ZUsjQ7zulKtvVYspp7rCPZDWJeIeVS_MVvYjJehGoNdnxSKxaMhy0eVhtRUPFzP8qCWKqG-KAeZZ38wqzajPV1zjOnOOdDI5vtQ', 1);
+insert into side (set_question_id, paragraph, seq) values (43, 'https://study4.com/media/tez_media1/img/ets_toeic_2022_test_1_65_67.png', 1);
+insert into side (set_question_id, paragraph, seq) values (53, 'https://study4.com/media/tez_media1/img/ets_toeic_2022_test_1_68_70.png', 1);
+insert into side (set_question_id, paragraph, seq) values (54, 'https://study4.com/media/tez_media1/img/ets_toeic_2022_test_1_98_100.png', 1);
+insert into side (set_question_id, paragraph, seq) values (85, 'NOTICE
 To continue providing the highest level of ----- (131) to our corporate tenants, we have scheduled the south lobby restrooms for maintenance this weekend, May 13 and May 14. ----- (132) this time, the restrooms will be out of order, so tenants and their guests should instead use the facilities in the north lobby.
 We ----- (133) for any inconvenience this might cause. -----(134).
-Denville Property Management Partners');
-insert into side (set_question_id, paragraph) values (86, 'I recently received a last-minute invitation to a formal dinner. I bought a suit and needed it tailored as -----(135) as possible. A friend suggested that I use Antonio`s Tailoring Shop in downtown Auckland. When I met Antonio, he gave me his full attention ----- (136) his shop was busy. He took the time to listen to me and carefully noted all my measurements. He then explained all the tailoring costs up front and assured me that he could have my suit ready in three days, but he had it done in two! ----- (137).
+Denville Property Management Partners', 1);
+insert into side (set_question_id, paragraph, seq) values (86, 'I recently received a last-minute invitation to a formal dinner. I bought a suit and needed it tailored as -----(135) as possible. A friend suggested that I use Antonio`s Tailoring Shop in downtown Auckland. When I met Antonio, he gave me his full attention ----- (136) his shop was busy. He took the time to listen to me and carefully noted all my measurements. He then explained all the tailoring costs up front and assured me that he could have my suit ready in three days, but he had it done in two! ----- (137).
 Antonio has run his shop for over 30 years, and his experience really shows. He is a ----- (138) tailor.
 I highly recommend him.
-Jim Kestren, Auckland');
-insert into side (set_question_id, paragraph) values (87, 'Dear Director Yoshida,
+Jim Kestren, Auckland', 1);
+insert into side (set_question_id, paragraph, seq) values (87, 'Dear Director Yoshida,
 Thank you for your school`s interest in visiting our farm next month. Please note that children must be at least six years old to visit and tour the farm.-----(139). I have enclosed a list of the ----- ( 140) activities available for our young visitors. Two of these ----- (141) must be scheduled in advance. They are a cheese-making class and an introduction to beekeeping. Both are very popular with our visitors.
 Please let ----- (142) know your selection by early next week. I look forward to welcoming your group soon!
 Sincerely,
 Annabel Romero, Coordinator
-Merrytree Family Farm');
-insert into side (set_question_id, paragraph) values (88, 'To: Lakshmi Aiyar
+Merrytree Family Farm', 1);
+insert into side (set_question_id, paragraph, seq) values (88, 'To: Lakshmi Aiyar
 From: info@healthonity.com
 Date: February 8
 Subject: Healthonity Dental
@@ -1519,25 +1523,25 @@ We, the dental health professionals of the Healthonity Dental Center, are ----- 
 Contact our center today at 305-555-0121 ----- (145) an initial evaluation. All first-time ----- (146) will benefit from a 50 percent discount on the cost through the end of the month.
 
 Sincerely,
-The Team at Healthonity Dental Center');
-insert into side (set_question_id, paragraph) values (89, 'http://www.moonglowairways.com.au
+The Team at Healthonity Dental Center', 1);
+insert into side (seq, set_question_id, paragraph) values (1, 89, 'http://www.moonglowairways.com.au
 Special Announcement by Geoff Clifford, President of Moon Glow Airways
 As many of you are aware, there was a problem with Pelman Technology, the system that handles our airline reservations. This outage has affected several airlines. It`s been a rough week, but the good news is it that it has been repaired, and we are re-setting our system. However, Moon Glow passengers may still face delays for day or two. This most likely will include longer lines at airports. We have added more on-site customer service representatives at airports in all of our destination cities to assist customers with their flights and information. We appreciate your understanding and patience.');
-insert into side (set_question_id, paragraph) values (90, 'Video Captioners --- Work from Home
+insert into side (seq, set_question_id, paragraph) values (1, 90, 'Video Captioners --- Work from Home
 Kiesel Video is seeking detail-oriented people to use our software to add text captions to a wide variety of video material, such as television programs, movies, and university lectures. We will provide free online training. Successful applicants must possess strong language skills and have a computer, a headset, and high-speed Internet access.
 The position features:
 - Flexible hours--you work as much or as little as you want.
 - Choice of projects-we have work in many types of content.
 - Good pay - our captioners earn $350 to $1,100 a week, depending on the assignment.
 Apply today at www.kieselvideo.com/jobs');
-insert into side (set_question_id, paragraph) values (91, 'February 1
+insert into side (seq, set_question_id, paragraph) values (1, 91, 'February 1
 SOFTWARE TESTING REPORT
 Version of Software Program: Konserted 2.5
 Testing Dates: January 10-12
 Number of Participants: 8
 Software Testing Overview: Participants were asked to complete a series of tasks testing the functionality of the revised Konserted interface. In task number 1, participants searched for a concert in a designated area. In task number 2, participants searched for new friends on the site. In task number 3, participants invited friends to a concert. In task number 4, participants posted concert reviews, photos, and videos. 
 Initial Findings: Task number 3 proved the most challenging, with three participants unable to complete it in under two minutes. A potential cause for this difficulty may be the choice of icons in the menu bar. Clearer, more intuitive icons could make this task easier to complete for participants.');
-insert into side (set_question_id, paragraph) values (92, '*E-mail*
+insert into side (seq, set_question_id, paragraph) values (1, 92, '*E-mail*
 
 To: catiyeh@mymailroom.au
 From: achen@mutamark.au
@@ -1551,9 +1555,9 @@ To follow up on our phone conversation earlier today, I would like to extend to 
 Very best regards,
 Alex Chen, Conference Planning
 Mutamark Headquarters, Melbourne');
-insert into side (set_question_id, paragraph) values (93, 'Monorail Coming to Sudbury
+insert into side (seq, set_question_id, paragraph) values (1, 93, 'Monorail Coming to Sudbury
 (4 Feb.) Ottawa-based Saenger, Inc., has been selected by the city of Sudbury to build a monorail system that will connect the city`s commercial district to the airport. -[1]-. Funding for the system is drawn from a combination of public agencies and private investors. -[2]-. Ticket sales for the monorail will also provide a new source of revenue for the city. -[3]-. Construction is slated to begin in early June and is expected to be completed within four years. -[4]-');
-insert into side (set_question_id, paragraph) values (94, 'Dennis Beck (2:52 P.M.)
+insert into side (seq, set_question_id, paragraph) values (1, 94, 'Dennis Beck (2:52 P.M.)
 Hi, Corinne. I just want to be sure that you saw the document I sent you. It''s the combined market analysis and advertising proposal for the Keyes Elegant Home group. We''re preparing it for tomorrow''s presentation to the client.
 Corinne McCall (2:53 P.M.)
 Yes, I have just downloaded it. Is this about their new line of tableware?
@@ -1565,7 +1569,7 @@ Dennis Beck (3:02 P.M.)
 Feel free to add information to the section "Advertising Strategies," since that is your area of expertise.
 Corinne McCall (3:03 P.M.)
 Will do. I`ll get it back to you before the end of the day.');
-insert into side (set_question_id, paragraph) values (95, 'To: Mara Renaldo
+insert into side (seq, set_question_id, paragraph) values (1, 95, 'To: Mara Renaldo
 From: Lisa Yang
 Date: May 28
 Subject: RE: Staffordsville Craft Fair
@@ -1584,12 +1588,12 @@ Thanks again, and best of luck with your application,
 Lisa Yang
 
 ');
-insert into side (set_question_id, paragraph) values (96, 'SLEEP SOUNDLY SOLUTIONS
+insert into side (seq, set_question_id, paragraph) values (1, 96, 'SLEEP SOUNDLY SOLUTIONS
 Thank you for choosing Sleep Soundly Solutions!
 The updated control panel is linked to an integrated system that allows you to activate and disable all security systems in your home, including your Sleep Soundly motion sensor as well as your fire, smoke, and carbon monoxide detectors. 
 All Sleep Soundly residential alarm systems have been tested thoroughly to ensure the highest quality and sensitivity, so you can sleep soundly in the knowledge that your home is protected. We have also developed a new smartphone application that will notify you of any disturbances wherever you are. The app is available for download now.
 Sleep Soundly control equipment is carefully manufactured for use with Sleep Soundly detectors and alarms. Using products manufactured by other companies may result in an alarm system that does not meet safety requirements for residential buildings or comply with local laws.');
-insert into side (set_question_id, paragraph) values (97, 'March 29
+insert into side (seq, set_question_id, paragraph) values (1, 97, 'March 29
 Dr. Maritza Geerlings
 Poseidonstraat 392
 Paramaribo
@@ -1602,7 +1606,7 @@ Sincerely,
 Audley Bartlett
 Vice President for Academic Affairs,
 Jamaican Agricultural Training Academy');
-insert into side (set_question_id, paragraph) values (98, 'Ashley Montaine 8:54 A.M.: How did the interview with Mr. Erickson go?
+insert into side (seq, set_question_id, paragraph) values (1, 98, 'Ashley Montaine 8:54 A.M.: How did the interview with Mr. Erickson go?
 Dan Campbell 8:55 A.M.: I really enjoyed meeting him. I think he`d be a great reporter here. He seems smart and organized, and his samples show that he`s a great writer.
 Ashley Montaine 8:57 A.M.: Brooke, can you contact Mr. Erickson to set up the next interview? Is that a problem?
 Dan Campbell 8:58 A.M.: I`d really like to work with him. It is very important that he impress Mr. Peters.
@@ -1612,7 +1616,7 @@ Brooke Randolph 9:02 A.M.: When would you like to meet with him again?
 Dan Campbell 9:03 A.M.: Ashley, I believe you will participate in the next interview. Note that Mr. Peters is probably going to ask why Mr. Erickson wants to transition from freelance writing to in-house news reporting. Also, Mr. Peters will want assurances that he`s committed and will stick around for several years.
 Ashley Montaine 9:04 A.M.: Brooke, Mr. Peters and I are both free Friday morning.
 Brooke Randolph 9:06 A.M.: Great. I`ll write an e-mail shortly.');
-insert into side (set_question_id, paragraph) values (99, 'Alberta Business Matters
+insert into side (seq, set_question_id, paragraph) values (1, 99, 'Alberta Business Matters
 April issue
 Improve Your Office Environment Now!
 Today`s office environment, featuring numerous corridors, unexciting beige or white walls, and often rows of identical, windowless cubicles, might not inspire comfort, beauty, and energy. However, there are some easy, inexpensive ways to make your office space more inviting.
@@ -1629,7 +1633,7 @@ Stress relief
 -------------------------
 Dear readers, if you have tips to add to this list, send them in and they will be published in next month`s issue.
 -------------------------');
-insert into side (set_question_id, paragraph) values (99, 'Alberta Business Matters
+insert into side (seq, set_question_id, paragraph) values (2, 99, 'Alberta Business Matters
 
 Letters to the Editor
 
@@ -1640,7 +1644,7 @@ For example, say you work two days a week at your headquarters in Edmonton, and 
 Best,
 
 Maria Testa');
-insert into side (set_question_id, paragraph) values (100, 'http://www.Lloydtouringcompany.co.uk
+insert into side (seq, set_question_id, paragraph) values (1, 100, 'http://www.Lloydtouringcompany.co.uk
 
 Choose one of Lloyd Touring Company`s (LTC) most popular outings to see the best that London has to offer! 
 Tour 1: Full-day tour of the most popular tourist sites on one of our famous red double-decker buses. See the Changing of the Guard and conclude the day with a river cruise. 
@@ -1649,21 +1653,21 @@ Tour 3: Half-day tour on a red double-decker bus, including private tour of the 
 Tour 4: Half-day tour of Buckingham Palace, including the Changing of the Guard. Tour ends with a traditional fish-and-chips lunch. 
 Tour 5: Full-day walking tour featuring London`s top highlights. Complete the day with a medieval banquet.
 LTC`s knowledgeable local staff members personally guide each one of our tours. Meals are not covered, except when noted in the tour description. Participants are responsible for meeting at chosen departure destination. LTC does not provide pickup from hotels. All tours can be upgraded for an additional fee to include an open-date ticket to the London Eye, London`s famous observation wheel.');
-insert into side (set_question_id, paragraph) values (100, 'Ella Bouton
+insert into side (seq, set_question_id, paragraph) values (2, 100, 'Ella Bouton
 
 Lloyd Touring Company Review
 
 This was my first trip to London. I decided to see all the major tourist sites on my own, but I wanted someone to help me discover the most interesting places to shop in London. My LTC tour guide, Larissa, was wonderful. She is an avid shopper herself, and at the beginning of the tour, she tried to get to know the participants. She was able to guide everyone to the shops that they were most interested in. It was such a personalized tour! And it was a bonus that Larissa also speaks French. My daughter and I were visiting from Paris, and we appreciated being able to communicate in two languages. The tour was very reasonably priced, too. I would highly recommend it. The only unpleasant part of the tour was that Oxford Street was extremely crowded when we visited, and it was difficult to walk around easily.');
-insert into side (set_question_id, paragraph) values (101, 'To: Joseph Morgan <joseph.morgan@peltergraphics.com>
+insert into side (seq, set_question_id, paragraph) values (1, 101, 'To: Joseph Morgan <joseph.morgan@peltergraphics.com>
 From: administrator@costaseminars.org
 Date: May 31
 Subject: Book order
 Dear Mr. Morgan,
 Thank you for registering for Emilio Costa`s seminar on June 11 at the Rothford Business Center. We are glad you took advantage of the opportunity for conference participants to purchase some of Emilio Costa`s graphic-design books at a discounted price. The information below is a confirmation of your order. The books will be waiting for you at the check-in desk on the day of the seminar. Please note that we will accept any major credit card for payment. We are looking forward to seeing you on June 11.');
-insert into side (set_question_id, paragraph) values (101, 'Attention, Seminar Participants:
+insert into side (seq, set_question_id, paragraph) values (2, 101, 'Attention, Seminar Participants:
 
 Unfortunately, we do not have copies of Emilio Costa`s book Branding Strategies in Graphic Design with us today. For those of you who have ordered it, please give your mailing address to the volunteer at the check-in desk, and the book will be mailed to your home at no cost to you. We will charge your credit card upon shipment. We are sorry for the inconvenience.');
-insert into side (set_question_id, paragraph) values (101, '*E-mail*
+insert into side (seq, set_question_id, paragraph) values (3, 101, '*E-mail*
 
 To: roberta.tsu@peltergraphics.com
 
@@ -1680,11 +1684,11 @@ I`m looking forward to finishing up our brochure design for Entchen Financial Co
 Best,
 
 Joseph');
-insert into side (set_question_id, paragraph) values (102, 'Anton Building
+insert into side (seq, set_question_id, paragraph) values (1, 102, 'Anton Building
 Clanton (12 October)--The planned renovation of the historic Anton Building by Jantuni Property Developers (JPD) is facing new delays. A JPD spokesperson says their negotiations with the city regarding a package of subsidies and tax incentives are ongoing and are proving somewhat contentious. According to the renovation plan, JPD must protect the historical integrity of the Anton Building while it creates a mixed-use interior, offering both office space and lower-level retail space. However, JPD`s city permit to do the project is on hold pending the current negotiations.
 
 This is making city revitalization advocates increasingly anxious. Aditi Yadav comments. "This plan to create useful space out of an empty decaying building will go a long way to restoring vibrancy to that area of the city. I sincerely hope that JPD does not back out. In creating their offer, the City Council should consider JPD`s excellent record of beautifully restoring and maintaining several other historic buildings in Clanton."');
-insert into side (set_question_id, paragraph) values (102, 'To: t.rowell@jantunipropertydevelopers.com
+insert into side (seq, set_question_id, paragraph) values (2, 102, 'To: t.rowell@jantunipropertydevelopers.com
 
 Date: 20 February
 
@@ -1697,8 +1701,8 @@ I am the owner of Lenoiva, a health-care technology company. We plan to expand o
 Thank you in advance,
 
 Ana Bautista');
-insert into side (set_question_id, paragraph) values (102, 'Image');
-insert into side (set_question_id, paragraph) values (103, 'From: Tanya Jefferson <tjeff@keysuppliers.com>
+insert into side (seq, set_question_id, paragraph) values (3, 102, 'Image');
+insert into side (seq, set_question_id, paragraph) values (1, 103, 'From: Tanya Jefferson <tjeff@keysuppliers.com>
 To: info@danestongear.com
 Subject: Request for group rental information
 Date: May 29
@@ -1706,7 +1710,7 @@ Hello Daneston Gear Company (DGC),
 I am the president of an activities club. This month. our 30 members intend to take a day trip to Daneston to go boating on the lake. Could you please send me information regarding your rates and offerings? We are most interested in renting boats that seat one person. Some time ago, I rented a kayak for myself from DGC, but this will be my first time renting from DGC for a group.
 Thank you,
 Tanya Jefferson');
-insert into side (set_question_id, paragraph) values (103, 'From: info@danestongear.com
+insert into side (seq, set_question_id, paragraph) values (2, 103, 'From: info@danestongear.com
 
 To: Tanya Jefferson <tjeff@keysuppliers.com>
 
@@ -1725,7 +1729,7 @@ I will be pleased to help you when you are ready to make your reservation.
 Best,
 
 Adam Goldstein');
-insert into side (set_question_id, paragraph) values (103, '- We are open every day from April to October, 10:00 A.M. to 6:30 P.M
+insert into side (seq, set_question_id, paragraph) values (3, 103, '- We are open every day from April to October, 10:00 A.M. to 6:30 P.M
 
 - All boats must be returned by 6:15 P.M. on the day they are rented.
 
@@ -1737,7 +1741,7 @@ create table exam_taking (
     exam_taking_id SERIAL PRIMARY KEY,
     exam_id INTEGER NOT NULL REFERENCES exam(exam_id),
     user_id INTEGER NOT NULL REFERENCES users(user_id),
-    time_finished INTEGER NOT NULL,
+    time_finished INTEGER NOT NULL DEFAULT 0,
     nums_of_correct_qn INTEGER NOT NULL DEFAULT 0,
     total_question INTEGER NOT NULL DEFAULT 0,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
