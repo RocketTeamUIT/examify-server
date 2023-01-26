@@ -259,17 +259,45 @@ module.exports = {
     try {
       const userId = req?.payload?.user?.id;
       const examTakingId = req?.params?.id;
-      const listAnswer = req.body;
+      const { timeFinished, listAnswer } = req.body;
 
       if (!userId) {
         throw createError.NotFound('Unidentified user');
       }
 
-      await db.AnswerRecord.bulkCreate(
-        listAnswer.map((answer) => ({
-          examTakingId,
-          ...answer,
-        })),
+      // Score the answer
+      const numsOfCorrectQn = await db.Choice.count({
+        where: {
+          id: {
+            [Op.in]: listAnswer.map((answer) => answer.choiceId),
+          },
+          key: true,
+        },
+      });
+
+      // create multiple answer record
+      try {
+        await db.AnswerRecord.bulkCreate(
+          listAnswer.map((answer) => ({
+            examTakingId,
+            ...answer,
+          })),
+        );
+      } catch (err) {
+        throw createError[400](err.name);
+      }
+
+      // update exam taking
+      db.ExamTaking.update(
+        {
+          timeFinished,
+          numsOfCorrectQn,
+        },
+        {
+          where: {
+            id: examTakingId,
+          },
+        },
       );
 
       res.status(200).json({
