@@ -4,7 +4,7 @@ const { sequelize } = require('../../config/connectDB');
 class Question extends Model {
   static associate(models) {
     Question.belongsTo(models.SetQuestion, { foreignKey: 'setQuestionId' });
-    Question.belongsTo(models.Hashtag, { foreignKey: 'hastagId' });
+    Question.belongsTo(models.Hashtag, { foreignKey: 'hastagId', as: 'hashtag' });
     Question.hasMany(models.Choice, { foreignKey: 'questionId', as: 'choiceList' });
     Question.hasMany(models.AnswerRecord, { foreignKey: 'questionId' });
   }
