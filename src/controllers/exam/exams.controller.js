@@ -38,7 +38,7 @@ module.exports = {
 
   getDetailExam: async (req, res, next) => {
     try {
-      const userId = req?.payload?.userId || -1;
+      const userId = req?.payload?.user?.id || -1;
       const { id } = req.params;
 
       const exam = await db.Exam.findOne({
@@ -103,7 +103,7 @@ module.exports = {
 
   examTaking: async (req, res, next) => {
     try {
-      const userId = req?.payload?.userId || -1;
+      const userId = req?.payload?.user?.id || -1;
       const { examId, partIds } = req.body;
 
       // task create an exam taking
@@ -248,6 +248,184 @@ module.exports = {
       res.status(200).json({
         status: 200,
         ...examName[0][0],
+        data: contentTaking,
+      });
+    } catch (err) {
+      next(err);
+    }
+  },
+
+  saveAnswer: async (req, res, next) => {
+    try {
+      const userId = req?.payload?.user?.id;
+      const examTakingId = req?.params?.id;
+      const { timeFinished, listAnswer } = req.body;
+
+      if (!userId) {
+        throw createError.NotFound('Unidentified user');
+      }
+
+      // Score the answer
+      const numsOfCorrectQn = await db.Choice.count({
+        where: {
+          id: {
+            [Op.in]: listAnswer.map((answer) => answer.choiceId),
+          },
+          key: true,
+        },
+      });
+
+      // create multiple answer record
+      try {
+        await db.AnswerRecord.bulkCreate(
+          listAnswer.map((answer) => ({
+            examTakingId,
+            ...answer,
+          })),
+        );
+      } catch (err) {
+        throw createError[400](err.name);
+      }
+
+      // update exam taking
+      db.ExamTaking.update(
+        {
+          timeFinished,
+          numsOfCorrectQn,
+        },
+        {
+          where: {
+            id: examTakingId,
+          },
+        },
+      );
+
+      res.status(200).json({
+        status: 200,
+        message: 'Answer list has been recorded!',
+      });
+    } catch (err) {
+      next(err);
+    }
+  },
+
+  getResultExam: async (req, res, next) => {
+    try {
+      const examTakingId = req?.params?.examTakingId;
+
+      // get name exam and exam series
+      const examName = await sequelize.query(`
+        SELECT exam.name AS "examName", exam_series.name AS "examSeriesName"
+        FROM exam_taking, exam, exam_series
+        WHERE exam_taking.exam_id = exam.exam_id
+        AND exam.exam_series_id = exam_series.exam_series_id
+        AND exam_taking.exam_taking_id = ${examTakingId}`);
+
+      // get info of examtaking
+      const examTakingInfo = await db.ExamTaking.findOne({
+        where: {
+          id: examTakingId,
+        },
+        attributes: [['time_finished', 'duration'], ['updated_at', 'date'], 'totalQuestion', 'numsOfCorrectQn'],
+      });
+
+      // get list partId
+      let listPartId = await db.PartOption.findAll({
+        where: {
+          examTakingId,
+        },
+        attributes: ['partId'],
+      });
+
+      listPartId = listPartId.map((object) => object.partId);
+
+      // get content and result of exam
+      const contentTaking = await db.Part.findAll({
+        where: {
+          id: {
+            [Op.in]: listPartId,
+          },
+        },
+        attributes: ['id', ['name', 'part']],
+        include: [
+          {
+            model: db.SetQuestion,
+            as: 'setQuestionList',
+            attributes: ['id', 'title', 'audio'],
+            include: [
+              // include model Side
+              {
+                model: db.Side,
+                as: 'side',
+                attributes: ['seq', ['paragraph', 'content']],
+              },
+              // include model Question
+              {
+                model: db.Question,
+                as: 'setQuestion',
+                attributes: {
+                  exclude: ['setQuestionId', 'hastagId', 'level', 'createdAt', 'updatedAt'],
+                  include: [
+                    [
+                      sequelize.literal(
+                        `(SELECT check_answer(${examTakingId}, "setQuestionList->setQuestion"."question_id" ))`,
+                      ),
+                      'userAnswer',
+                    ],
+                  ],
+                },
+                include: [
+                  // include model Choice
+                  {
+                    model: db.Choice,
+                    as: 'choiceList',
+                    attributes: ['id', ['order_choice', 'seq'], ['name', 'content'], 'key'],
+                  },
+                  // include model hashtag
+                  {
+                    model: db.Hashtag,
+                    as: 'hashtag',
+                    attributes: ['name'],
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+        order: [
+          // order in model Part
+          [['numeric_order', 'ASC']],
+          // order in model setQuestion
+          [{ model: db.SetQuestion, as: 'setQuestionList' }, 'numeric_order', 'ASC'],
+          // order in model Side
+          [{ model: db.SetQuestion, as: 'setQuestionList' }, { model: db.Side, as: 'side' }, 'seq', 'ASC'],
+          // order in model Question
+          [
+            { model: db.SetQuestion, as: 'setQuestionList' },
+            { model: db.Question, as: 'setQuestion' },
+            'order_qn',
+            'ASC',
+          ],
+          // order in model Choice
+          [
+            { model: db.SetQuestion, as: 'setQuestionList' },
+            { model: db.Question, as: 'setQuestion' },
+            { model: db.Choice, as: 'choiceList' },
+            'order_choice',
+            'ASC',
+          ],
+        ],
+      });
+
+      res.status(200).json({
+        status: 200,
+        ...examName[0][0],
+        duration: examTakingInfo.dataValues.duration,
+        date: examTakingInfo.dataValues.date,
+        result: {
+          total: examTakingInfo.dataValues.totalQuestion,
+          correct: examTakingInfo.dataValues.numsOfCorrectQn,
+        },
         data: contentTaking,
       });
     } catch (err) {
