@@ -372,6 +372,12 @@ module.exports = {
                       ),
                       'userAnswer',
                     ],
+                    [
+                      sequelize.literal(
+                        `(SELECT choice_id FROM answer_record WHERE exam_taking_id = ${examTakingId} and question_id = "setQuestionList->setQuestion"."question_id")`,
+                      ),
+                      'userChoiceId',
+                    ],
                   ],
                 },
                 include: [
