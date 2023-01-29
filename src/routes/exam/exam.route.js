@@ -12,13 +12,25 @@ router.post('/finished-taking/:id', verifyAccessToken, examsController.saveAnswe
 // [GET] /exams/exam-taking/:id    -> get content of exam
 router.get('/exam-taking/:id', examsController.getExamTaking);
 
-// [GET] /exams/:id     -> get detail an exam
-router.get('/:id', checkLogin, examsController.getDetailExam);
+// [GET] /exams/:id     -> get an exam
+router.get('/:id', checkLogin, examsController.getExam); /* query only information of exam*/
+
+// [GET] /exams/detail/:id  -> get detail an exam
+router.get('/detail/:id', examsController.getDetailExam); /* query nested multiple child model*/
 
 // [GET]  /exams   ->   get all exam
 router.get('/', checkLogin, examsController.getAllExam);
 
+// [POST] /exams/create -> create an exam
+router.post('/create', examsController.createExam);
+
 // [POST] /exams/taking     -> taking an exam
 router.post('/taking', verifyAccessToken, examsController.examTaking);
+
+// [PUT] /exams/update/:id  -> update an exam
+router.put('/update/:id', examsController.updateExam);
+
+// [DELETE] /exams/delete/:id   -> delete an exam
+router.delete('/delete/:id', examsController.deleteExam);
 
 module.exports = router;
