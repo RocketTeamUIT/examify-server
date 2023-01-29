@@ -240,6 +240,21 @@ module.exports = {
     }
   },
 
+  deleteExam: async (req, res, next) => {
+    try {
+      const examId = req?.params?.id;
+
+      // being processed...
+
+      res.status(200).json({
+        status: 200,
+        data: 'deleted an exam success!',
+      });
+    } catch (err) {
+      next(err);
+    }
+  },
+
   examTaking: async (req, res, next) => {
     try {
       const userId = req?.payload?.user?.id || -1;
@@ -577,4 +592,32 @@ module.exports = {
       next(err);
     }
   },
+
+  // getAllExamTaking: async (req, res, next) => {
+  //   try {
+  //     const userId = req?.payload?.user?.id || 1;
+
+  //     const historyTaking = await db.ExamTaking.findAll({
+  //       where: {
+  //         userId,
+  //       },
+  //       include: [
+  //         {
+  //           model: db.Exam,
+  //           as: 'exam',
+  //           attributes: ['id', 'name'],
+  //         },
+
+  //         [db.PartOption.Part],
+  //       ],
+  //     });
+
+  //     res.status(200).json({
+  //       status: 200,
+  //       data: historyTaking,
+  //     });
+  //   } catch (err) {
+  //     next(err);
+  //   }
+  // },
 };
