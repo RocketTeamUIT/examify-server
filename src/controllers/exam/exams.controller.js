@@ -36,7 +36,7 @@ module.exports = {
     }
   },
 
-  getDetailExam: async (req, res, next) => {
+  getExam: async (req, res, next) => {
     try {
       const userId = req?.payload?.user?.id || -1;
       const { id } = req.params;
@@ -95,6 +95,160 @@ module.exports = {
       res.status(200).json({
         status: 200,
         data: exam,
+      });
+    } catch (err) {
+      next(err);
+    }
+  },
+
+  getDetailExam: async (req, res, next) => {
+    try {
+      const examId = req?.params?.id;
+
+      const examData = await db.Exam.findOne({
+        where: {
+          id: examId,
+        },
+        include: [
+          {
+            model: db.Part,
+            as: 'parts',
+            include: [
+              {
+                model: db.SetQuestion,
+                as: 'setQuestionList',
+                include: [
+                  {
+                    model: db.Question,
+                    as: 'setQuestion',
+                    include: [
+                      {
+                        model: db.Choice,
+                        as: 'choiceList',
+                      },
+                      {
+                        model: db.Hashtag,
+                        as: 'hashtag',
+                      },
+                    ],
+                  },
+                  {
+                    model: db.Side,
+                    as: 'side',
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+        order: [
+          // order in model Part
+          [{ model: db.Part, as: 'parts' }, 'numeric_order', 'ASC'],
+          // order in model setQuestion
+          [{ model: db.Part, as: 'parts' }, { model: db.SetQuestion, as: 'setQuestionList' }, 'numeric_order', 'ASC'],
+          // order in model Side
+          [
+            { model: db.Part, as: 'parts' },
+            { model: db.SetQuestion, as: 'setQuestionList' },
+            { model: db.Side, as: 'side' },
+            'seq',
+            'ASC',
+          ],
+          // order in model Question
+          [
+            { model: db.Part, as: 'parts' },
+            { model: db.SetQuestion, as: 'setQuestionList' },
+            { model: db.Question, as: 'setQuestion' },
+            'order_qn',
+            'ASC',
+          ],
+          // order in model Choice
+          [
+            { model: db.Part, as: 'parts' },
+            { model: db.SetQuestion, as: 'setQuestionList' },
+            { model: db.Question, as: 'setQuestion' },
+            { model: db.Choice, as: 'choiceList' },
+            'order_choice',
+            'ASC',
+          ],
+        ],
+      });
+
+      res.status(200).json({
+        status: 200,
+        data: examData,
+      });
+    } catch (err) {
+      next(err);
+    }
+  },
+
+  createExam: async (req, res, next) => {
+    try {
+      const { name, examSeriesId, pointReward, duration, isFullExplanation, hashtag, audio, fileDownload } = req.body;
+
+      const newExam = await db.Exam.create({
+        name,
+        examSeriesId,
+        pointReward,
+        duration,
+        isFullExplanation,
+        hashtag,
+        audio,
+        fileDownload,
+      });
+
+      res.status(200).json({
+        status: 200,
+        message: 'created new an exam success!',
+        data: newExam,
+      });
+    } catch (err) {
+      next(err);
+    }
+  },
+
+  updateExam: async (req, res, next) => {
+    try {
+      const examId = req?.params?.id;
+      const { name, examSeriesId, pointReward, duration, isFullExplanation, hashtag, audio, fileDownload } = req.body;
+
+      await db.Exam.update(
+        {
+          name,
+          examSeriesId,
+          pointReward,
+          duration,
+          isFullExplanation,
+          hashtag,
+          audio,
+          fileDownload,
+        },
+        {
+          where: {
+            id: examId,
+          },
+        },
+      );
+
+      res.status(200).json({
+        status: 200,
+        data: 'updated an exam success!',
+      });
+    } catch (err) {
+      next(err);
+    }
+  },
+
+  deleteExam: async (req, res, next) => {
+    try {
+      const examId = req?.params?.id;
+
+      // being processed...
+
+      res.status(200).json({
+        status: 200,
+        data: 'deleted an exam success!',
       });
     } catch (err) {
       next(err);
@@ -438,4 +592,32 @@ module.exports = {
       next(err);
     }
   },
+
+  // getAllExamTaking: async (req, res, next) => {
+  //   try {
+  //     const userId = req?.payload?.user?.id || 1;
+
+  //     const historyTaking = await db.ExamTaking.findAll({
+  //       where: {
+  //         userId,
+  //       },
+  //       include: [
+  //         {
+  //           model: db.Exam,
+  //           as: 'exam',
+  //           attributes: ['id', 'name'],
+  //         },
+
+  //         [db.PartOption.Part],
+  //       ],
+  //     });
+
+  //     res.status(200).json({
+  //       status: 200,
+  //       data: historyTaking,
+  //     });
+  //   } catch (err) {
+  //     next(err);
+  //   }
+  // },
 };
