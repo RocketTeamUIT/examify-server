@@ -611,6 +611,13 @@ module.exports = {
       });
       const avg_rating = Math.round(parseFloat(avg_rating_query.toJSON().avg_rating) * 10) / 10;
       const rating_count = await db.Rating.count();
+      const popular = await db.Course.findAll({
+        order: [
+          ['participants', 'DESC'],
+          ['avg_rating', 'DESC'],
+        ],
+        limit: 5,
+      });
 
       res.status(200).json({
         status: 200,
@@ -619,6 +626,7 @@ module.exports = {
           learnt_count,
           avg_rating,
           rating_count,
+          popular,
         },
       });
     } catch (err) {
