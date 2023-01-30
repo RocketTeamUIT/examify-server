@@ -26,6 +26,11 @@ Side.init(
       field: 'paragraph',
     },
 
+    numericOrder: {
+      type: DataTypes.INTEGER,
+      field: 'seq',
+    },
+
     createdAt: {
       type: DataTypes.DATE,
       field: 'created_at',

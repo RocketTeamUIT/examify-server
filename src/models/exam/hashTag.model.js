@@ -1,13 +1,13 @@
 const { Model, DataTypes } = require('sequelize');
 const { sequelize } = require('../../config/connectDB');
 
-class Hastag extends Model {
+class Hashtag extends Model {
   static associate(models) {
-    Hastag.hasMany(models.Question, { foreignKey: 'hastagId' });
+    Hashtag.hasMany(models.Question, { foreignKey: 'hashtagId' });
   }
 }
 
-Hastag.init(
+Hashtag.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -33,9 +33,9 @@ Hastag.init(
   },
   {
     sequelize,
-    modelName: 'Hastag',
+    modelName: 'Hashtag',
     tableName: 'hashtag',
   },
 );
 
-module.exports = Hastag;
+module.exports = Hashtag;
