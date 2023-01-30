@@ -382,10 +382,10 @@ module.exports = {
   },
 
   getSetStatistics: async (req, res, next) => {
-    const id = req.params.id || -1;
-    const year = req.query.year || new Date().getFullYear();
-
     try {
+      const id = req.params.id || -1;
+      const year = req.query.year || new Date().getFullYear();
+
       const count = await pool.query(
         `select count(*) count, views, 
         (SELECT COUNT(*) learnt_count FROM learnt_list ll INNER JOIN flashcard f2 ON ll.fc_id = f2.fc_id AND f2.fc_set_id = ${id} AND date_part('year', ll.created_at) = ${year}) 

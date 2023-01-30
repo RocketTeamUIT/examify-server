@@ -9,6 +9,12 @@ router.get('/search', checkLogin, courseController.searchCourse);
 // [GET] /courses/popular?limit=    -> Get top courses popular
 router.get('/popular', checkLogin, courseController.getCoursePopular);
 
+// [GET] get overall statistics of courses
+router.get('/statistics', courseController.getStatistics);
+
+// Get detail statistics
+router.get('/statistics/:id', courseController.getCourseStatistics);
+
 // [POST] /courses/:id/enroll
 router.post('/:id/enroll', verifyAccessToken, courseController.enrrollCourse);
 

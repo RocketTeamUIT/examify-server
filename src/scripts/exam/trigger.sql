@@ -33,7 +33,7 @@ LANGUAGE 'plpgsql';
 CREATE OR REPLACE TRIGGER delete_exam
 	AFTER DELETE ON exam
 	FOR EACH ROW
-	EXECUTE PROCEDURE decrease_total_exam()
+	EXECUTE PROCEDURE decrease_total_exam();
 
 
 -- Function update total_question in exam when create a question
