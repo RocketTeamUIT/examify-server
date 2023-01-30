@@ -14,6 +14,12 @@ const flashcardSetRouter = require('./flashcardSets.route');
 const flashcardRouter = require('./flashcards.route');
 // Exam
 const examRouter = require('./exam/exam.route');
+const examSeriesRouter = require('./exam/examSeries.route');
+const partRouter = require('./exam/part.route');
+const setQuestionRouter = require('./exam/setQuestion.route');
+const questionRouter = require('./exam/question.route');
+const sideRouter = require('./exam/side.route');
+const hashtagRouter = require('./exam/hashtag.route');
 
 function route(app) {
   app.use('/auth', authRouter);
@@ -33,6 +39,12 @@ function route(app) {
   app.use('/flashcards', flashcardRouter);
   // Exam
   app.use('/exams', examRouter);
+  app.use('/examSeries', examSeriesRouter);
+  app.use('/parts', partRouter);
+  app.use('/setQuestions', setQuestionRouter);
+  app.use('/questions', questionRouter);
+  app.use('/sides', sideRouter);
+  app.use('/hashtags', hashtagRouter);
 }
 
 module.exports = route;

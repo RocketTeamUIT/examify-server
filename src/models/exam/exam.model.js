@@ -54,7 +54,7 @@ Exam.init(
     },
 
     hashtag: {
-      type: DataTypes.STRING,
+      type: DataTypes.ARRAY(sequelize.Sequelize.TEXT),
       field: 'hashtag',
     },
 
@@ -66,6 +66,16 @@ Exam.init(
     duration: {
       type: DataTypes.INTEGER,
       field: 'duration',
+    },
+
+    audio: {
+      type: DataTypes.STRING,
+      field: 'audio',
+    },
+
+    fileDownload: {
+      type: DataTypes.STRING,
+      field: 'file_download',
     },
 
     createdAt: {

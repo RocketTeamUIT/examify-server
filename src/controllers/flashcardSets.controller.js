@@ -1,5 +1,7 @@
 const { Op } = require('sequelize');
 const { sequelize } = require('../config/connectDB');
+const pool = require('../config/db');
+const { FlashcardSet, LearntList } = require('../models/index');
 const db = require('../models/index');
 
 module.exports = {
@@ -60,10 +62,10 @@ module.exports = {
       const recent = await sequelize.query(
         `
         SELECT DISTINCT fs.fc_set_id, fs.fc_type_id, type, name, fs.description, words_count, system_belong, access, views, fs.created_by, fs.created_at, fs.updated_at, user_id, MAX(ll.created_at) learnt_time, 
-        (SELECT COUNT(*) learnt_count FROM flashcard_set fs2, flashcard f2, learnt_list ll2 WHERE fs2.fc_set_id = f2.fc_set_id AND f2.fc_id = ll2.fc_id AND user_id = 21 AND fs2.fc_set_id = fs.fc_set_id) 
+        (SELECT COUNT(*) learnt_count FROM flashcard_set fs2, flashcard f2, learnt_list ll2 WHERE fs2.fc_set_id = f2.fc_set_id AND f2.fc_id = ll2.fc_id AND user_id = ${userId} AND fs2.fc_set_id = fs.fc_set_id) 
         FROM flashcard_set fs LEFT JOIN flashcard_type ft ON ft.fc_type_id = fs.fc_type_id 
         INNER JOIN flashcard f ON f.fc_set_id = fs.fc_set_id 
-        INNER JOIN learnt_list ll ON ll.fc_id = f.fc_id AND user_id = 21
+        INNER JOIN learnt_list ll ON ll.fc_id = f.fc_id AND user_id = ${userId}
         GROUP BY fs.fc_set_id, fs.fc_type_id, type, name, fs.description, words_count, system_belong, access, views, fs.created_by, fs.created_at, fs.updated_at, user_id
         ORDER BY MAX(ll.created_at) DESC
         LIMIT 8
@@ -324,6 +326,98 @@ module.exports = {
 
         limit: 8,
       });
+
+      res.status(200).json({
+        data: result,
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  getStatistics: async (req, res, next) => {
+    try {
+      const views = await db.FlashcardSet.findOne({
+        attributes: [[sequelize.fn('sum', sequelize.col('views')), 'total_views']],
+      });
+      const learnt_sets = await pool.query(
+        `select fs.fc_set_id, user_id, count(*) learnt_words FROM learnt_list ll, flashcard f, flashcard_set fs WHERE ll.fc_id = f.fc_id AND f.fc_set_id = fs.fc_set_id GROUP BY fs.fc_set_id, user_id HAVING count(*) = (SELECT COUNT(*) FROM flashcard f2 WHERE f2.fc_set_id = fs.fc_set_id)`,
+      );
+      const learnt_words = await db.LearntList.findOne({
+        attributes: [[sequelize.fn('COUNT', sequelize.col('*')), 'learnt_words']],
+      });
+      const flashcards_count = await db.Flashcard.findOne({
+        attributes: [[sequelize.fn('COUNT', sequelize.col('*')), 'flashcards_count']],
+      });
+      const popular = await db.FlashcardSet.findAll({
+        attributes: Object.keys(db.FlashcardSet.getAttributes()).concat([
+          [
+            sequelize.cast(
+              sequelize.literal(
+                '(SELECT COUNT(*) FROM learnt_list ll INNER JOIN flashcard f ON ll.fc_id = f.fc_id AND "flashcardSet".fc_set_id = f.fc_set_id)',
+              ),
+              'INT',
+            ),
+            'learnt_count',
+          ],
+        ]),
+        order: [['views', 'DESC']],
+        limit: 5,
+      });
+
+      const result = {
+        ...views.toJSON(),
+        ...learnt_words.toJSON(),
+        ...flashcards_count.toJSON(),
+        popular: popular,
+        learnt_count: learnt_sets.rowCount,
+      };
+
+      res.status(200).json({
+        data: result,
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  getSetStatistics: async (req, res, next) => {
+    const id = req.params.id || -1;
+    const year = req.query.year || new Date().getFullYear();
+
+    try {
+      const count = await pool.query(
+        `select count(*) count, views, 
+        (SELECT COUNT(*) learnt_count FROM learnt_list ll INNER JOIN flashcard f2 ON ll.fc_id = f2.fc_id AND f2.fc_set_id = ${id} AND date_part('year', ll.created_at) = ${year}) 
+        from flashcard_set fs, flashcard f where fs.fc_set_id = f.fc_set_id and fs.fc_set_id = ${id} group by views`,
+      );
+
+      const months = await pool.query(
+        `select date_part('month', ll.created_at) as month, count(*) learnt_count from learnt_list ll, flashcard f where ll.fc_id = f.fc_id and date_part('year', ll.created_at) = ${year} and fc_set_id = ${id} group by date_part('month', ll.created_at);`,
+      );
+
+      const users_count = await pool.query(
+        `select count(distinct user_id) users_count from learnt_list ll, flashcard f where f.fc_id = ll.fc_id AND date_part('year', ll.created_at) = ${year} and fc_set_id = ${id};`,
+      );
+
+      const users_learnt_count = await pool.query(
+        `select 1 users_count FROM learnt_list ll, flashcard f WHERE ll.fc_id = f.fc_id AND f.fc_set_id = ${id} AND date_part('year', ll.created_at) = ${year} GROUP BY user_id HAVING count(*) = (SELECT COUNT(*) FROM flashcard f2 WHERE f2.fc_set_id = ${id});`,
+      );
+
+      const result = {};
+      result.months = Array(12)
+        .fill(0)
+        .map((_, i) => i + 1)
+        .map((month) => ({
+          month,
+          learnt_count: parseInt(months.rows.find((value) => String(value.month) === String(month))?.learnt_count || 0),
+        }));
+
+      result.count = parseInt(count.rows[0]?.count || 0);
+      result.views = parseInt(count.rows[0]?.views || 0);
+      result.learnt_count = parseInt(count.rows[0]?.learnt_count || 0);
+      result.users_count = parseInt(users_count.rows[0]?.users_count || 0);
+      result.users_learnt_count = parseInt(users_learnt_count.rowCount || 0);
 
       res.status(200).json({
         data: result,
