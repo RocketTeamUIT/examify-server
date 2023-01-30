@@ -244,7 +244,7 @@ module.exports = {
     try {
       const examId = req?.params?.id;
 
-      // being processed...
+      await sequelize.query(`SELECT fn_delete_exam(${examId})`);
 
       res.status(200).json({
         status: 200,

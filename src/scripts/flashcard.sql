@@ -476,7 +476,7 @@ $$
 				OR 
 				EXISTS (                                                                       
 					SELECT 1 FROM flashcard_set
-					WHERE fc_set_id = arg_fc_set_id AND (created_by = arg_user_id OR access = 'public')
+					WHERE fc_set_id = arg_fc_set_id AND (created_by = arg_user_id OR access = 'public' OR system_belong = TRUE)
 				)
 			THEN true ELSE false 
 		END INTO isAllow;

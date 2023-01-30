@@ -592,4 +592,92 @@ module.exports = {
       next(err);
     }
   },
+
+  getStatistics: async (req, res, next) => {
+    try {
+      const join_count = await db.JoinCourse.count();
+      const learnt_count = (
+        await pool.query(
+          'select c.course_id, jl.student_id, count(*) learnt_count from course c, chapter ch, unit u, lesson l, join_lesson jl where c.course_id = ch.course_id and ch.chapter_id = u.chapter_id and u.unit_id = l.unit_id and l.lesson_id = jl.lesson_id group by c.course_id, jl.student_id having count(*) = c.total_lesson;',
+        )
+      ).rowCount;
+      const avg_rating_query = await db.Course.findOne({
+        attributes: [[sequelize.fn('avg', sequelize.col('avg_rating')), 'avg_rating']],
+        where: {
+          avg_rating: {
+            [Op.not]: 0,
+          },
+        },
+      });
+      const avg_rating = Math.round(parseFloat(avg_rating_query.toJSON().avg_rating) * 10) / 10;
+      const rating_count = await db.Rating.count();
+      const popular = await db.Course.findAll({
+        order: [
+          ['participants', 'DESC'],
+          ['avg_rating', 'DESC'],
+        ],
+        limit: 5,
+      });
+
+      res.status(200).json({
+        status: 200,
+        data: {
+          join_count,
+          learnt_count,
+          avg_rating,
+          rating_count,
+          popular,
+        },
+      });
+    } catch (err) {
+      next(err);
+    }
+  },
+
+  getCourseStatistics: async (req, res, next) => {
+    try {
+      const id = req.params.id || -1;
+      const year = req.query.year || new Date().getFullYear();
+
+      const months = await pool.query(
+        `SELECT COUNT(*) join_count, DATE_PART('month', created_at) as month FROM join_course WHERE course_id = ${id} AND DATE_PART('year', created_at) = ${year} GROUP BY DATE_PART('month', created_at)`,
+      );
+
+      const completed_months = await pool.query(
+        `SELECT COUNT(*) completed_count, learnt_month as month FROM (select student_id, count(*) learnt_count, MAX(DATE_PART('month', jl.created_at)) learnt_month from chapter ch, unit u, lesson l, join_lesson jl where ch.course_id = ${id} and ch.chapter_id = u.chapter_id and u.unit_id = l.unit_id and l.lesson_id = jl.lesson_id AND DATE_PART('year', jl.created_at) = ${year} group by student_id having count(*) = (SELECT total_lesson FROM course WHERE course_id = ${id})) as TEMP GROUP BY month;`,
+      );
+
+      const rating = await pool.query(
+        `select avg(rate) avg_rating, count(*) rating_count from rating where date_part('year', updated_at) = ${year} and course_id = ${id}`,
+      );
+
+      const result = {};
+      result.months = Array(12)
+        .fill(0)
+        .map((_, i) => i + 1)
+        .map((month) => ({
+          month,
+          join_count: parseInt(months.rows.find((value) => String(value.month) === String(month))?.join_count || 0),
+          completed_count: parseInt(
+            completed_months.rows.find((value) => String(value.month) === String(month))?.completed_count || 0,
+          ),
+        }));
+
+      result.total_join_count = result.months.reduce((prev, curr) => {
+        return prev + curr.join_count;
+      }, 0);
+      result.total_completed_count = result.months.reduce((prev, curr) => {
+        return prev + curr.completed_count;
+      }, 0);
+      result.avg_rating = Math.round(parseInt(rating.rows[0]?.avg_rating || 0) * 10) / 10;
+      result.rating_count = rating.rows[0]?.rating_count || 0;
+
+      res.status(200).json({
+        status: 200,
+        data: result,
+      });
+    } catch (err) {
+      next(err);
+    }
+  },
 };
