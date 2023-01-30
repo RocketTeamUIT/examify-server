@@ -310,7 +310,7 @@ LANGUAGE plpgsql;
 
 
 -- Trigger update numeric order when delete part
-CREATE OR REPLACE TRIGGER numeric_order_part_update
+CREATE OR REPLACE TRIGGER numeric_order_part_delete
 	AFTER DELETE ON part
 	FOR EACH ROW
 	EXECUTE PROCEDURE fn_num_order_part_delete();
@@ -408,7 +408,106 @@ LANGUAGE plpgsql;
 
 
 -- Trigger update numeric order when delete Set Question
-CREATE OR REPLACE TRIGGER numeric_order_set_question_update
+CREATE OR REPLACE TRIGGER numeric_order_set_question_delete
 	AFTER DELETE ON set_question
 	FOR EACH ROW
 	EXECUTE PROCEDURE fn_num_order_set_question_delete();
+
+
+
+
+	-- Function update number order in Side
+CREATE OR REPLACE FUNCTION fn_num_order_side_update() RETURNS Trigger AS 
+$$
+DECLARE var_new_num int;
+DECLARE var_old_num int;
+DECLARE var_old_side_id int;
+DECLARE var_old_set_question_id int;
+DECLARE var_record RECORD;
+	BEGIN
+		var_new_num := NEW.seq;
+		var_old_num := OLD.seq;
+		var_old_side_id := OLD.side_id;
+		var_old_set_question_id := OLD.set_question_id;
+		
+		IF EXISTS(SELECT * FROM side WHERE seq = var_new_num AND set_question_id = var_old_set_question_id) THEN
+-- 			Create temp set question:
+			INSERT INTO set_question(set_question_id, title, numeric_order) VALUES(-1, '', 0);
+-- 			Handle new_num > old_num:
+			IF var_new_num > var_old_num THEN 
+				UPDATE side SET set_question_id = -1 WHERE side_id = var_old_side_id;
+				
+				FOR var_record IN 
+					SELECT side_id 
+					FROM side
+					WHERE set_question_id = var_old_set_question_id
+					AND seq > var_old_num 
+					AND seq <= var_new_num
+					ORDER BY seq ASC
+				LOOP
+					UPDATE side SET seq = seq - 1 WHERE side_id = var_record.side_id;
+				END LOOP;
+			ELSE 
+-- 				Handle new_num < old_num:
+				IF var_new_num < var_old_num THEN 
+					UPDATE side SET set_question_id = -1 WHERE side_id = var_old_side_id;
+					
+					FOR var_record IN 
+						SELECT side_id 
+						FROM side
+						WHERE set_question_id = var_old_set_question_id
+						AND seq < var_old_num 
+						AND seq >= var_new_num
+						ORDER BY seq DESC
+					LOOP
+						UPDATE side SET seq = seq + 1 WHERE side_id = var_record.side_id;
+					END LOOP;
+				END IF;
+			END IF;
+-- 			Update:
+			UPDATE side SET seq = var_new_num, set_question_id = var_old_set_question_id WHERE side_id = var_old_side_id;
+-- 			Delete temp set question:
+			DELETE FROM set_question WHERE set_question_id = -1;
+		END IF;
+		RAISE NOTICE 'updated numeric order of side successfull!';
+	RETURN NULL;
+	END;
+$$ 
+LANGUAGE plpgsql;
+
+
+-- Trigger update numeric order when update Side
+CREATE OR REPLACE TRIGGER numeric_order_side_update
+	BEFORE UPDATE OF seq ON side
+	FOR EACH ROW
+	WHEN (pg_trigger_depth() = 0)
+	EXECUTE PROCEDURE fn_num_order_side_update();
+
+
+
+-- Function update number order in Side
+CREATE OR REPLACE FUNCTION fn_num_order_side_delete() RETURNS Trigger AS 
+$$
+DECLARE var_recode RECORD;
+	BEGIN
+		FOR var_recode IN 
+			SELECT side_id
+			FROM side 
+			WHERE set_question_id = OLD.set_question_id
+			AND seq > OLD.seq
+			ORDER BY seq ASC
+		 LOOP
+		 	UPDATE side SET seq = seq - 1 WHERE side_id = var_recode.side_id;
+		END LOOP;
+		RAISE NOTICE 'Updated numeric_order in Side!';
+	RETURN NULL;
+	END;
+$$ 
+LANGUAGE plpgsql;
+
+
+-- Trigger update numeric order when delete Side
+CREATE OR REPLACE TRIGGER numeric_order_side_delete
+	AFTER DELETE ON side
+	FOR EACH ROW
+	EXECUTE PROCEDURE fn_num_order_side_delete();
