@@ -511,3 +511,101 @@ CREATE OR REPLACE TRIGGER numeric_order_side_delete
 	AFTER DELETE ON side
 	FOR EACH ROW
 	EXECUTE PROCEDURE fn_num_order_side_delete();
+
+
+
+-- Function update number order in Question
+CREATE OR REPLACE FUNCTION fn_num_order_question_update() RETURNS Trigger AS 
+$$
+DECLARE var_new_num int;
+DECLARE var_old_num int;
+DECLARE var_old_question_id int;
+DECLARE var_old_set_question_id int;
+DECLARE var_record RECORD;
+	BEGIN
+		var_new_num := NEW.order_qn;
+		var_old_num := OLD.order_qn;
+		var_old_question_id := OLD.question_id;
+		var_old_set_question_id := OLD.set_question_id;
+		
+		IF EXISTS(SELECT * FROM question WHERE order_qn = var_new_num AND set_question_id = var_old_set_question_id) THEN
+-- 			Create temp set question:
+			INSERT INTO set_question(set_question_id, title, numeric_order) VALUES(-1, '', 0);
+-- 			Handle new_num > old_num:
+			IF var_new_num > var_old_num THEN 
+				UPDATE question SET set_question_id = -1 WHERE question_id = var_old_question_id;
+				
+				FOR var_record IN 
+					SELECT question_id 
+					FROM question
+					WHERE set_question_id = var_old_set_question_id
+					AND order_qn > var_old_num 
+					AND order_qn <= var_new_num
+					ORDER BY order_qn ASC
+				LOOP
+					UPDATE question SET order_qn = order_qn - 1 WHERE question_id = var_record.question_id;
+				END LOOP;
+			ELSE 
+-- 				Handle new_num < old_num:
+				IF var_new_num < var_old_num THEN 
+					UPDATE question SET set_question_id = -1 WHERE question_id = var_old_question_id;
+					
+					FOR var_record IN 
+						SELECT question_id 
+						FROM question
+						WHERE set_question_id = var_old_set_question_id
+						AND order_qn < var_old_num 
+						AND order_qn >= var_new_num
+						ORDER BY order_qn DESC
+					LOOP
+						UPDATE question SET order_qn = order_qn + 1 WHERE question_id = var_record.question_id;
+					END LOOP;
+				END IF;
+			END IF;
+-- 			Update:
+			UPDATE question SET order_qn = var_new_num, set_question_id = var_old_set_question_id WHERE question_id = var_old_question_id;
+-- 			Delete temp set question:
+			DELETE FROM set_question WHERE set_question_id = -1;
+		END IF;
+		RAISE NOTICE 'updated numeric order of question successfull!';
+	RETURN NULL;
+	END;
+$$ 
+LANGUAGE plpgsql;
+
+
+-- Trigger update numeric order when update Question
+CREATE OR REPLACE TRIGGER numeric_order_question_update
+	BEFORE UPDATE OF order_qn ON question 
+	FOR EACH ROW
+	WHEN (pg_trigger_depth() = 0)
+	EXECUTE PROCEDURE fn_num_order_question_update();
+
+
+
+-- Function update number order in Question
+CREATE OR REPLACE FUNCTION fn_num_order_question_delete() RETURNS Trigger AS 
+$$
+DECLARE var_recode RECORD;
+	BEGIN
+		FOR var_recode IN 
+			SELECT question_id
+			FROM question 
+			WHERE set_question_id = OLD.set_question_id
+			AND order_qn > OLD.order_qn
+			ORDER BY order_qn ASC
+		 LOOP
+		 	UPDATE question SET order_qn = order_qn - 1 WHERE question_id = var_recode.question_id;
+		END LOOP;
+		RAISE NOTICE 'Updated numeric_order in Question!';
+	RETURN NULL;
+	END;
+$$ 
+LANGUAGE plpgsql;
+
+
+-- Trigger update numeric order when delete Question
+CREATE OR REPLACE TRIGGER numeric_order_question_delete
+	AFTER DELETE ON question
+	FOR EACH ROW
+	EXECUTE PROCEDURE fn_num_order_question_delete();
