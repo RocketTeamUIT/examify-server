@@ -1,3 +1,4 @@
+const { sequelize } = require('../../config/connectDB');
 const db = require('../../models/index');
 
 module.exports = {
@@ -81,7 +82,7 @@ module.exports = {
     try {
       const examSeriesId = req?.params?.id;
 
-      // being processed...
+      await sequelize.query(`SELECT fn_delete_exam_series(${examSeriesId})`);
 
       res.status(200).json({
         status: 200,
