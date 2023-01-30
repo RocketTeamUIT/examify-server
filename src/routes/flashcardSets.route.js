@@ -15,6 +15,12 @@ router.get('/my', checkLogin, flashcardSetController.getMyFlashcard);
 // Search user to share flashcard set
 router.get('/search', verifyAccessToken, flashcardSetController.searchSharePerson);
 
+// Get flashcard statistics
+router.get('/statistics', flashcardSetController.getStatistics);
+
+// Get flashcard set statistics
+router.get('/statistics/:id', flashcardSetController.getSetStatistics);
+
 // Get flashcard set detail
 router.get('/:id', checkLogin, flashcardSetController.getFlashcardSetDetail);
 
