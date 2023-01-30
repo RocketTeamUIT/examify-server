@@ -99,3 +99,19 @@ module.exports = {
       next(err);
     }
   },
+
+  deletePart: async (req, res, next) => {
+    try {
+      const partId = await req?.params?.id;
+
+      await sequelize.query(`SELECT fn_delete_part(${partId})`);
+
+      res.status(200).json({
+        status: 200,
+        data: 'deleted a part success!',
+      });
+    } catch (err) {
+      next(err);
+    }
+  },
+};
