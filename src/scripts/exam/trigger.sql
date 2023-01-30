@@ -286,3 +286,31 @@ CREATE OR REPLACE TRIGGER numeric_order_part_update
 	WHEN (pg_trigger_depth() = 0)
 	EXECUTE PROCEDURE fn_num_order_part_update();
 
+
+
+-- Function update number order in Part
+CREATE OR REPLACE FUNCTION fn_num_order_part_delete() RETURNS Trigger AS 
+$$
+DECLARE var_recode RECORD;
+	BEGIN
+		FOR var_recode IN 
+			SELECT part_id
+			FROM part 
+			WHERE exam_id = OLD.exam_id
+			AND numeric_order > OLD.numeric_order
+			ORDER BY numeric_order ASC
+		 LOOP
+		 	UPDATE part SET numeric_order = numeric_order - 1 WHERE part_id = var_recode.part_id;
+		END LOOP;
+		RAISE NOTICE 'Updated numeric_order in Part!';
+	RETURN NULL;
+	END;
+$$ 
+LANGUAGE plpgsql;
+
+
+-- Trigger update numeric order when delete part
+CREATE OR REPLACE TRIGGER numeric_order_part_update
+	AFTER DELETE ON part
+	FOR EACH ROW
+	EXECUTE PROCEDURE fn_num_order_part_delete();
