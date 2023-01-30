@@ -109,7 +109,7 @@ module.exports = {
       setQuestionId,
       name,
       level,
-      hastagId: hashtagId,
+      hashtagId,
       explain,
       order: numericOrder,
     });
