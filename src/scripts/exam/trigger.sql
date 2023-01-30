@@ -216,3 +216,73 @@ CREATE OR REPLACE TRIGGER auto_create_user_to_role
 	AFTER INSERT ON users
 	FOR EACH ROW
 	EXECUTE PROCEDURE fn_create_a_role_user();
+
+
+
+-- Function update number order in Part
+CREATE OR REPLACE FUNCTION fn_num_order_part_update() RETURNS Trigger AS 
+$$
+DECLARE var_new_num int;
+DECLARE var_old_num int;
+DECLARE var_old_part_id int;
+DECLARE var_old_exam_id int;
+DECLARE var_record RECORD;
+	BEGIN
+		var_new_num := NEW.numeric_order;
+		var_old_num := OLD.numeric_order;
+		var_old_part_id := OLD.part_id;
+		var_old_exam_id := OLD.exam_id;
+		
+		IF EXISTS(SELECT * FROM part WHERE numeric_order = var_new_num AND exam_id = var_old_exam_id) THEN
+-- 			Create temp Exam:
+			INSERT INTO exam(exam_id, name) VALUES(-1, '');
+-- 			Handle new_num > old_num:
+			IF var_new_num > var_old_num THEN 
+				UPDATE part SET exam_id = -1 WHERE part_id = var_old_part_id;
+				
+				FOR var_record IN 
+					SELECT part_id 
+					FROM part
+					WHERE exam_id = var_old_exam_id
+					AND numeric_order > var_old_num 
+					AND numeric_order <= var_new_num
+					ORDER BY numeric_order ASC
+				LOOP
+					UPDATE part SET numeric_order = numeric_order - 1 WHERE part_id = var_record.part_id;
+				END LOOP;
+			ELSE 
+-- 				Handle new_num < old_num:
+				IF var_new_num < var_old_num THEN 
+					UPDATE part SET exam_id = -1 WHERE part_id = var_old_part_id;
+					
+					FOR var_record IN 
+						SELECT part_id 
+						FROM part
+						WHERE exam_id = var_old_exam_id
+						AND numeric_order < var_old_num 
+						AND numeric_order >= var_new_num
+						ORDER BY numeric_order DESC
+					LOOP
+						UPDATE part SET numeric_order = numeric_order + 1 WHERE part_id = var_record.part_id;
+					END LOOP;
+				END IF;
+			END IF;
+-- 			Update:
+			UPDATE part SET numeric_order = var_new_num, exam_id = var_old_exam_id WHERE part_id = var_old_part_id;
+-- 			Delete temp Exam:
+			DELETE FROM exam WHERE exam_id = -1;
+		END IF;
+		RAISE NOTICE 'updated numeric order of part successfull!';
+	RETURN NULL;
+	END;
+$$ 
+LANGUAGE plpgsql;
+
+
+-- Trigger update numeric order when update Part
+CREATE OR REPLACE TRIGGER numeric_order_part_update
+	BEFORE UPDATE OF numeric_order ON part
+	FOR EACH ROW
+	WHEN (pg_trigger_depth() = 0)
+	EXECUTE PROCEDURE fn_num_order_part_update();
+
