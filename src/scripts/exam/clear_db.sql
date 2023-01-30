@@ -4,6 +4,7 @@ DROP TABLE question;
 DROP TABLE hashtag;
 DROP TABLE side;
 DROP TABLE set_question;
+DROP TABLE part_option;
 DROP TABLE part;
 DROP TABLE exam_taking;
 DROP TABLE exam;
