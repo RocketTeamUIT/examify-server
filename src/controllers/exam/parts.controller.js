@@ -78,7 +78,7 @@ module.exports = {
       const maxNumOrder = await sequelize.query(`
         SELECT numeric_order AS "max_num" 
         FROM part 
-        WHERE exam_id = 1 
+        WHERE exam_id = ${examId} 
         ORDER BY numeric_order DESC
         LIMIT 1`);
 
