@@ -1,3 +1,4 @@
+const Op = require('sequelize').Op;
 const db = require('../../models/index');
 
 module.exports = {
@@ -51,9 +52,10 @@ module.exports = {
 
   updateHashtag: async (req, res, next) => {
     try {
+      const hashtagId = req?.params?.id;
       const { name } = req.body;
 
-      await db.Hashtag.update({ name });
+      await db.Hashtag.update({ name }, { where: { id: hashtagId } });
 
       res.status(200).json({
         status: 200,
@@ -68,18 +70,20 @@ module.exports = {
     try {
       const hashtagId = req?.params?.id;
 
-      // update reference of question refer to default hashtag.
+      // delete reference of question refer to hashtag.
       await db.Question.update(
         {
-          hashtagId: 0 /*The "0" number is default ID of hashtag.*/,
+          hashtagId: null,
         },
         {
-          where: hashtagId,
+          where: {
+            hashtagId,
+          },
         },
       );
 
       //  delete hashtag
-      await db.Hashtag.delete({
+      await db.Hashtag.destroy({
         where: {
           id: hashtagId,
         },
