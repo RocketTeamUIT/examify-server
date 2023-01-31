@@ -65,7 +65,9 @@ module.exports = {
           author,
         },
         {
-          id: examSeriesId,
+          where: {
+            id: examSeriesId,
+          },
         },
       );
 

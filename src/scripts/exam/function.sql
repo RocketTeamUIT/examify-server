@@ -130,7 +130,7 @@ DECLARE var_recode RECORD;
 		FOR var_recode IN 
 			SELECT part_id
 			FROM part
-			WHERE exam.exam_id = arg_exam_id
+			WHERE part.exam_id = arg_exam_id
 		 LOOP
 			PERFORM fn_delete_part(var_recode.part_id);
 		END LOOP;
@@ -155,7 +155,7 @@ DECLARE var_recode RECORD;
 		FOR var_recode IN 
 			SELECT exam_id
 			FROM exam
-			WHERE exam.exam_series_id = exam_series_id
+			WHERE exam.exam_series_id = arg_exam_series_id
 		 LOOP
 			PERFORM fn_delete_exam(var_recode.exam_id);
 		END LOOP;
