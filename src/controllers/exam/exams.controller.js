@@ -492,6 +492,7 @@ module.exports = {
       });
 
       listPartId = listPartId.map((object) => object.partId);
+      console.log('check: ', listPartId);
 
       // get content and result of exam
       const contentTaking = await db.Part.findAll({
@@ -587,6 +588,99 @@ module.exports = {
           correct: examTakingInfo.dataValues.numsOfCorrectQn,
         },
         data: contentTaking,
+      });
+    } catch (err) {
+      next(err);
+    }
+  },
+
+  getExamTaking2: async (req, res, next) => {
+    try {
+      const { examId, partIds } = req.query;
+
+      const examInfo = await db.Exam.findOne({
+        where: {
+          id: examId,
+        },
+        attributes: [['name', 'examName'], 'audio'],
+        include: [
+          {
+            model: db.ExamSeries,
+          },
+        ],
+        raw: true,
+        nest: true,
+      });
+
+      const questionListGrByPart = await db.Part.findAll({
+        where: {
+          id: {
+            [Op.in]: partIds,
+          },
+        },
+        attributes: ['id', ['name', 'part']],
+        include: [
+          {
+            model: db.SetQuestion,
+            as: 'setQuestionList',
+            attributes: ['id', 'title', 'audio'],
+            include: [
+              // include model Side
+              {
+                model: db.Side,
+                as: 'side',
+                attributes: ['seq', ['paragraph', 'content']],
+              },
+              // include model Question
+              {
+                model: db.Question,
+                as: 'setQuestion',
+                attributes: ['id', ['order_qn', 'seq'], 'name'],
+                include: [
+                  // include model Choice
+                  {
+                    model: db.Choice,
+                    as: 'choiceList',
+                    attributes: ['id', ['order_choice', 'seq'], ['name', 'content']],
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+        order: [
+          // order in model Part
+          [['numeric_order', 'ASC']],
+          // order in model setQuestion
+          [{ model: db.SetQuestion, as: 'setQuestionList' }, 'numeric_order', 'ASC'],
+          // order in model Side
+          [{ model: db.SetQuestion, as: 'setQuestionList' }, { model: db.Side, as: 'side' }, 'seq', 'ASC'],
+          // order in model Question
+          [
+            { model: db.SetQuestion, as: 'setQuestionList' },
+            { model: db.Question, as: 'setQuestion' },
+            'order_qn',
+            'ASC',
+          ],
+          // order in model Choice
+          [
+            { model: db.SetQuestion, as: 'setQuestionList' },
+            { model: db.Question, as: 'setQuestion' },
+            { model: db.Choice, as: 'choiceList' },
+            'order_choice',
+            'ASC',
+          ],
+        ],
+      });
+
+      // Refactor object
+      const info = { ...examInfo, examSeriesName: examInfo.ExamSery.name };
+      delete info['ExamSery'];
+
+      res.status(200).json({
+        status: 200,
+        ...info,
+        data: questionListGrByPart,
       });
     } catch (err) {
       next(err);

@@ -1411,245 +1411,33 @@ insert into side (set_question_id, paragraph, seq) values (42, 'https://lh6.goog
 insert into side (set_question_id, paragraph, seq) values (43, 'https://study4.com/media/tez_media1/img/ets_toeic_2022_test_1_65_67.png', 1);
 insert into side (set_question_id, paragraph, seq) values (53, 'https://study4.com/media/tez_media1/img/ets_toeic_2022_test_1_68_70.png', 1);
 insert into side (set_question_id, paragraph, seq) values (54, 'https://study4.com/media/tez_media1/img/ets_toeic_2022_test_1_98_100.png', 1);
-insert into side (set_question_id, paragraph, seq) values (85, 'NOTICE
-To continue providing the highest level of ----- (131) to our corporate tenants, we have scheduled the south lobby restrooms for maintenance this weekend, May 13 and May 14. ----- (132) this time, the restrooms will be out of order, so tenants and their guests should instead use the facilities in the north lobby.
-We ----- (133) for any inconvenience this might cause. -----(134).
-Denville Property Management Partners', 1);
-insert into side (set_question_id, paragraph, seq) values (86, 'I recently received a last-minute invitation to a formal dinner. I bought a suit and needed it tailored as -----(135) as possible. A friend suggested that I use Antonio`s Tailoring Shop in downtown Auckland. When I met Antonio, he gave me his full attention ----- (136) his shop was busy. He took the time to listen to me and carefully noted all my measurements. He then explained all the tailoring costs up front and assured me that he could have my suit ready in three days, but he had it done in two! ----- (137).
-Antonio has run his shop for over 30 years, and his experience really shows. He is a ----- (138) tailor.
-I highly recommend him.
-Jim Kestren, Auckland', 1);
-insert into side (set_question_id, paragraph, seq) values (87, 'Dear Director Yoshida,
-Thank you for your school`s interest in visiting our farm next month. Please note that children must be at least six years old to visit and tour the farm.-----(139). I have enclosed a list of the ----- ( 140) activities available for our young visitors. Two of these ----- (141) must be scheduled in advance. They are a cheese-making class and an introduction to beekeeping. Both are very popular with our visitors.
-Please let ----- (142) know your selection by early next week. I look forward to welcoming your group soon!
-Sincerely,
-Annabel Romero, Coordinator
-Merrytree Family Farm', 1);
-insert into side (set_question_id, paragraph, seq) values (88, 'To: Lakshmi Aiyar
-From: info@healthonity.com
-Date: February 8
-Subject: Healthonity Dental
-
-Dear Ms. Aiyar,
-
-We, the dental health professionals of the Healthonity Dental Center, are ----- (143) to introduce our just-opened practice. We aim to provide access to the largest team of dental specialists in the region. On our Web site, you can see a comprehensive list of the procedures we offer. ----- (144). The members of our practice share a passion for helping people maintain beautiful and healthy smiles.
-
-Contact our center today at 305-555-0121 ----- (145) an initial evaluation. All first-time ----- (146) will benefit from a 50 percent discount on the cost through the end of the month.
-
-Sincerely,
-The Team at Healthonity Dental Center', 1);
-insert into side (seq, set_question_id, paragraph) values (1, 89, 'http://www.moonglowairways.com.au
-Special Announcement by Geoff Clifford, President of Moon Glow Airways
-As many of you are aware, there was a problem with Pelman Technology, the system that handles our airline reservations. This outage has affected several airlines. It`s been a rough week, but the good news is it that it has been repaired, and we are re-setting our system. However, Moon Glow passengers may still face delays for day or two. This most likely will include longer lines at airports. We have added more on-site customer service representatives at airports in all of our destination cities to assist customers with their flights and information. We appreciate your understanding and patience.');
-insert into side (seq, set_question_id, paragraph) values (1, 90, 'Video Captioners --- Work from Home
-Kiesel Video is seeking detail-oriented people to use our software to add text captions to a wide variety of video material, such as television programs, movies, and university lectures. We will provide free online training. Successful applicants must possess strong language skills and have a computer, a headset, and high-speed Internet access.
-The position features:
-- Flexible hours--you work as much or as little as you want.
-- Choice of projects-we have work in many types of content.
-- Good pay - our captioners earn $350 to $1,100 a week, depending on the assignment.
-Apply today at www.kieselvideo.com/jobs');
-insert into side (seq, set_question_id, paragraph) values (1, 91, 'February 1
-SOFTWARE TESTING REPORT
-Version of Software Program: Konserted 2.5
-Testing Dates: January 10-12
-Number of Participants: 8
-Software Testing Overview: Participants were asked to complete a series of tasks testing the functionality of the revised Konserted interface. In task number 1, participants searched for a concert in a designated area. In task number 2, participants searched for new friends on the site. In task number 3, participants invited friends to a concert. In task number 4, participants posted concert reviews, photos, and videos. 
-Initial Findings: Task number 3 proved the most challenging, with three participants unable to complete it in under two minutes. A potential cause for this difficulty may be the choice of icons in the menu bar. Clearer, more intuitive icons could make this task easier to complete for participants.');
-insert into side (seq, set_question_id, paragraph) values (1, 92, '*E-mail*
-
-To: catiyeh@mymailroom.au
-From: achen@mutamark.au
-Date: 1 July
-Subject: Mutamark conference
-
-Dear Ms. Atiyeh,
-
-To follow up on our phone conversation earlier today, I would like to extend to you a formal written invitation to speak at the eighth annual Mutamark conference, scheduled to take place this year from 17 to 20 September in Zagros. Because you drew a sizeable crowd when you appeared at the conference in the past, we will be making special arrangements for your visit this time. The Blue Room at the Debeljak Hotel holds only 120, so this year we are also booking the Koros Hall, which has a capacity of 270. We can offer you a 40-to-50-minute slot on the last day of the conference, when attendance should be at its peak. Please e-mail me to confirm your acceptance and to let me know more about your audiovisual requirements. We can provide overhead projection for still images if you will be using them again.
-
-Very best regards,
-Alex Chen, Conference Planning
-Mutamark Headquarters, Melbourne');
-insert into side (seq, set_question_id, paragraph) values (1, 93, 'Monorail Coming to Sudbury
-(4 Feb.) Ottawa-based Saenger, Inc., has been selected by the city of Sudbury to build a monorail system that will connect the city`s commercial district to the airport. -[1]-. Funding for the system is drawn from a combination of public agencies and private investors. -[2]-. Ticket sales for the monorail will also provide a new source of revenue for the city. -[3]-. Construction is slated to begin in early June and is expected to be completed within four years. -[4]-');
-insert into side (seq, set_question_id, paragraph) values (1, 94, 'Dennis Beck (2:52 P.M.)
-Hi, Corinne. I just want to be sure that you saw the document I sent you. It''s the combined market analysis and advertising proposal for the Keyes Elegant Home group. We''re preparing it for tomorrow''s presentation to the client.
-Corinne McCall (2:53 P.M.)
-Yes, I have just downloaded it. Is this about their new line of tableware?
-Dennis Beck (2:54 P.M.)
-Yes. I`d like you to read it over.
-Corinne McCall (3:01 P.M.)
-No problem. Would you like me to revise anything, or do you want me to just check that it is all clear?
-Dennis Beck (3:02 P.M.)
-Feel free to add information to the section "Advertising Strategies," since that is your area of expertise.
-Corinne McCall (3:03 P.M.)
-Will do. I`ll get it back to you before the end of the day.');
-insert into side (seq, set_question_id, paragraph) values (1, 95, 'To: Mara Renaldo
-From: Lisa Yang
-Date: May 28
-Subject: RE: Staffordsville Craft Fair
-
-Dear Ms. Renaldo,
-
-Thank you for your interest in selling your handcrafted items at the annual Staffordsville Craft Fair. Please note that all applicants must submit a $25 application fee, whether or not they want to share a space with another applicant. Moreover, all applicants must submit a minimum of four photographs of their work in order to be considered as a vendor. -[1]-
-
-In addition to photographs, we ask that you submit a rough a sketch showing how you would display your work. Since you propose to share a space with a friend, local potter Julia Berens, it would be helpful if your sketch could indicate how you are planning to use the space jointly. -[2]-
-
-Also, because we hold the fair rain or shine, all vendors must supply their own tenting to protect themselves and their wares from the possibility of rain. -[3]-
-
-Finally, please be aware that every year we receive far more applications from jewelry makers than we can accept. We hope that you will not be too discouraged if your work is not accepted this year, as you are applying for the first time. -[4]-.
-
-Thanks again, and best of luck with your application,
-Lisa Yang
-
-');
-insert into side (seq, set_question_id, paragraph) values (1, 96, 'SLEEP SOUNDLY SOLUTIONS
-Thank you for choosing Sleep Soundly Solutions!
-The updated control panel is linked to an integrated system that allows you to activate and disable all security systems in your home, including your Sleep Soundly motion sensor as well as your fire, smoke, and carbon monoxide detectors. 
-All Sleep Soundly residential alarm systems have been tested thoroughly to ensure the highest quality and sensitivity, so you can sleep soundly in the knowledge that your home is protected. We have also developed a new smartphone application that will notify you of any disturbances wherever you are. The app is available for download now.
-Sleep Soundly control equipment is carefully manufactured for use with Sleep Soundly detectors and alarms. Using products manufactured by other companies may result in an alarm system that does not meet safety requirements for residential buildings or comply with local laws.');
-insert into side (seq, set_question_id, paragraph) values (1, 97, 'March 29
-Dr. Maritza Geerlings
-Poseidonstraat 392
-Paramaribo
-Suriname
-Dear Dr. Geerlings,
-I am writing to thank you for your years of service on the faculty of the Jamaican Agricultural Training Academy (JATA) and to let you know about some exciting developments. As you know, JATA was originally established as a vocational school for agriculture but now offers courses in i varied array of disciplines, including cybersecurity, electrical engineering, and health information management. Our student body, which for the first ten years consisted almost exclusively of locals, is now culturally diverse, with students from across the Americas and Europe. Today`s students work with sophisticated equipment, much of which did not exist in our early days.
-To reflect these and other significant changes that JATA has undergone over time, the Board of Trustees has approved a proposal by the Faculty Senate to rename the institution the Caribbean Academy of Science and Technology. As a result, a new institutional logo will be adopted. All students and faculty members, both current and former, are invited to participate in a logo design contest. Information about the contest will be forthcoming.
-The renaming ceremony and the introduction of the new logo will take place at 11 A.M. on 1 June, the twentieth anniversary of the institution. We hope you will be able to join us.
-Sincerely,
-Audley Bartlett
-Vice President for Academic Affairs,
-Jamaican Agricultural Training Academy');
-insert into side (seq, set_question_id, paragraph) values (1, 98, 'Ashley Montaine 8:54 A.M.: How did the interview with Mr. Erickson go?
-Dan Campbell 8:55 A.M.: I really enjoyed meeting him. I think he`d be a great reporter here. He seems smart and organized, and his samples show that he`s a great writer.
-Ashley Montaine 8:57 A.M.: Brooke, can you contact Mr. Erickson to set up the next interview? Is that a problem?
-Dan Campbell 8:58 A.M.: I`d really like to work with him. It is very important that he impress Mr. Peters.
-Brooke Randolph 8:59 A.M.: Not at all.
-Ashley Montaine 9:00 A.M.: Thanks. I also see that he has a varied work history. That will make him a well-rounded reporter.
-Brooke Randolph 9:02 A.M.: When would you like to meet with him again?
-Dan Campbell 9:03 A.M.: Ashley, I believe you will participate in the next interview. Note that Mr. Peters is probably going to ask why Mr. Erickson wants to transition from freelance writing to in-house news reporting. Also, Mr. Peters will want assurances that he`s committed and will stick around for several years.
-Ashley Montaine 9:04 A.M.: Brooke, Mr. Peters and I are both free Friday morning.
-Brooke Randolph 9:06 A.M.: Great. I`ll write an e-mail shortly.');
-insert into side (seq, set_question_id, paragraph) values (1, 99, 'Alberta Business Matters
-April issue
-Improve Your Office Environment Now!
-Today`s office environment, featuring numerous corridors, unexciting beige or white walls, and often rows of identical, windowless cubicles, might not inspire comfort, beauty, and energy. However, there are some easy, inexpensive ways to make your office space more inviting.
-Air quality
-- Add some green plants to the décor. Plants offer a natural filtration system, increasing oxygen levels. Nonflowering plants should be preferred, as they will not scatter pollen.
-- A small, tabletop air purifier helps improve stale air and removes dust.
-Light quality
-- Take breaks and go outdoors. Even just five minutes before or after lunch break will provide your eyes with a respite from artificial light sources.
-- Use desktop lamps with full-spectrum lightbulbs.
-- Install double-glazed windows instead of blinds to reduce glare while maintaining natural light.
-Stress relief
-- Earplugs or noise-cancelling headphones can block distracting noise in an open office floor plan.
-- Photographs of loved ones and places we have visited for vacation are reminders of our life away from the office. Select a few favorite pictures as important decorative elements.
--------------------------
-Dear readers, if you have tips to add to this list, send them in and they will be published in next month`s issue.
--------------------------');
-insert into side (seq, set_question_id, paragraph) values (2, 99, 'Alberta Business Matters
-
-Letters to the Editor
-
-It may interest your readers to know about the company I work for, called Moveable, Inc. We aspire to make dull offices more comfortable and convenient for workers, especially for today`s on-the-move employees.
-
-For example, say you work two days a week at your headquarters in Edmonton, and the rest of the week you are in a satellite office. Our "Can-Do Case" ensures that your favorite office supplies always travel with you. Our "Modular Décor Kit," weighing just 1.75 kg, contains a portable reading lamp, a miniature silk plant, and a folding photo frame with space for four pictures. Look us up online and follow us on social media, as we offer new items frequently!
-
-Best,
-
-Maria Testa');
-insert into side (seq, set_question_id, paragraph) values (1, 100, 'http://www.Lloydtouringcompany.co.uk
-
-Choose one of Lloyd Touring Company`s (LTC) most popular outings to see the best that London has to offer! 
-Tour 1: Full-day tour of the most popular tourist sites on one of our famous red double-decker buses. See the Changing of the Guard and conclude the day with a river cruise. 
-Tour 2: Full-day walking tour of London` best shopping areas. Explore London`s famous department stores and wander along fashionable Bond and Oxford Streets. 
-Tour 3: Half-day tour on a red double-decker bus, including private tour of the Tower of London and lunch at a nearby café. 
-Tour 4: Half-day tour of Buckingham Palace, including the Changing of the Guard. Tour ends with a traditional fish-and-chips lunch. 
-Tour 5: Full-day walking tour featuring London`s top highlights. Complete the day with a medieval banquet.
-LTC`s knowledgeable local staff members personally guide each one of our tours. Meals are not covered, except when noted in the tour description. Participants are responsible for meeting at chosen departure destination. LTC does not provide pickup from hotels. All tours can be upgraded for an additional fee to include an open-date ticket to the London Eye, London`s famous observation wheel.');
-insert into side (seq, set_question_id, paragraph) values (2, 100, 'Ella Bouton
-
-Lloyd Touring Company Review
-
-This was my first trip to London. I decided to see all the major tourist sites on my own, but I wanted someone to help me discover the most interesting places to shop in London. My LTC tour guide, Larissa, was wonderful. She is an avid shopper herself, and at the beginning of the tour, she tried to get to know the participants. She was able to guide everyone to the shops that they were most interested in. It was such a personalized tour! And it was a bonus that Larissa also speaks French. My daughter and I were visiting from Paris, and we appreciated being able to communicate in two languages. The tour was very reasonably priced, too. I would highly recommend it. The only unpleasant part of the tour was that Oxford Street was extremely crowded when we visited, and it was difficult to walk around easily.');
-insert into side (seq, set_question_id, paragraph) values (1, 101, 'To: Joseph Morgan <joseph.morgan@peltergraphics.com>
-From: administrator@costaseminars.org
-Date: May 31
-Subject: Book order
-Dear Mr. Morgan,
-Thank you for registering for Emilio Costa`s seminar on June 11 at the Rothford Business Center. We are glad you took advantage of the opportunity for conference participants to purchase some of Emilio Costa`s graphic-design books at a discounted price. The information below is a confirmation of your order. The books will be waiting for you at the check-in desk on the day of the seminar. Please note that we will accept any major credit card for payment. We are looking forward to seeing you on June 11.');
-insert into side (seq, set_question_id, paragraph) values (2, 101, 'Attention, Seminar Participants:
-
-Unfortunately, we do not have copies of Emilio Costa`s book Branding Strategies in Graphic Design with us today. For those of you who have ordered it, please give your mailing address to the volunteer at the check-in desk, and the book will be mailed to your home at no cost to you. We will charge your credit card upon shipment. We are sorry for the inconvenience.');
-insert into side (seq, set_question_id, paragraph) values (3, 101, '*E-mail*
-
-To: roberta.tsu@peltergraphics.com
-
-From: joseph.morgan@peltergraphics.com
-
-Date: June 22
-
-Sent: Costa book
-
-Dear Roberta,
-
-I`m looking forward to finishing up our brochure design for Entchen Financial Consultants. Before we submit our final draft, I would like to rethink how we are presenting our data. Have you had a chance to look through the Costa book I showed you? He gives great advice on improving the clarity of financial information in marketing materials. Anyway, let`s talk about it at lunch tomorrow.
-
-Best,
-
-Joseph');
-insert into side (seq, set_question_id, paragraph) values (1, 102, 'Anton Building
-Clanton (12 October)--The planned renovation of the historic Anton Building by Jantuni Property Developers (JPD) is facing new delays. A JPD spokesperson says their negotiations with the city regarding a package of subsidies and tax incentives are ongoing and are proving somewhat contentious. According to the renovation plan, JPD must protect the historical integrity of the Anton Building while it creates a mixed-use interior, offering both office space and lower-level retail space. However, JPD`s city permit to do the project is on hold pending the current negotiations.
-
-This is making city revitalization advocates increasingly anxious. Aditi Yadav comments. "This plan to create useful space out of an empty decaying building will go a long way to restoring vibrancy to that area of the city. I sincerely hope that JPD does not back out. In creating their offer, the City Council should consider JPD`s excellent record of beautifully restoring and maintaining several other historic buildings in Clanton."');
-insert into side (seq, set_question_id, paragraph) values (2, 102, 'To: t.rowell@jantunipropertydevelopers.com
-
-Date: 20 February
-
-Subject: Lease inquiry
-
-Dear Mr. Rowell,
-
-I am the owner of Lenoiva, a health-care technology company. We plan to expand our operations and we need new office space. The Anton Building is one of the locations in Clanton that we are considering. We have been informed that your restoration project of this building will be finished sometime this spring, which is good timing for us. We are particularly attracted by the easy access to public transportation services that your building offers. Do you still have spaces available for rent? We anticipate needing a space at least 300 square metres in size. Would there be any reserved parking for our employees if we rented there? We would appreciate any information you can provide.
-
-Thank you in advance,
-
-Ana Bautista');
-insert into side (seq, set_question_id, paragraph) values (3, 102, 'Image');
-insert into side (seq, set_question_id, paragraph) values (1, 103, 'From: Tanya Jefferson <tjeff@keysuppliers.com>
-To: info@danestongear.com
-Subject: Request for group rental information
-Date: May 29
-Hello Daneston Gear Company (DGC),
-I am the president of an activities club. This month. our 30 members intend to take a day trip to Daneston to go boating on the lake. Could you please send me information regarding your rates and offerings? We are most interested in renting boats that seat one person. Some time ago, I rented a kayak for myself from DGC, but this will be my first time renting from DGC for a group.
-Thank you,
-Tanya Jefferson');
-insert into side (seq, set_question_id, paragraph) values (2, 103, 'From: info@danestongear.com
-
-To: Tanya Jefferson <tjeff@keysuppliers.com>
-
-Subject: RE: Request for group rental information
-
-Date: May 30
-
-Attachment:  Price list
-
-Dear Ms. Jefferson,
-
-Thank you for contacting us regarding your group`s anticipated visit to DGC. We look forward to equipping your club for its next adventure. A price list is attached to this e-mail. If you wish to discuss our rentals in more detail, please call me at (888) 555-1578. Incidentally, we recently added a rowboat option that is an excellent choice for adults who wish to boat with their children.
-
-I will be pleased to help you when you are ready to make your reservation.
-
-Best,
-
-Adam Goldstein');
-insert into side (seq, set_question_id, paragraph) values (3, 103, '- We are open every day from April to October, 10:00 A.M. to 6:30 P.M
-
-- All boats must be returned by 6:15 P.M. on the day they are rented.
-
-- Life jackets and paddles are included in the rental fee.
-
-- Groups of ten or more qualify for a discount if they book at least one week in advance.');
+insert into side (set_question_id, paragraph, seq) values (85, '<p><strong>NOTICE</strong></p><p>&nbsp;</p><p>To continue providing the highest level of <strong>--(131)--</strong> to our corporate tenants, we have scheduled the south lobby restrooms for maintenance this weekend, May 13 and May 14. <strong>--(132)--</strong> this time, the restrooms will be out of order, so tenants and their guests should instead use the facilities in the north lobby.</p><p>&nbsp;</p><p>We <strong>--(133)--</strong> for any inconvenience this might cause. <strong>--(134)--</strong>.</p><p>&nbsp;</p><p>Denville Property Management Partners</p>', 1);
+insert into side (set_question_id, paragraph, seq) values (86, '<p>I recently received a last-minute invitation to a formal dinner. I bought a suit and needed it tailored as <strong>--(135)--</strong> as possible. A friend suggested that I use Antonio''s Tailoring Shop in downtown Auckland. When I met Antonio, he gave me his full attention <strong>--(136)--</strong> his shop was busy. He took the time to listen to me and carefully noted all my measurements. He then explained all the tailoring costs up front and assured me that he could have my suit ready in three days, but he had it done in two! <strong>--(137)--</strong>.</p><p>&nbsp;</p><p>Antonio has run his shop for over 30 years, and his experience really shows. He is a <strong>--(138)--</strong> tailor.</p><p>I highly recommend him.<br>&nbsp;</p><p>Jim Kestren, Auckland</p>', 1);
+insert into side (set_question_id, paragraph, seq) values (87, '<p>Dear Director Yoshida,</p><p>&nbsp;</p><p>Thank you for your school''s interest in visiting our farm next month. Please note that children must be at least six years old to visit and tour the farm.<strong>--(139)--</strong>. I have enclosed a list of the <strong>--(140)--</strong> activities available for our young visitors. Two of these <strong>--(141)--</strong> must be scheduled in advance. They are a cheese-making class and an introduction to beekeeping. Both are very popular with our visitors.</p><p>&nbsp;</p><p>Please let <strong>--(142)--</strong> know your selection by early next week. I look forward to welcoming your group soon!</p><p>&nbsp;</p><p>Sincerely,<br>&nbsp;</p><p>Annabel Romero, Coordinator</p><p>Merrytree Family Farm</p>', 1);
+insert into side (set_question_id, paragraph, seq) values (88, '<p><strong>To:</strong> Lakshmi Aiyar<br><strong>From:</strong> info@healthonity.com<br><strong>Date:</strong> February 8<br><strong>Subject:</strong> Healthonity Dental</p><p>&nbsp;</p><p>Dear Ms. Aiyar,</p><p>&nbsp;</p><p>We, the dental health professionals of the Healthonity Dental Center, are <strong>--(143)--</strong> to introduce our just-opened practice. We aim to provide access to the largest team of dental specialists in the region. On our Web site, you can see a comprehensive list of the procedures we offer. <strong>--(144)--</strong>. The members of our practice share a passion for helping people maintain beautiful and healthy smiles.</p><p>&nbsp;</p><p>Contact our center today at 305-555-0121 <strong>--(145)--</strong> an initial evaluation. All first-time <strong>--(146)--</strong> will benefit from a 50 percent discount on the cost through the end of the month.</p><p>&nbsp;</p><p>Sincerely,</p><p><br>The Team at Healthonity Dental Center</p>', 1);
+insert into side (seq, set_question_id, paragraph) values (1, 89, '<p>http://www.moonglowairways.com.au</p><p><strong>Special Announcement by Geoff Clifford, President of Moon Glow Airways</strong><br>&nbsp;</p><p>As many of you are aware, there was a problem with Pelman Technology, the system that handles our airline reservations. This outage has affected several airlines. It''s been a rough week, but the good news is it that it has been repaired, and we are re-setting our system. However, Moon Glow passengers may still face delays for day or two. This most likely will include longer lines at airports. We have added more on-site customer service representatives at airports in all of our destination cities to assist customers with their flights and information. We appreciate your understanding and patience.</p>');
+insert into side (seq, set_question_id, paragraph) values (1, 90, '<p><strong>Video Captioners --- Work from Home</strong></p><p>Kiesel Video is seeking detail-oriented people to use our software to add text captions to a wide variety of video material, such as television programs, movies, and university lectures. We will provide free online training. Successful applicants must possess strong language skills and have a computer, a headset, and high-speed Internet access.</p><p>The position features:</p><p>- Flexible hours--you work as much or as little as you want.</p><p>- Choice of projects-we have work in many types of content.</p><p>- Good pay - our captioners earn $350 to $1,100 a week, depending on the assignment.</p><p>Apply today at www.kieselvideo.com/jobs</p>');
+insert into side (seq, set_question_id, paragraph) values (1, 91, '<p>February 1</p><p>&nbsp;</p><p>SOFTWARE TESTING REPORT</p><p>&nbsp;</p><p>Version of Software Program: Konserted 2.5</p><p>Testing Dates: January 10-12</p><p>Number of Participants: 8</p><p>&nbsp;</p><p>Software Testing Overview: Participants were asked to complete a series of tasks testing the functionality of the revised Konserted interface. In task number 1, participants searched for a concert in a designated area. In task number 2, participants searched for new friends on the site. In task number 3, participants invited friends to a concert. In task number 4, participants posted concert reviews, photos, and videos.&nbsp;<br>&nbsp;</p><p>Initial Findings: Task number 3 proved the most challenging, with three participants unable to complete it in under two minutes. A potential cause for this difficulty may be the choice of icons in the menu bar. Clearer, more intuitive icons could make this task easier to complete for participants.</p>');
+insert into side (seq, set_question_id, paragraph) values (1, 92, '<p><strong>*E-mail*</strong></p><p>&nbsp;</p><p>To: catiyeh@mymailroom.au<br>From: achen@mutamark.au<br>Date: 1 July<br>Subject: Mutamark conference</p><p>&nbsp;</p><p>Dear Ms. Atiyeh,</p><p>&nbsp;</p><p>To follow up on our phone conversation earlier today, I would like to extend to you a formal written invitation to speak at the eighth annual Mutamark conference, scheduled to take place this year from 17 to 20 September in Zagros. Because you drew a sizeable crowd when you appeared at the conference in the past, we will be making special arrangements for your visit this time. The Blue Room at the Debeljak Hotel holds only 120, so this year we are also booking the Koros Hall, which has a capacity of 270. We can offer you a 40-to-50-minute slot on the last day of the conference, when attendance should be at its peak. Please e-mail me to confirm your acceptance and to let me know more about your audiovisual requirements. We can provide overhead projection for still images if you will be using them again.</p><p>&nbsp;</p><p>Very best regards,</p><p><br>Alex Chen, Conference Planning<br>Mutamark Headquarters, Melbourne</p>');
+insert into side (seq, set_question_id, paragraph) values (1, 93, '<p><strong>Monorail Coming to Sudbury</strong></p><p>(4 Feb.) Ottawa-based Saenger, Inc., has been selected by the city of Sudbury to build a monorail system that will connect the city''s commercial district to the airport. <strong>-[1]-</strong>. Funding for the system is drawn from a combination of public agencies and private investors. <strong>-[2]-</strong>. Ticket sales for the monorail will also provide a new source of revenue for the city. <strong>-[3]-</strong>. Construction is slated to begin in early June and is expected to be completed within four years. <strong>-[4]-</strong></p>');
+insert into side (seq, set_question_id, paragraph) values (1, 94, '<p><strong>Dennis Beck (2:52 P.M.)</strong></p><p>Hi, Corinne. I just want to be sure that you saw the document I sent you. It''s the combined market analysis and advertising proposal for the Keyes Elegant Home group. We''re preparing it for tomorrow''s presentation to the client.</p><p>&nbsp;</p><p><strong>Corinne McCall (2:53 P.M.)</strong></p><p>Yes, I have just downloaded it. Is this about their new line of tableware?</p><p>&nbsp;</p><p><strong>Dennis Beck (2:54 P.M.)</strong></p><p>Yes. I''d like you to read it over.</p><p>&nbsp;</p><p><strong>Corinne McCall (3:01 P.M.)</strong></p><p>No problem. Would you like me to revise anything, or do you want me to just check that it is all clear?</p><p>&nbsp;</p><p><strong>Dennis Beck (3:02 P.M.)</strong></p><p>Feel free to add information to the section "Advertising Strategies," since that is your area of expertise.</p><p>&nbsp;</p><p><strong>Corinne McCall (3:03 P.M.)</strong></p><p>Will do. I''ll get it back to you before the end of the day.</p>');
+insert into side (seq, set_question_id, paragraph) values (1, 95, '<p><strong>To:</strong> Mara Renaldo<br><strong>From:</strong> Lisa Yang<br><strong>Date:</strong> May 28<br><strong>Subject: RE:</strong> Staffordsville Craft Fair</p><p>&nbsp;</p><p>Dear Ms. Renaldo,</p><p>&nbsp;</p><p>Thank you for your interest in selling your handcrafted items at the annual Staffordsville Craft Fair. Please note that all applicants must submit a $25 application fee, whether or not they want to share a space with another applicant. Moreover, all applicants must submit a minimum of four photographs of their work in order to be considered as a vendor. <strong>-[1]-.</strong></p><p>&nbsp;</p><p>In addition to photographs, we ask that you submit a rough a sketch showing how you would display your work. Since you propose to share a space with a friend, local potter Julia Berens, it would be helpful if your sketch could indicate how you are planning to use the space jointly. <strong>-[2]-.</strong></p><p>&nbsp;</p><p>Also, because we hold the fair rain or shine, all vendors must supply their own tenting to protect themselves and their wares from the possibility of rain. <strong>-[3]-.</strong></p><p>&nbsp;</p><p>Finally, please be aware that every year we receive far more applications from jewelry makers than we can accept. We hope that you will not be too discouraged if your work is not accepted this year, as you are applying for the first time. <strong>-[4]-</strong>.</p><p>&nbsp;</p><p>Thanks again, and best of luck with your application,</p><p><br>Lisa Yang</p>');
+insert into side (seq, set_question_id, paragraph) values (1, 96, '<p><strong>SLEEP SOUNDLY SOLUTIONS</strong></p><p><i>Thank you for choosing Sleep Soundly Solutions!</i><br>&nbsp;</p><p>The updated control panel is linked to an integrated system that allows you to activate and disable all security systems in your home, including your Sleep Soundly motion sensor as well as your fire, smoke, and carbon monoxide detectors.&nbsp;<br>&nbsp;</p><p>All Sleep Soundly residential alarm systems have been tested thoroughly to ensure the highest quality and sensitivity, so you can sleep soundly in the knowledge that your home is protected. We have also developed a new smartphone application that will notify you of any disturbances wherever you are. The app is available for download now.<br>&nbsp;</p><p>Sleep Soundly control equipment is carefully manufactured for use with Sleep Soundly detectors and alarms. Using products manufactured by other companies may result in an alarm system that does not <i><strong>meet</strong></i> safety requirements for residential buildings or comply with local laws.</p>');
+insert into side (seq, set_question_id, paragraph) values (1, 97, '<p>March 29</p><p>&nbsp;</p><p>Dr. Maritza Geerlings</p><p>Poseidonstraat 392</p><p>Paramaribo</p><p>Suriname</p><p>&nbsp;</p><p>Dear Dr. Geerlings,</p><p>&nbsp;</p><p>I am writing to thank you for your years of service on the faculty of the Jamaican Agricultural Training Academy (JATA) and to let you know about some exciting developments. As you know, JATA was originally <i><strong>established </strong></i>as a vocational school for agriculture but now offers courses in i varied array of disciplines, including cybersecurity, electrical engineering, and health information management. Our student body, which for the first ten years consisted almost exclusively of locals, is now culturally diverse, with students from across the Americas and Europe. Today''s students work with sophisticated equipment, much of which did not exist in our early days.<br>&nbsp;</p><p>To reflect these and other significant changes that JATA has undergone over time, the Board of Trustees has approved a proposal by the Faculty Senate to rename the institution the Caribbean Academy of Science and Technology. As a result, a new institutional logo will be adopted. All students and faculty members, both current and former, are invited to participate in a logo design contest. Information about the contest will be forthcoming.<br>&nbsp;</p><p>The renaming ceremony and the introduction of the new logo will take place at 11 A.M. on 1 June, the twentieth anniversary of the institution. We hope you will be able to join us.<br>&nbsp;</p><p>Sincerely,<br>&nbsp;</p><p>Audley Bartlett<br>&nbsp;</p><p>Vice President for Academic Affairs,</p><p>Jamaican Agricultural Training Academy</p><p><br>&nbsp;</p>');
+insert into side (seq, set_question_id, paragraph) values (1, 98, '<p><strong>Ashley Montaine 8:54 A.M.:</strong> How did the interview with Mr. Erickson go?</p><p>&nbsp;</p><p><strong>Dan Campbell 8:55 A.M.:</strong> I really enjoyed meeting him. I think he''d be a great reporter here. He seems smart and organized, and his samples show that he''s a great writer.</p><p>&nbsp;</p><p><strong>Ashley Montaine 8:57 A.M.:</strong> Brooke, can you contact Mr. Erickson to set up the next interview? Is that a problem?<br>&nbsp;</p><p><strong>Dan Campbell 8:58 A.M.:</strong> I''d really like to work with him. It is very important that he impress Mr. Peters.<br>&nbsp;</p><p><strong>Brooke Randolph 8:59 A.M.: </strong>Not at all.<br>&nbsp;</p><p><strong>Ashley Montaine 9:00 A.M.: </strong>Thanks. I also see that he has a varied work history. That will make him a well-rounded reporter.<br>&nbsp;</p><p><strong>Brooke Randolph 9:02 A.M.:</strong> When would you like to meet with him again?<br>&nbsp;</p><p><strong>Dan Campbell 9:03 A.M.:</strong> Ashley, I believe you will participate in the next interview. Note that Mr. Peters is probably going to ask why Mr. Erickson wants to transition from freelance writing to in-house news reporting. Also, Mr. Peters will want assurances that he''s committed and will stick around for several years.</p><p>&nbsp;</p><p><strong>Ashley Montaine 9:04 A.M.:</strong> Brooke, Mr. Peters and I are both free Friday morning.<br>&nbsp;</p><p><strong>Brooke Randolph 9:06 A.M.:</strong> Great. I''ll write an e-mail shortly.</p>');
+insert into side (seq, set_question_id, paragraph) values (1, 99, '<p><strong>Alberta Business Matters</strong></p><p>April issue</p><p>&nbsp;</p><h2><strong>Improve Your Office Environment Now!</strong></h2><p>Today''s office environment, featuring numerous corridors, unexciting beige or white walls, and often rows of identical, windowless cubicles, might not inspire comfort, beauty, and energy. However, there are some easy, inexpensive ways to make your office space more inviting.<br>&nbsp;</p><p><strong>Air quality</strong></p><p>- Add some green plants to the décor. Plants offer a natural filtration system, increasing oxygen levels. Nonflowering plants should be preferred, as they will not scatter pollen.</p><p>- A small, tabletop air purifier helps improve stale air and removes dust.</p><p>&nbsp;</p><p><strong>Light quality</strong></p><p>- Take breaks and go outdoors. Even just five minutes before or after lunch break will provide your eyes with a respite from artificial light sources.</p><p>- Use desktop lamps with full-spectrum lightbulbs.</p><p>- Install double-glazed windows instead of blinds to reduce glare while maintaining natural light.</p><p>&nbsp;</p><p><strong>Stress relief</strong></p><p>- Earplugs or noise-cancelling headphones can block distracting noise in an open office floor plan.</p><p>- Photographs of loved ones and places we have visited for vacation are reminders of our life away from the office. Select a few favorite pictures as important decorative elements.</p><p>-------------------------</p><p><strong>Dear readers, if you have tips to add to this list, send them in and they will be published in next month''s issue.</strong></p><p>-------------------------</p>');
+insert into side (seq, set_question_id, paragraph) values (2, 99, '<p><strong>Alberta Business Matters</strong></p><p><strong>Letters to the Editor</strong></p><p>&nbsp;</p><p>It may interest your readers to know about the company I work for, called Moveable, Inc. We aspire to make dull offices more comfortable and convenient for workers, especially for today''s on-the-move employees.</p><p>&nbsp;</p><p>For example, say you work two days a week at your headquarters in Edmonton, and the rest of the week you are in a satellite office. Our "Can-Do Case" ensures that your favorite office supplies always travel with you. Our "Modular Décor Kit," weighing just 1.75 kg, contains a portable reading lamp, a miniature silk plant, and a folding photo frame with space for four pictures. Look us up online and follow us on social media, as we offer new items frequently!</p><p>&nbsp;</p><p>Best,</p><p>Maria Testa</p><p><br>&nbsp;</p>');
+insert into side (seq, set_question_id, paragraph) values (1, 100, '<p>http://www.Lloydtouringcompany.co.uk</p><p>&nbsp;</p><p>Choose one of Lloyd Touring Company''s (LTC) most popular outings to see the best that London has to offer!&nbsp;</p><p><strong>Tour 1:</strong> Full-day tour of the most popular tourist sites on one of our famous red double-decker buses. See the Changing of the Guard and conclude the day with a river cruise.&nbsp;</p><p><strong>Tour 2: </strong>Full-day walking tour of London'' best shopping areas. Explore London''s famous department stores and wander along fashionable Bond and Oxford Streets.&nbsp;</p><p><strong>Tour 3:</strong> Half-day tour on a red double-decker bus, including private tour of the Tower of London and lunch at a nearby café.&nbsp;</p><p><strong>Tour 4:</strong> Half-day tour of Buckingham Palace, including the Changing of the Guard. Tour ends with a traditional fish-and-chips lunch.&nbsp;</p><p><strong>Tour 5:</strong> Full-day walking tour featuring London''s top highlights. Complete the day with a medieval banquet.<br>&nbsp;</p><p>LTC''s knowledgeable local staff members personally guide each one of our tours. Meals are not covered, except when noted in the tour description. Participants are responsible for meeting at chosen departure destination. LTC does not provide pickup from hotels. All tours can be upgraded for an additional fee to include an open-date ticket to the London Eye, London''s famous observation wheel.</p>');
+insert into side (seq, set_question_id, paragraph) values (2, 100, '<p><strong>--Ella Bouton</strong><br>&nbsp;</p><p>Lloyd Touring Company Review</p><p>&nbsp;</p><p>This was my first trip to London. I decided to see all the major tourist sites on my own, but I wanted someone to help me discover the most interesting places to shop in London. My LTC tour guide, Larissa, was wonderful. She is an avid shopper herself, and at the beginning of the tour, she tried to get to know the participants. She was able to guide everyone to the shops that they were most interested in. It was such a personalized tour! And it was a bonus that Larissa also speaks French. My daughter and I were visiting from Paris, and we appreciated being able to communicate in two languages. The tour was very reasonably priced, too. I would highly recommend it. The only unpleasant part of the tour was that Oxford Street was extremely crowded when we visited, and it was difficult to walk around easily.</p>');
+insert into side (seq, set_question_id, paragraph) values (1, 101, '<p><strong>To:</strong> Joseph Morgan &lt;joseph.morgan@peltergraphics.com&gt;</p><p><strong>From:</strong> administrator@costaseminars.org</p><p><strong>Date:</strong> May 31</p><p><strong>Subject:</strong> Book order</p><p>&nbsp;</p><p>Dear Mr. Morgan,</p><p>&nbsp;</p><p>Thank you for registering for Emilio Costa''s seminar on June 11 at the Rothford Business Center. We are glad you took advantage of the opportunity for conference participants to purchase some of Emilio Costa''s graphic-design books at a discounted price. The information below is a confirmation of your order. The books will be waiting for you at the check-in desk on the day of the seminar. Please note that we will accept any major credit card for payment. We are looking forward to seeing you on June 11.</p><figure class="table"><table><tbody><tr><td><strong>Quantity</strong></td><td><strong>Title</strong></td><td><strong>Price</strong></td><td><strong>Discounted Price</strong></td><td><strong>Total Price</strong></td></tr><tr><td>1</td><td>Perfect Figures: Making Data Visually Appleaing</td><td>$22.00</td><td>$17.60</td><td>$17.60<br>&nbsp;</td></tr><tr><td>1</td><td>Logos in the Information Age</td><td>$18.00</td><td>$14.40</td><td>$14.40<br>&nbsp;</td></tr><tr><td>1</td><td>Branding Strategies in Graphic Design</td><td>$20.00</td><td>$16.00</td><td>$16.00<br>&nbsp;</td></tr><tr><td>2</td><td>Best Practices in Web Design: A Euroean Perspective</td><td>$28.00</td><td>$22.40</td><td>$44.80<br>&nbsp;</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td><strong>TOTAL DUE:</strong></td><td><strong>$92.80</strong></td></tr></tbody></table></figure>');
+insert into side (seq, set_question_id, paragraph) values (2, 101, '<p><strong>Attention, Seminar Participants:</strong></p><p>Unfortunately, we do not have copies of Emilio Costa''s book <i>Branding Strategies in Graphic Design</i> with us today. For those of you who have ordered it, please give your mailing address to the volunteer at the check-in desk, and the book will be mailed to your home at no cost to you. We will charge your credit card upon shipment. We are sorry for the inconvenience.</p>');
+insert into side (seq, set_question_id, paragraph) values (3, 101, '<p><strong>*E-mail*</strong></p><p><strong>To: </strong>roberta.tsu@peltergraphics.com</p><p><strong>From:</strong> joseph.morgan@peltergraphics.com</p><p><strong>Date:</strong> June 22</p><p><strong>Sent: </strong>Costa book</p><p>&nbsp;</p><p>Dear Roberta,</p><p>&nbsp;</p><p>I''m looking forward to finishing up our brochure design for Entchen Financial Consultants. Before we submit our final draft, I would like to rethink how we are presenting our data. Have you had a chance to look through the Costa book I showed you? He gives great advice on improving the clarity of financial information in marketing materials. Anyway, let''s talk about it at lunch tomorrow.</p><p>&nbsp;</p><p>Best,<br>&nbsp;</p><p>Joseph</p><p><br>&nbsp;</p>');
+insert into side (seq, set_question_id, paragraph) values (1, 102, '<p><strong>Anton Building</strong></p><p>Clanton (12 October)--The planned renovation of the historic Anton Building by Jantuni Property Developers (JPD) is facing new delays. A JPD spokesperson says their negotiations with the city regarding a package of subsidies and tax incentives are ongoing and are proving somewhat contentious. According to the renovation plan, JPD must protect the historical integrity of the Anton Building while it creates a mixed-use interior, offering both office space and lower-level retail space. However, JPD''s city permit to do the project is on hold pending the current negotiations.</p><p>This is making city revitalization advocates increasingly anxious. Aditi Yadav comments. "This plan to create useful space out of an empty decaying building will go a long way to restoring vibrancy to that area of the city. I sincerely hope that JPD does not back out. In creating their offer, the City Council should consider JPD''s excellent record of beautifully restoring and maintaining several other historic buildings in Clanton."</p>');
+insert into side (seq, set_question_id, paragraph) values (2, 102, '<p><strong>From:</strong> abautista@lenoiva-health.com</p><p><strong>To:</strong> t.rowell@jantunipropertydevelopers.com</p><p><strong>Date:</strong> 20 February</p><p><strong>Subject:</strong> Lease inquiry</p><p>&nbsp;</p><p>Dear Mr. Rowell,</p><p>&nbsp;</p><p>I am the owner of Lenoiva, a health-care technology company. We plan to expand our operations and we need new office space. The Anton Building is one of the locations in Clanton that we are considering. We have been informed that your restoration project of this building will be finished sometime this spring, which is good timing for us. We are particularly attracted by the easy access to public transportation services that your building offers. Do you still have spaces available for rent? We anticipate needing a space at least 300 square metres in size. Would there be any reserved parking for our employees if we rented there? We would appreciate any information you can provide.</p><p>&nbsp;</p><p>Thank you in advance,</p><p>&nbsp;</p><p><strong>Ana Bautista</strong></p><p><br>&nbsp;</p>');
+insert into side (seq, set_question_id, paragraph) values (3, 102, '<figure class="image"><img src="http://res.cloudinary.com/doxsstgkc/image/upload/v1675264441/examify/image_tygie7.png"></figure>');
+insert into side (seq, set_question_id, paragraph) values (1, 103, '<p><strong>From: </strong>Tanya Jefferson &lt;tjeff@keysuppliers.com&gt;</p><p><strong>To:</strong> info@danestongear.com</p><p><strong>Subject:</strong> Request for group rental information</p><p><strong>Date: </strong>May 29</p><p>&nbsp;</p><p>Hello Daneston Gear Company (DGC),<br>&nbsp;</p><p>I am the president of an activities club. This month. our 30 members intend to take a day trip to Daneston to go boating on the lake. Could you please send me information regarding your rates and offerings? We are most interested in renting boats that seat one person. Some time ago, I rented a kayak for myself from DGC, but this will be my first time renting from DGC for a group.</p><p>&nbsp;</p><p>Thank you,<br>&nbsp;</p><p>Tanya Jefferson</p>');
+insert into side (seq, set_question_id, paragraph) values (2, 103, '<p><strong>From:</strong> info@danestongear.com</p><p><strong>To:</strong> Tanya Jefferson &lt;tjeff@keysuppliers.com&gt;</p><p><strong>Subject:</strong> RE: Request for group rental information</p><p><strong>Date: </strong>May 30</p><p><strong>Attachment:&nbsp;</strong> Price list</p><p>&nbsp;</p><p>Dear Ms. Jefferson,<br>&nbsp;</p><p>Thank you for contacting us regarding your group''s anticipated visit to DGC. We look forward to equipping your club for its next adventure. A price list is attached to this e-mail. If you wish to discuss our rentals in more detail, please call me at (888) 555-1578. Incidentally, we recently added a rowboat option that is an excellent choice for adults who wish to boat with their children.</p><p>&nbsp;</p><p>I will be pleased to help you when you are ready to make your reservation.<br>&nbsp;</p><p>Best,<br>&nbsp;</p><p>Adam Goldstein</p>');
+insert into side (seq, set_question_id, paragraph) values (3, 103, '<p><strong>DGC Price List</strong></p><figure class="table"><table><tbody><tr><td>&nbsp;</td><td>Boat type</td><td>Hourly rate<br>&nbsp;</td><td>Additional 1/2 hour<br>&nbsp;</td></tr><tr><td><strong>Option 1</strong><br>&nbsp;</td><td>2-person canoe<br>&nbsp;</td><td>$13<br>&nbsp;</td><td>$8<br>&nbsp;</td></tr><tr><td><strong>Option 2</strong><br>&nbsp;</td><td>3-person canoe<br>&nbsp;</td><td>$15<br>&nbsp;</td><td>$8</td></tr><tr><td><strong>Option 3</strong><br>&nbsp;</td><td>1-person kayak<br>&nbsp;</td><td>$11<br>&nbsp;</td><td>$8</td></tr><tr><td><strong>Option 4</strong><br>&nbsp;</td><td>2-person kayak<br>&nbsp;</td><td>$14<br>&nbsp;</td><td>$8<br>&nbsp;</td></tr><tr><td><strong>Option 5</strong><br>&nbsp;</td><td>3- or 4-person rowboat&nbsp;(3 adults&nbsp;or 2 adults and 2 children</td><td>$13<br>&nbsp;</td><td>$9<br>&nbsp;</td></tr></tbody></table></figure><p>- We are open every day from April to October, 10:00 A.M. to 6:30 P.M</p><p>- All boats must be returned by 6:15 P.M. on the day they are rented.</p><p>- Life jackets and paddles are included in the rental fee.</p><p>- Groups of ten or more qualify for a discount if they book at least one week in advance.</p>');
 
 
 -- exam_taking
