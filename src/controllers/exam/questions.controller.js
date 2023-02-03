@@ -10,12 +10,26 @@ module.exports = {
         where: {
           setQuestionId,
         },
+        include: [
+          {
+            model: db.Choice,
+            as: 'choiceList',
+          },
+        ],
         order: [['order', 'ASC']],
+      });
+
+      const formattedQuestionData = listQuestion.map((item) => {
+        const { choiceList, ...jsonItem } = item.toJSON();
+        return {
+          ...jsonItem,
+          choices: choiceList,
+        };
       });
 
       res.status(200).json({
         status: 200,
-        data: listQuestion,
+        data: formattedQuestionData,
       });
     } catch (err) {
       next(err);
@@ -102,7 +116,9 @@ module.exports = {
         ORDER BY order_qn DESC
         LIMIT 1`);
 
-    const numericOrder = ++maxNumOrder[0][0].max_num;
+    let numericOrder;
+    if (maxNumOrder[0][0]) numericOrder = ++maxNumOrder[0][0].max_num;
+    else numericOrder = 1;
 
     // create Question
     const newQuestion = await db.Question.create({

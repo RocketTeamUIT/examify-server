@@ -78,7 +78,9 @@ module.exports = {
         ORDER BY seq DESC
         LIMIT 1`);
 
-      const numericOrder = ++maxNumOrder[0][0].max_num;
+      let numericOrder;
+      if (maxNumOrder[0][0]) numericOrder = ++maxNumOrder[0][0].max_num;
+      else numericOrder = 1;
 
       const newSide = await db.Side.create({
         setQuestionId,
