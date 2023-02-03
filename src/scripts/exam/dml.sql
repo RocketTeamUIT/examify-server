@@ -4,7 +4,7 @@ insert into exam_series (name, total_exam, public_date, author, created_by) valu
 
 
 -- exam
-insert into exam (exam_series_id, name) values (1, 'ETS TOEIC 2022 TEST 1');
+insert into exam (exam_series_id, name, audio, duration, file_download) values (1, 'ETS TOEIC 2022 TEST 1', 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_ets_2022_test01.mp3', 7200, 'https://www.africau.edu/images/default/sample.pdf');
 insert into exam (exam_series_id, name) values (1, 'ETS TOEIC 2022 TEST 2');
 insert into exam (exam_series_id, name) values (1, 'ETS TOEIC 2022 TEST 3');
 insert into exam (exam_series_id, name) values (1, 'ETS TOEIC 2022 TEST 4');
@@ -90,63 +90,63 @@ insert into hashtag (name) values ('[Part 7] Câu hỏi tìm từ đồng nghĩa
 insert into hashtag (name) values ('[Part 7] Câu hỏi suy luận: câu hỏi về ngụ ý câu nói');
 
 -- set_question
-insert into set_question (part_id, title, numeric_order) values (1, '', 1);
-insert into set_question (part_id, title, numeric_order) values (1, '', 2);
-insert into set_question (part_id, title, numeric_order) values (1, '', 3);
-insert into set_question (part_id, title, numeric_order) values (1, '', 4);
-insert into set_question (part_id, title, numeric_order) values (1, '', 5);
-insert into set_question (part_id, title, numeric_order) values (1, '', 6);
+insert into set_question (part_id, title, numeric_order, audio) values (1, '', 1, 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_1.mp3');
+insert into set_question (part_id, title, numeric_order, audio) values (1, '', 2, 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_2.mp3');
+insert into set_question (part_id, title, numeric_order, audio) values (1, '', 3, 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_3.mp3');
+insert into set_question (part_id, title, numeric_order, audio) values (1, '', 4, 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_4.mp3');
+insert into set_question (part_id, title, numeric_order, audio) values (1, '', 5, 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_5.mp3');
+insert into set_question (part_id, title, numeric_order, audio) values (1, '', 6, 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_6.mp3');
 
-insert into set_question (part_id, title, numeric_order) values (2, '', 1);
-insert into set_question (part_id, title, numeric_order) values (2, '', 2);
-insert into set_question (part_id, title, numeric_order) values (2, '', 3);
-insert into set_question (part_id, title, numeric_order) values (2, '', 4);
-insert into set_question (part_id, title, numeric_order) values (2, '', 5);
-insert into set_question (part_id, title, numeric_order) values (2, '', 6);
-insert into set_question (part_id, title, numeric_order) values (2, '', 7);
-insert into set_question (part_id, title, numeric_order) values (2, '', 8);
-insert into set_question (part_id, title, numeric_order) values (2, '', 9);
-insert into set_question (part_id, title, numeric_order) values (2, '', 10);
-insert into set_question (part_id, title, numeric_order) values (2, '', 11);
-insert into set_question (part_id, title, numeric_order) values (2, '', 12);
-insert into set_question (part_id, title, numeric_order) values (2, '', 13);
-insert into set_question (part_id, title, numeric_order) values (2, '', 14);
-insert into set_question (part_id, title, numeric_order) values (2, '', 15);
-insert into set_question (part_id, title, numeric_order) values (2, '', 16);
-insert into set_question (part_id, title, numeric_order) values (2, '', 17);
-insert into set_question (part_id, title, numeric_order) values (2, '', 18);
-insert into set_question (part_id, title, numeric_order) values (2, '', 19);
-insert into set_question (part_id, title, numeric_order) values (2, '', 20);
-insert into set_question (part_id, title, numeric_order) values (2, '', 21);
-insert into set_question (part_id, title, numeric_order) values (2, '', 22);
-insert into set_question (part_id, title, numeric_order) values (2, '', 23);
-insert into set_question (part_id, title, numeric_order) values (2, '', 24);
-insert into set_question (part_id, title, numeric_order) values (2, '', 25);
+insert into set_question (part_id, title, numeric_order, audio) values (2, '', 1, 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_7.mp3');
+insert into set_question (part_id, title, numeric_order, audio) values (2, '', 2, 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_8.mp3');
+insert into set_question (part_id, title, numeric_order, audio) values (2, '', 3, 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_9.mp3');
+insert into set_question (part_id, title, numeric_order, audio) values (2, '', 4, 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_10.mp3');
+insert into set_question (part_id, title, numeric_order, audio) values (2, '', 5, 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_11.mp3');
+insert into set_question (part_id, title, numeric_order, audio) values (2, '', 6, 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_12.mp3');
+insert into set_question (part_id, title, numeric_order, audio) values (2, '', 7, 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_13.mp3');
+insert into set_question (part_id, title, numeric_order, audio) values (2, '', 8, 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_14.mp3');
+insert into set_question (part_id, title, numeric_order, audio) values (2, '', 9, 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_15.mp3');
+insert into set_question (part_id, title, numeric_order, audio) values (2, '', 10, 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_16.mp3');
+insert into set_question (part_id, title, numeric_order, audio) values (2, '', 11, 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_17.mp3');
+insert into set_question (part_id, title, numeric_order, audio) values (2, '', 12, 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_18.mp3');
+insert into set_question (part_id, title, numeric_order, audio) values (2, '', 13, 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_19.mp3');
+insert into set_question (part_id, title, numeric_order, audio) values (2, '', 14, 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_20.mp3');
+insert into set_question (part_id, title, numeric_order, audio) values (2, '', 15, 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_21.mp3');
+insert into set_question (part_id, title, numeric_order, audio) values (2, '', 16, 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_22.mp3');
+insert into set_question (part_id, title, numeric_order, audio) values (2, '', 17, 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_23.mp3');
+insert into set_question (part_id, title, numeric_order, audio) values (2, '', 18, 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_24.mp3');
+insert into set_question (part_id, title, numeric_order, audio) values (2, '', 19, 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_25.mp3');
+insert into set_question (part_id, title, numeric_order, audio) values (2, '', 20, 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_26.mp3');
+insert into set_question (part_id, title, numeric_order, audio) values (2, '', 21, 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_27.mp3');
+insert into set_question (part_id, title, numeric_order, audio) values (2, '', 22, 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_28.mp3');
+insert into set_question (part_id, title, numeric_order, audio) values (2, '', 23, 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_29.mp3');
+insert into set_question (part_id, title, numeric_order, audio) values (2, '', 24, 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_30.mp3');
+insert into set_question (part_id, title, numeric_order, audio) values (2, '', 25, 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_31.mp3');
 
-insert into set_question (part_id, title, numeric_order) values (3, '', 1);
-insert into set_question (part_id, title, numeric_order) values (3, '', 2);
-insert into set_question (part_id, title, numeric_order) values (3, '', 3);
-insert into set_question (part_id, title, numeric_order) values (3, '', 4);
-insert into set_question (part_id, title, numeric_order) values (3, '', 5);
-insert into set_question (part_id, title, numeric_order) values (3, '', 6);
-insert into set_question (part_id, title, numeric_order) values (3, '', 7);
-insert into set_question (part_id, title, numeric_order) values (3, '', 8);
-insert into set_question (part_id, title, numeric_order) values (3, '', 9);
-insert into set_question (part_id, title, numeric_order) values (3, '', 10);
-insert into set_question (part_id, title, numeric_order) values (3, '', 11);
-insert into set_question (part_id, title, numeric_order) values (3, '', 12);
-insert into set_question (part_id, title, numeric_order) values (3, '', 13);
+insert into set_question (part_id, title, numeric_order, audio) values (3, '', 1, 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_32_34.mp3');
+insert into set_question (part_id, title, numeric_order, audio) values (3, '', 2, 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_35_37.mp3');
+insert into set_question (part_id, title, numeric_order, audio) values (3, '', 3, 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_38_40.mp3');
+insert into set_question (part_id, title, numeric_order, audio) values (3, '', 4, 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_41_43.mp3');
+insert into set_question (part_id, title, numeric_order, audio) values (3, '', 5, 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_44_46.mp3');
+insert into set_question (part_id, title, numeric_order, audio) values (3, '', 6, 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_47_49.mp3');
+insert into set_question (part_id, title, numeric_order, audio) values (3, '', 7, 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_50_52.mp3');
+insert into set_question (part_id, title, numeric_order, audio) values (3, '', 8, 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_53_55.mp3');
+insert into set_question (part_id, title, numeric_order, audio) values (3, '', 9, 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_56_58.mp3');
+insert into set_question (part_id, title, numeric_order, audio) values (3, '', 10, 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_59_61.mp3');
+insert into set_question (part_id, title, numeric_order, audio) values (3, '', 11, 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_62_64.mp3');
+insert into set_question (part_id, title, numeric_order, audio) values (3, '', 12, 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_65_67.mp3');
+insert into set_question (part_id, title, numeric_order, audio) values (3, '', 13, 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_68_70.mp3');
 
-insert into set_question (part_id, title, numeric_order) values (4, '', 1);
-insert into set_question (part_id, title, numeric_order) values (4, '', 2);
-insert into set_question (part_id, title, numeric_order) values (4, '', 3);
-insert into set_question (part_id, title, numeric_order) values (4, '', 4);
-insert into set_question (part_id, title, numeric_order) values (4, '', 5);
-insert into set_question (part_id, title, numeric_order) values (4, '', 6);
-insert into set_question (part_id, title, numeric_order) values (4, '', 7);
-insert into set_question (part_id, title, numeric_order) values (4, '', 8);
-insert into set_question (part_id, title, numeric_order) values (4, '', 9);
-insert into set_question (part_id, title, numeric_order) values (4, '', 10);
+insert into set_question (part_id, title, numeric_order, audio) values (4, '', 1, 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_71_73.mp3');
+insert into set_question (part_id, title, numeric_order, audio) values (4, '', 2, 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_74_76.mp3');
+insert into set_question (part_id, title, numeric_order, audio) values (4, '', 3, 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_77_79.mp3');
+insert into set_question (part_id, title, numeric_order, audio) values (4, '', 4, 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_80_82.mp3');
+insert into set_question (part_id, title, numeric_order, audio) values (4, '', 5, 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_83_85.mp3');
+insert into set_question (part_id, title, numeric_order, audio) values (4, '', 6, 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_86_88.mp3');
+insert into set_question (part_id, title, numeric_order, audio) values (4, '', 7, 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_89_91.mp3');
+insert into set_question (part_id, title, numeric_order, audio) values (4, '', 8, 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_92_94.mp3');
+insert into set_question (part_id, title, numeric_order, audio) values (4, '', 9, 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_95_97.mp3');
+insert into set_question (part_id, title, numeric_order, audio) values (4, '', 10, 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_98_100.mp3');
 
 insert into set_question (part_id, title, numeric_order) values (5, '', 1);
 insert into set_question (part_id, title, numeric_order) values (5, '', 2);
@@ -179,26 +179,26 @@ insert into set_question (part_id, title, numeric_order) values (5, '', 28);
 insert into set_question (part_id, title, numeric_order) values (5, '', 29);
 insert into set_question (part_id, title, numeric_order) values (5, '', 30);
 
-insert into set_question (part_id, title, numeric_order) values (6, '', 1);
-insert into set_question (part_id, title, numeric_order) values (6, '', 2);
-insert into set_question (part_id, title, numeric_order) values (6, '', 3);
-insert into set_question (part_id, title, numeric_order) values (6, '', 4);
+insert into set_question (part_id, title, numeric_order) values (6, 'refer to the following notice.', 1);
+insert into set_question (part_id, title, numeric_order) values (6, 'refer to the following customer review.', 2);
+insert into set_question (part_id, title, numeric_order) values (6, 'refer to the following letter.', 3);
+insert into set_question (part_id, title, numeric_order) values (6, 'refer to the following e-mail.', 4);
 
-insert into set_question (part_id, title, numeric_order) values (7, '', 1);
-insert into set_question (part_id, title, numeric_order) values (7, '', 2);
-insert into set_question (part_id, title, numeric_order) values (7, '', 3);
-insert into set_question (part_id, title, numeric_order) values (7, '', 4);
-insert into set_question (part_id, title, numeric_order) values (7, '', 5);
-insert into set_question (part_id, title, numeric_order) values (7, '', 6);
-insert into set_question (part_id, title, numeric_order) values (7, '', 7);
-insert into set_question (part_id, title, numeric_order) values (7, '', 8);
-insert into set_question (part_id, title, numeric_order) values (7, '', 9);
-insert into set_question (part_id, title, numeric_order) values (7, '', 10);
-insert into set_question (part_id, title, numeric_order) values (7, '', 11);
-insert into set_question (part_id, title, numeric_order) values (7, '', 12);
-insert into set_question (part_id, title, numeric_order) values (7, '', 13);
-insert into set_question (part_id, title, numeric_order) values (7, '', 14);
-insert into set_question (part_id, title, numeric_order) values (7, '', 15);
+insert into set_question (part_id, title, numeric_order) values (7, 'refer to the following Web page.', 1);
+insert into set_question (part_id, title, numeric_order) values (7, 'refer to the following job advertisement.', 2);
+insert into set_question (part_id, title, numeric_order) values (7, 'refer to the following report.', 3);
+insert into set_question (part_id, title, numeric_order) values (7, 'refer to the following e-mail.', 4);
+insert into set_question (part_id, title, numeric_order) values (7, 'refer to the following article.', 5);
+insert into set_question (part_id, title, numeric_order) values (7, 'refer to the following text-message chain.', 6);
+insert into set_question (part_id, title, numeric_order) values (7, 'refer to the following e-mail.', 7);
+insert into set_question (part_id, title, numeric_order) values (7, 'refer to the following information.', 8);
+insert into set_question (part_id, title, numeric_order) values (7, 'refer to the following letter.', 9);
+insert into set_question (part_id, title, numeric_order) values (7, 'refer to the following online chat discussion.', 10);
+insert into set_question (part_id, title, numeric_order) values (7, 'refer to the following article and letter.', 11);
+insert into set_question (part_id, title, numeric_order) values (7, 'refer to the following Web page and review.', 12);
+insert into set_question (part_id, title, numeric_order) values (7, 'refer to the following e-mails and notice.', 13);
+insert into set_question (part_id, title, numeric_order) values (7, 'refer to the following article, e-mail, and plan.', 14);
+insert into set_question (part_id, title, numeric_order) values (7, 'refer to the following e-mails and price list.', 15);
 
 
 
@@ -1402,14 +1402,15 @@ insert into choice (question_id, order_choice, name, key) values (200, 4, 'They 
 
 -- side
 insert into side (set_question_id, paragraph, seq) values (1, 'https://study4.com/media/tez_media1/img/ets_toeic_2022_test_1_1.png', 1);
-insert into side (set_question_id, paragraph, seq) values (2, 'https://study4.com/media/tez_media1/img/ets_toeic_2022_test_1_1.png', 1);
-insert into side (set_question_id, paragraph, seq) values (3, 'https://study4.com/media/tez_media1/img/ets_toeic_2022_test_1_1.png', 1);
-insert into side (set_question_id, paragraph, seq) values (4, 'https://study4.com/media/tez_media1/img/ets_toeic_2022_test_1_1.png', 1);
-insert into side (set_question_id, paragraph, seq) values (5, 'https://study4.com/media/tez_media1/img/ets_toeic_2022_test_1_1.png', 1);
-insert into side (set_question_id, paragraph, seq) values (6, 'https://study4.com/media/tez_media1/img/ets_toeic_2022_test_1_1.png', 1);
+insert into side (set_question_id, paragraph, seq) values (2, 'https://study4.com/media/tez_media1/img/ets_toeic_2022_test_1_2.png', 1);
+insert into side (set_question_id, paragraph, seq) values (3, 'https://study4.com/media/tez_media1/img/ets_toeic_2022_test_1_3.png', 1);
+insert into side (set_question_id, paragraph, seq) values (4, 'https://study4.com/media/tez_media1/img/ets_toeic_2022_test_1_4.png', 1);
+insert into side (set_question_id, paragraph, seq) values (5, 'https://study4.com/media/tez_media1/img/ets_toeic_2022_test_1_5.png', 1);
+insert into side (set_question_id, paragraph, seq) values (6, 'https://study4.com/media/tez_media1/img/ets_toeic_2022_test_1_6.png', 1);
 insert into side (set_question_id, paragraph, seq) values (42, 'https://lh6.googleusercontent.com/AWbPfUpA0bKxy18rFIqOUN4vLDdpAB5aQAd99f09lqW30z5ZUsjQ7zulKtvVYspp7rCPZDWJeIeVS_MVvYjJehGoNdnxSKxaMhy0eVhtRUPFzP8qCWKqG-KAeZZ38wqzajPV1zjOnOOdDI5vtQ', 1);
 insert into side (set_question_id, paragraph, seq) values (43, 'https://study4.com/media/tez_media1/img/ets_toeic_2022_test_1_65_67.png', 1);
-insert into side (set_question_id, paragraph, seq) values (53, 'https://study4.com/media/tez_media1/img/ets_toeic_2022_test_1_68_70.png', 1);
+insert into side (set_question_id, paragraph, seq) values (44, 'https://study4.com/media/tez_media1/img/ets_toeic_2022_test_1_68_70.png', 1);
+insert into side (set_question_id, paragraph, seq) values (53, 'https://study4.com/media/tez_media1/img/ets_toeic_2022_test_1_95_97.png', 1);
 insert into side (set_question_id, paragraph, seq) values (54, 'https://study4.com/media/tez_media1/img/ets_toeic_2022_test_1_98_100.png', 1);
 insert into side (set_question_id, paragraph, seq) values (85, '<p><strong>NOTICE</strong></p><p>&nbsp;</p><p>To continue providing the highest level of <strong>--(131)--</strong> to our corporate tenants, we have scheduled the south lobby restrooms for maintenance this weekend, May 13 and May 14. <strong>--(132)--</strong> this time, the restrooms will be out of order, so tenants and their guests should instead use the facilities in the north lobby.</p><p>&nbsp;</p><p>We <strong>--(133)--</strong> for any inconvenience this might cause. <strong>--(134)--</strong>.</p><p>&nbsp;</p><p>Denville Property Management Partners</p>', 1);
 insert into side (set_question_id, paragraph, seq) values (86, '<p>I recently received a last-minute invitation to a formal dinner. I bought a suit and needed it tailored as <strong>--(135)--</strong> as possible. A friend suggested that I use Antonio''s Tailoring Shop in downtown Auckland. When I met Antonio, he gave me his full attention <strong>--(136)--</strong> his shop was busy. He took the time to listen to me and carefully noted all my measurements. He then explained all the tailoring costs up front and assured me that he could have my suit ready in three days, but he had it done in two! <strong>--(137)--</strong>.</p><p>&nbsp;</p><p>Antonio has run his shop for over 30 years, and his experience really shows. He is a <strong>--(138)--</strong> tailor.</p><p>I highly recommend him.<br>&nbsp;</p><p>Jim Kestren, Auckland</p>', 1);
@@ -1651,7 +1652,7 @@ insert into part_option(exam_taking_id, part_id) values(1, 2);
 insert into part_option(exam_taking_id, part_id) values(1, 3);
 insert into part_option(exam_taking_id, part_id) values(1, 5);
 
-UPDATE exam SET audio = 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_1.mp3';
-UPDATE set_question SET audio = 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_1.mp3';
-UPDATE exam SET duration = 7200 WHERE exam_id = 1;
-UPDATE exam SET file_download = 'https://www.africau.edu/images/default/sample.pdf' WHERE exam_id = 1;
+-- UPDATE exam SET audio = 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_1.mp3';
+-- UPDATE set_question SET audio = 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_1.mp3';
+-- UPDATE exam SET duration = 7200 WHERE exam_id = 1;
+-- UPDATE exam SET file_download = 'https://www.africau.edu/images/default/sample.pdf' WHERE exam_id = 1;
