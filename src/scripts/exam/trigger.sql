@@ -281,7 +281,7 @@ LANGUAGE plpgsql;
 
 -- Trigger update numeric order when update Part
 CREATE OR REPLACE TRIGGER numeric_order_part_update
-	BEFORE UPDATE OF numeric_order ON part
+	AFTER UPDATE OF numeric_order ON part
 	FOR EACH ROW
 	WHEN (pg_trigger_depth() = 0)
 	EXECUTE PROCEDURE fn_num_order_part_update();
@@ -379,7 +379,7 @@ LANGUAGE plpgsql;
 
 -- Trigger update numeric order when update Set Question
 CREATE OR REPLACE TRIGGER numeric_order_set_question_update
-	BEFORE UPDATE OF numeric_order ON set_question
+	AFTER UPDATE OF numeric_order ON set_question
 	FOR EACH ROW
 	WHEN (pg_trigger_depth() = 0)
 	EXECUTE PROCEDURE fn_num_order_set_question_update();
@@ -478,7 +478,7 @@ LANGUAGE plpgsql;
 
 -- Trigger update numeric order when update Side
 CREATE OR REPLACE TRIGGER numeric_order_side_update
-	BEFORE UPDATE OF seq ON side
+	AFTER UPDATE OF seq ON side
 	FOR EACH ROW
 	WHEN (pg_trigger_depth() = 0)
 	EXECUTE PROCEDURE fn_num_order_side_update();
@@ -576,7 +576,7 @@ LANGUAGE plpgsql;
 
 -- Trigger update numeric order when update Question
 CREATE OR REPLACE TRIGGER numeric_order_question_update
-	BEFORE UPDATE OF order_qn ON question 
+	AFTER UPDATE OF order_qn ON question 
 	FOR EACH ROW
 	WHEN (pg_trigger_depth() = 0)
 	EXECUTE PROCEDURE fn_num_order_question_update();

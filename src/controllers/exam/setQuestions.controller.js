@@ -81,7 +81,9 @@ module.exports = {
         ORDER BY numeric_order DESC
         LIMIT 1`);
 
-      const numericOrder = ++maxNumOrder[0][0].max_num;
+      let numericOrder;
+      if (maxNumOrder[0][0]) numericOrder = ++maxNumOrder[0][0].max_num;
+      else numericOrder = 1;
 
       const newSetQuestion = await db.SetQuestion.create({
         partId,

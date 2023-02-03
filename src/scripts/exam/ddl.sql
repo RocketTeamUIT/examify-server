@@ -19,7 +19,7 @@ create table exam_series (
 	total_exam INT NOT NULL DEFAULT 0,
 	public_date DATE,
 	author TEXT DEFAULT '',
-	created_by INTEGER REFERENCES users(user_id),
+	created_by INTEGER REFERENCES users(user_id) ,
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -32,7 +32,7 @@ EXECUTE PROCEDURE update_timestamp();
 -- exam Table
 create table exam (
     exam_id SERIAL PRIMARY KEY,
-	exam_series_id INTEGER REFERENCES exam_series(exam_series_id),
+	exam_series_id INTEGER REFERENCES exam_series(exam_series_id) ON DELETE CASCADE,
 	name VARCHAR(255) NOT NULL,
 	total_part INTEGER DEFAULT 0,
 	total_question INTEGER DEFAULT 0,

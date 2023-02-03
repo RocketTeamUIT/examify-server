@@ -48,7 +48,7 @@ module.exports = {
     try {
       const partId = await req?.params?.id;
       const { examId, name, numericOrder } = req.body;
-
+      console.log(examId, name, numericOrder);
       await db.Part.update(
         {
           examId,
@@ -57,7 +57,7 @@ module.exports = {
         },
         {
           where: {
-            id: partId,
+            id: parseInt(partId),
           },
         },
       );
@@ -82,7 +82,9 @@ module.exports = {
         ORDER BY numeric_order DESC
         LIMIT 1`);
 
-      const numericOrder = ++maxNumOrder[0][0].max_num;
+      let numericOrder;
+      if (maxNumOrder[0][0]) numericOrder = ++maxNumOrder[0][0].max_num;
+      else numericOrder = 1;
 
       const newPart = await db.Part.create({
         examId,

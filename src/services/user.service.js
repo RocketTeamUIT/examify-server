@@ -16,8 +16,14 @@ module.exports = {
             as: 'rank',
             attributes: ['rankId', 'rankName'],
           },
+          {
+            model: db.Roles,
+            as: 'role',
+            attributes: [],
+          },
         ],
         attributes: {
+          include: [[connectDB.sequelize.col('role.role_name'), 'roleName']],
           exclude: ['password', 'rankId', 'refreshToken', 'createdAt', 'updatedAt'],
         },
         nest: true,
