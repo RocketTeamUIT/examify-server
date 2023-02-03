@@ -4,7 +4,9 @@ const db = require('../../models/index');
 module.exports = {
   getAllExamSeries: async (req, res, next) => {
     try {
-      const listSeriesData = await db.ExamSeries.findAll();
+      const listSeriesData = await db.ExamSeries.findAll({
+        order: [['id', 'ASC']],
+      });
 
       res.status(200).json({
         status: 200,
@@ -65,7 +67,9 @@ module.exports = {
           author,
         },
         {
-          id: examSeriesId,
+          where: {
+            id: examSeriesId,
+          },
         },
       );
 
@@ -82,7 +86,11 @@ module.exports = {
     try {
       const examSeriesId = req?.params?.id;
 
-      await sequelize.query(`SELECT fn_delete_exam_series(${examSeriesId})`);
+      await db.ExamSeries.destroy({
+        where: {
+          id: examSeriesId,
+        },
+      });
 
       res.status(200).json({
         status: 200,

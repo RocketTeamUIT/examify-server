@@ -24,6 +24,15 @@ router.get('/me', verifyAccessToken, userController.account);
 // [PUT] /users/update-info
 router.put('/update-info', verifyAccessToken, userController.updateInfo);
 
+// [PUT] change role
+router.put('/change-role', userController.changeRole);
+
+// [GET] /users/statistics
+router.get('/statistics', userController.getStatistics);
+
+// [GET] /users/statistics/detail
+router.get('/statistics/detail', userController.getDetailStatistics);
+
 // [GET] /users -> get all user
 router.get('/', userController.getAllUsers);
 

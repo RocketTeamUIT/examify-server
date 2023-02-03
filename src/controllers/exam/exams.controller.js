@@ -519,7 +519,7 @@ module.exports = {
                 model: db.Question,
                 as: 'setQuestion',
                 attributes: {
-                  exclude: ['setQuestionId', 'hastagId', 'level', 'createdAt', 'updatedAt'],
+                  exclude: ['setQuestionId', 'hashtagId', 'level', 'createdAt', 'updatedAt'],
                   include: [
                     [
                       sequelize.literal(
