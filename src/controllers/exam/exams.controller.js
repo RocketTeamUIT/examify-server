@@ -714,4 +714,135 @@ module.exports = {
   //     next(err);
   //   }
   // },
+
+  getStatistics: async (req, res, next) => {
+    try {
+      const exams_count = await db.Exam.count();
+      const taking_count = await db.ExamTaking.count();
+      const favorite_parts = await pool.query(
+        'select name, CAST(count(po.part_id) as INT) from part p left join part_option po on p.part_id = po.part_id group by name order by CAST(count(po.part_id) as INT) desc, name asc limit 3;',
+      );
+      const average = await db.ExamTaking.findOne({
+        attributes: [
+          [sequelize.fn('AVG', sequelize.col('time_finished')), 'average_time'],
+          [sequelize.fn('AVG', sequelize.col('nums_of_correct_qn')), 'average_correct_num'],
+          [sequelize.fn('AVG', sequelize.col('total_question')), 'average_total_question'],
+        ],
+      });
+
+      const popular_exams = await pool.query(
+        'SELECT e.exam_id, name, CAST(COUNT(et.exam_taking_id) as INT) taking_count, CAST(COUNT(DISTINCT et.user_id) as INT) participants_count FROM exam e LEFT JOIN exam_taking et ON e.exam_id = et.exam_id GROUP BY e.exam_id, name ORDER BY taking_count DESC LIMIT 5',
+      );
+
+      const averageData = average.toJSON();
+
+      res.status(200).json({
+        status: 200,
+        data: {
+          exams_count,
+          taking_count,
+          favorite_parts: favorite_parts.rows,
+          average: {
+            time: averageData.average_time,
+            score: Number(averageData.average_correct_num) / (Number(averageData.average_total_question) || 1),
+          },
+          popular_exams: popular_exams.rows,
+        },
+        message: 'Answer list has been recorded!',
+      });
+    } catch (err) {
+      next(err);
+    }
+  },
+
+  getExamStatistics: async (req, res, next) => {
+    try {
+      const id = req.params.id || -1;
+      const year = req.query.year || new Date().getFullYear();
+      const result = {};
+
+      const exam_takings = await pool.query(
+        'SELECT CAST(EXTRACT(MONTH FROM created_at) AS INT) AS month, CAST(COUNT(*) AS INT) taking_count, CAST(COUNT(DISTINCT user_id) AS INT) users_count FROM exam_taking WHERE exam_id = $1 AND EXTRACT(YEAR FROM created_at) = $2 GROUP BY month',
+        [id, year],
+      );
+      const part_options = await pool.query(
+        'SELECT CAST(EXTRACT(MONTH FROM po.created_at) AS INT) AS month, p.name, CAST(COUNT(po.created_at) AS INT) taking_count FROM exam_taking et, part p, part_option po WHERE po.exam_taking_id = et.exam_taking_id AND po.part_id = p.part_id AND et.exam_id = $1 AND EXTRACT(YEAR FROM po.created_at) = $2 GROUP BY month, p.name',
+        [id, year],
+      );
+      const average = await db.ExamTaking.findOne({
+        attributes: [
+          [sequelize.fn('AVG', sequelize.col('time_finished')), 'average_time'],
+          [sequelize.fn('AVG', sequelize.col('nums_of_correct_qn')), 'average_correct_num'],
+          [sequelize.fn('AVG', sequelize.col('total_question')), 'average_total_question'],
+        ],
+        where: {
+          examId: id,
+          [Op.and]: [sequelize.literal(`EXTRACT(YEAR FROM created_at) = ${year}`)],
+        },
+      });
+
+      const averageData = average.toJSON();
+
+      const total_exam_takings = exam_takings.rows.reduce((prev, curr) => {
+        return prev + Number(curr.taking_count);
+      }, 0);
+
+      const total_users = exam_takings.rows.reduce((prev, curr) => {
+        return prev + Number(curr.users_count);
+      }, 0);
+
+      result.months = Array(12)
+        .fill(0)
+        .map((_, i) => i + 1)
+        .map((month) => ({
+          month,
+          taking_count: 0,
+          ...exam_takings.rows.find((item) => String(item.month) === String(month)),
+        }));
+
+      Array(7)
+        .fill('')
+        .map((_, i) => 'Part ' + (i + 1))
+        .forEach((part) => {
+          result[part] = Array(12)
+            .fill(0)
+            .map((_, i) => i + 1)
+            .reduce(
+              (prev, curr) => ({
+                ...prev,
+                [curr]: 0,
+              }),
+              {},
+            );
+        });
+
+      part_options.rows.forEach((row) => {
+        result[row.name] = {
+          ...result[row.name],
+          [row.month]: row.taking_count,
+        };
+      });
+
+      const favorite_part = await pool.query(
+        'SELECT name, CAST(COUNT(*) AS INT) parts_count FROM exam_taking et, part_option po, part p WHERE et.exam_taking_id = po.exam_taking_id AND po.part_id = p.part_id AND et.exam_id = $1 AND EXTRACT(YEAR FROM et.created_at) = $2 GROUP BY p.name ORDER BY parts_count DESC, name ASC LIMIT 1',
+        [id, year],
+      );
+
+      res.status(200).json({
+        status: 200,
+        data: {
+          ...result,
+          total_exam_takings,
+          total_users,
+          favorite_part: favorite_part.rows[0],
+          average: {
+            time: averageData.average_time,
+            score: Number(averageData.average_correct_num) / (Number(averageData.average_total_question) || 1),
+          },
+        },
+      });
+    } catch (err) {
+      next(err);
+    }
+  },
 };
