@@ -13,6 +13,10 @@ router.post('/finished-taking/:id', verifyAccessToken, examsController.saveAnswe
 router.get('/exam-taking/:id', examsController.getExamTaking);
 router.get('/exam-takingg/:id', examsController.getExamTaking2);
 
+router.get('/statistics', examsController.getStatistics);
+
+router.get('/statistics/:id', examsController.getExamStatistics);
+
 // [GET] /exams/:id     -> get an exam
 router.get('/:id', checkLogin, examsController.getExam); /* query only information of exam*/
 
