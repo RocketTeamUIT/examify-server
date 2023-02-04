@@ -687,6 +687,92 @@ module.exports = {
     }
   },
 
+  submitExam: async (req, res, next) => {
+    try {
+      const userId = req.payload.user.id;
+      const { examId, partIds, timeFinished, listAnswer } = req.body;
+      let recordId = -1;
+
+      // task create an exam taking
+      const createExamTaking = new Promise(async (resolve) => {
+        const examTaking = await db.ExamTaking.create({ examId, userId });
+        resolve(examTaking.id);
+      });
+
+      // task calculate total question belongs to list part
+      const getTotalQuestion = new Promise(async (resolve) => {
+        const totalQuestion = await db.Question.count({
+          include: {
+            model: db.SetQuestion,
+            where: {
+              partId: {
+                [Op.in]: partIds,
+              },
+            },
+          },
+        });
+        resolve(totalQuestion);
+      });
+
+      // task count for correct answer
+      const countCorrectQn = new Promise(async (resolve) => {
+        const numsOfCorrectQn = await db.Choice.count({
+          where: {
+            id: {
+              [Op.in]: listAnswer.map((answer) => answer.choiceId),
+            },
+            key: true,
+          },
+        });
+        resolve(numsOfCorrectQn);
+      });
+
+      await Promise.all([createExamTaking, getTotalQuestion, countCorrectQn]).then(
+        ([examTakingId, totalQuestion, numsOfCorrectQn]) => {
+          recordId = examTakingId;
+
+          // create list part option
+          db.PartOption.bulkCreate(
+            partIds.map((partId) => ({
+              examTakingId: examTakingId,
+              partId,
+            })),
+          );
+
+          // update total question in examTaking
+          db.ExamTaking.update(
+            {
+              timeFinished,
+              totalQuestion,
+              numsOfCorrectQn,
+            },
+            {
+              where: {
+                id: examTakingId,
+              },
+            },
+          );
+
+          // create multiple answer record
+          db.AnswerRecord.bulkCreate(
+            listAnswer.map((answer) => ({
+              examTakingId,
+              ...answer,
+            })),
+          );
+        },
+      );
+
+      res.status(200).json({
+        status: 200,
+        recordId,
+        message: 'Submit exam successfully',
+      });
+    } catch (err) {
+      next(err);
+    }
+  },
+
   // getAllExamTaking: async (req, res, next) => {
   //   try {
   //     const userId = req?.payload?.user?.id || 1;

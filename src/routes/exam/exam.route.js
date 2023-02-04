@@ -34,4 +34,7 @@ router.put('/update/:id', examsController.updateExam);
 // [DELETE] /exams/delete/:id   -> delete an exam
 router.delete('/delete/:id', examsController.deleteExam);
 
+// [POST] /exams/submit
+router.post('/submit', verifyAccessToken, examsController.submitExam);
+
 module.exports = router;
