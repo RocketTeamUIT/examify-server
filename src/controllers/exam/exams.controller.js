@@ -64,7 +64,7 @@ module.exports = {
                   AND part_option.exam_taking_id = exam_taking.exam_taking_id
                   AND part_option.exam_taking_id = "historyTaking".exam_taking_id
                 )`),
-                  'PartOptions',
+                  'partTakeList',
                 ],
               ],
             },
@@ -480,7 +480,13 @@ module.exports = {
         where: {
           id: examTakingId,
         },
-        attributes: [['time_finished', 'duration'], ['updated_at', 'date'], 'totalQuestion', 'numsOfCorrectQn'],
+        attributes: [
+          'examId',
+          ['time_finished', 'duration'],
+          ['updated_at', 'date'],
+          'totalQuestion',
+          'numsOfCorrectQn',
+        ],
       });
 
       // get list partId
@@ -492,7 +498,6 @@ module.exports = {
       });
 
       listPartId = listPartId.map((object) => object.partId);
-      console.log('check: ', listPartId);
 
       // get content and result of exam
       const contentTaking = await db.Part.findAll({
@@ -580,6 +585,7 @@ module.exports = {
 
       res.status(200).json({
         status: 200,
+        examId: examTakingInfo.dataValues.examId,
         ...examName[0][0],
         duration: examTakingInfo.dataValues.duration,
         date: examTakingInfo.dataValues.date,
