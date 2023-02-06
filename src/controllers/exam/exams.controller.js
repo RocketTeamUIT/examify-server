@@ -64,7 +64,7 @@ module.exports = {
                   AND part_option.exam_taking_id = exam_taking.exam_taking_id
                   AND part_option.exam_taking_id = "historyTaking".exam_taking_id
                 )`),
-                  'PartOptions',
+                  'partTakeList',
                 ],
               ],
             },
@@ -480,7 +480,13 @@ module.exports = {
         where: {
           id: examTakingId,
         },
-        attributes: [['time_finished', 'duration'], ['updated_at', 'date'], 'totalQuestion', 'numsOfCorrectQn'],
+        attributes: [
+          'examId',
+          ['time_finished', 'duration'],
+          ['updated_at', 'date'],
+          'totalQuestion',
+          'numsOfCorrectQn',
+        ],
       });
 
       // get list partId
@@ -492,7 +498,6 @@ module.exports = {
       });
 
       listPartId = listPartId.map((object) => object.partId);
-      console.log('check: ', listPartId);
 
       // get content and result of exam
       const contentTaking = await db.Part.findAll({
@@ -580,6 +585,7 @@ module.exports = {
 
       res.status(200).json({
         status: 200,
+        examId: examTakingInfo.dataValues.examId,
         ...examName[0][0],
         duration: examTakingInfo.dataValues.duration,
         date: examTakingInfo.dataValues.date,
@@ -687,33 +693,134 @@ module.exports = {
     }
   },
 
-  // getAllExamTaking: async (req, res, next) => {
-  //   try {
-  //     const userId = req?.payload?.user?.id || 1;
+  submitExam: async (req, res, next) => {
+    try {
+      const userId = req.payload.user.id;
+      const { examId, partIds, timeFinished, listAnswer } = req.body;
+      let recordId = -1;
 
-  //     const historyTaking = await db.ExamTaking.findAll({
-  //       where: {
-  //         userId,
-  //       },
-  //       include: [
-  //         {
-  //           model: db.Exam,
-  //           as: 'exam',
-  //           attributes: ['id', 'name'],
-  //         },
+      // task create an exam taking
+      const createExamTaking = new Promise(async (resolve) => {
+        const examTaking = await db.ExamTaking.create({ examId, userId });
+        resolve(examTaking.id);
+      });
 
-  //         [db.PartOption.Part],
-  //       ],
-  //     });
+      // task calculate total question belongs to list part
+      const getTotalQuestion = new Promise(async (resolve) => {
+        const totalQuestion = await db.Question.count({
+          include: {
+            model: db.SetQuestion,
+            where: {
+              partId: {
+                [Op.in]: partIds,
+              },
+            },
+          },
+        });
+        resolve(totalQuestion);
+      });
 
-  //     res.status(200).json({
-  //       status: 200,
-  //       data: historyTaking,
-  //     });
-  //   } catch (err) {
-  //     next(err);
-  //   }
-  // },
+      // task count for correct answer
+      const countCorrectQn = new Promise(async (resolve) => {
+        const numsOfCorrectQn = await db.Choice.count({
+          where: {
+            id: {
+              [Op.in]: listAnswer.map((answer) => answer.choiceId),
+            },
+            key: true,
+          },
+        });
+        resolve(numsOfCorrectQn);
+      });
+
+      await Promise.all([createExamTaking, getTotalQuestion, countCorrectQn]).then(
+        ([examTakingId, totalQuestion, numsOfCorrectQn]) => {
+          recordId = examTakingId;
+
+          // create list part option
+          db.PartOption.bulkCreate(
+            partIds.map((partId) => ({
+              examTakingId: examTakingId,
+              partId,
+            })),
+          );
+
+          // update total question in examTaking
+          db.ExamTaking.update(
+            {
+              timeFinished,
+              totalQuestion,
+              numsOfCorrectQn,
+            },
+            {
+              where: {
+                id: examTakingId,
+              },
+            },
+          );
+
+          // create multiple answer record
+          db.AnswerRecord.bulkCreate(
+            listAnswer.map((answer) => ({
+              examTakingId,
+              ...answer,
+            })),
+          );
+        },
+      );
+
+      res.status(200).json({
+        status: 200,
+        recordId,
+        message: 'Submit exam successfully',
+      });
+    } catch (err) {
+      next(err);
+    }
+  },
+
+  getAllExamTaking: async (req, res, next) => {
+    try {
+      const userId = req?.payload?.user?.id || -1;
+
+      const historyTaking = await db.ExamTaking.findAll({
+        where: {
+          userId,
+        },
+        include: [
+          {
+            model: db.Exam,
+            as: 'exam',
+            attributes: [],
+          },
+        ],
+        attributes: {
+          exclude: ['userId'],
+          include: [
+            [sequelize.col('exam.name'), 'examName'],
+            [
+              sequelize.literal(`(
+                SELECT array_agg(name)
+                FROM part_option, part, exam_taking
+                WHERE part_option.part_id = part.part_id
+                AND part_option.exam_taking_id = exam_taking.exam_taking_id
+                AND part_option.exam_taking_id = "ExamTaking"."exam_taking_id"
+              )`),
+              'partTakeList',
+            ],
+          ],
+        },
+        order: [['createdAt', 'DESC']],
+      });
+
+      res.status(200).json({
+        status: 200,
+        data: historyTaking,
+      });
+    } catch (err) {
+      next(err);
+    }
+  },
 
   getStatistics: async (req, res, next) => {
     try {
