@@ -593,31 +593,46 @@ module.exports = {
     }
   },
 
-  // getAllExamTaking: async (req, res, next) => {
-  //   try {
-  //     const userId = req?.payload?.user?.id || 1;
+  getAllExamTaking: async (req, res, next) => {
+    try {
+      const userId = req?.payload?.user?.id || -1;
 
-  //     const historyTaking = await db.ExamTaking.findAll({
-  //       where: {
-  //         userId,
-  //       },
-  //       include: [
-  //         {
-  //           model: db.Exam,
-  //           as: 'exam',
-  //           attributes: ['id', 'name'],
-  //         },
+      const historyTaking = await db.ExamTaking.findAll({
+        where: {
+          userId,
+        },
+        include: [
+          {
+            model: db.Exam,
+            as: 'exam',
+            attributes: [],
+          },
+        ],
+        attributes: {
+          exclude: ['userId'],
+          include: [
+            [sequelize.col('exam.name'), 'examName'],
+            [
+              sequelize.literal(`(
+                SELECT array_agg(name)
+                FROM part_option, part, exam_taking
+                WHERE part_option.part_id = part.part_id
+                AND part_option.exam_taking_id = exam_taking.exam_taking_id
+                AND part_option.exam_taking_id = "ExamTaking"."exam_taking_id"
+              )`),
+              'PartOptions',
+            ],
+          ],
+        },
+        order: [['createdAt', 'DESC']],
+      });
 
-  //         [db.PartOption.Part],
-  //       ],
-  //     });
-
-  //     res.status(200).json({
-  //       status: 200,
-  //       data: historyTaking,
-  //     });
-  //   } catch (err) {
-  //     next(err);
-  //   }
-  // },
+      res.status(200).json({
+        status: 200,
+        data: historyTaking,
+      });
+    } catch (err) {
+      next(err);
+    }
+  },
 };

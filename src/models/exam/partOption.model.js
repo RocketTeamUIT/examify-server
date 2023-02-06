@@ -4,7 +4,7 @@ const { sequelize } = require('../../config/connectDB');
 class PartOption extends Model {
   static associate(models) {
     PartOption.belongsTo(models.ExamTaking, { foreignKey: 'examTakingId' });
-    PartOption.belongsTo(models.Part, { foreignKey: 'partId' });
+    PartOption.belongsTo(models.Part, { foreignKey: 'partId', as: 'part' });
   }
 }
 
