@@ -5,17 +5,17 @@ insert into exam_series (name, total_exam, public_date, author, created_by) valu
 
 -- exam
 insert into exam (exam_series_id, name, audio, duration, file_download) values (1, 'ETS TOEIC 2022 TEST 1', 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_ets_2022_test01.mp3', 7200, 'https://www.africau.edu/images/default/sample.pdf');
-insert into exam (exam_series_id, name) values (1, 'ETS TOEIC 2022 TEST 2');
-insert into exam (exam_series_id, name) values (1, 'ETS TOEIC 2022 TEST 3');
-insert into exam (exam_series_id, name) values (1, 'ETS TOEIC 2022 TEST 4');
-insert into exam (exam_series_id, name) values (1, 'ETS TOEIC 2022 TEST 5');
-insert into exam (exam_series_id, name) values (1, 'ETS TOEIC 2022 TEST 6');
-insert into exam (exam_series_id, name) values (1, 'ETS TOEIC 2022 TEST 7');
-insert into exam (exam_series_id, name) values (1, 'ETS TOEIC 2022 TEST 8');
-insert into exam (exam_series_id, name) values (1, 'ETS TOEIC 2022 TEST 9');
-insert into exam (exam_series_id, name) values (1, 'ETS TOEIC 2022 TEST 10');
-insert into exam (exam_series_id, name) values (2, 'ETS TOEIC 2022 TEST 1');
-insert into exam (exam_series_id, name) values (2, 'ETS TOEIC 2022 TEST 2');
+insert into exam (exam_series_id, name, audio, duration, file_download) values (1, 'ETS TOEIC 2022 TEST 2', 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_ets_2022_test01.mp3', 7200, 'https://www.africau.edu/images/default/sample.pdf');
+insert into exam (exam_series_id, name, audio, duration, file_download) values (1, 'ETS TOEIC 2022 TEST 3', 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_ets_2022_test01.mp3', 7200, 'https://www.africau.edu/images/default/sample.pdf');
+insert into exam (exam_series_id, name, audio, duration, file_download) values (1, 'ETS TOEIC 2022 TEST 4', 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_ets_2022_test01.mp3', 7200, 'https://www.africau.edu/images/default/sample.pdf');
+insert into exam (exam_series_id, name, audio, duration, file_download) values (1, 'ETS TOEIC 2022 TEST 5', 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_ets_2022_test01.mp3', 7200, 'https://www.africau.edu/images/default/sample.pdf');
+insert into exam (exam_series_id, name, audio, duration, file_download) values (1, 'ETS TOEIC 2022 TEST 6', 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_ets_2022_test01.mp3', 7200, 'https://www.africau.edu/images/default/sample.pdf');
+insert into exam (exam_series_id, name, audio, duration, file_download) values (1, 'ETS TOEIC 2022 TEST 7', 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_ets_2022_test01.mp3', 7200, 'https://www.africau.edu/images/default/sample.pdf');
+insert into exam (exam_series_id, name, audio, duration, file_download) values (1, 'ETS TOEIC 2022 TEST 8', 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_ets_2022_test01.mp3', 7200, 'https://www.africau.edu/images/default/sample.pdf');
+insert into exam (exam_series_id, name, audio, duration, file_download) values (1, 'ETS TOEIC 2022 TEST 9', 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_ets_2022_test01.mp3', 7200, 'https://www.africau.edu/images/default/sample.pdf');
+insert into exam (exam_series_id, name, audio, duration, file_download) values (1, 'ETS TOEIC 2022 TEST 10', 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_ets_2022_test01.mp3', 7200, 'https://www.africau.edu/images/default/sample.pdf');
+insert into exam (exam_series_id, name, audio, duration, file_download) values (2, 'ETS TOEIC 2022 TEST 1', 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_ets_2022_test01.mp3', 7200, 'https://www.africau.edu/images/default/sample.pdf');
+insert into exam (exam_series_id, name, audio, duration, file_download) values (2, 'ETS TOEIC 2022 TEST 2', 'https://study4.com/media/tez_media1/sound/ets_toeic_2022_test_1_ets_2022_test01.mp3', 7200, 'https://www.africau.edu/images/default/sample.pdf');
 
 -- part
 insert into part (exam_id, name, numeric_order) values (1, 'Part 1', 1);
