@@ -94,7 +94,7 @@ module.exports = {
         httpOnly: true,
         secure: false,
         path: '/',
-        sameSite: 'strict',
+        sameSite: 'None',
         maxAge: 60 * 60 * 24 * 3600 * 1000,
       });
 
@@ -156,7 +156,7 @@ module.exports = {
         httpOnly: true,
         secure: false,
         path: '/',
-        sameSite: 'strict',
+        sameSite: 'None',
         maxAge: 60 * 60 * 24 * 3600 * 1000,
       });
 
