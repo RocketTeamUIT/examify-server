@@ -813,7 +813,7 @@ module.exports = {
 
   getAllExamTaking: async (req, res, next) => {
     try {
-      const userId = req?.payload?.user?.id || -1;
+      const userId = req.payload.user.id;
 
       const historyTaking = await db.ExamTaking.findAll({
         where: {

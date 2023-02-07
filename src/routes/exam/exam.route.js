@@ -4,7 +4,7 @@ const examsController = require('../../controllers/exam/exams.controller');
 const { checkLogin, verifyAccessToken } = require('../../utils/jwt_service');
 
 // [GET] /exams/history-taking      -> get history exam taking
-router.get('/history-taking', checkLogin, examsController.getAllExamTaking);
+router.get('/history-taking', verifyAccessToken, examsController.getAllExamTaking);
 
 // [GET] /exams/result/:examTakingId   -> get result of exam taking
 router.get('/result/:examTakingId', verifyAccessToken, examsController.getResultExam);
