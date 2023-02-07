@@ -108,7 +108,7 @@ create table question (
     set_question_id INTEGER REFERENCES set_question(set_question_id),
     hashtag_id INTEGER REFERENCES hashtag(hashtag_id),
 	name VARCHAR(255) DEFAULT '',
-    explain VARCHAR(255) DEFAULT '',
+    explain TEXT DEFAULT '',
     order_qn INTEGER NOT NULL,
     -- img TEXT,
     level INTEGER NOT NULL DEFAULT 1,
