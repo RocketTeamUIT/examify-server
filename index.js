@@ -10,7 +10,7 @@ const errorHandler = require('./src/middlewares/errorHandler');
 // Apply middleware
 app.use(
   cors({
-    origin: ['http://localhost:3000', 'http://localhost:4000'],
+    origin: ['https://examify-ten.vercel.app', 'http://localhost:3000', 'http://localhost:4000'],
     credentials: true,
   }),
 );
