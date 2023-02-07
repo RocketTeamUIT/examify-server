@@ -3,7 +3,6 @@ const db = require('../../models/index');
 const pool = require('../../config/db');
 const createError = require('http-errors');
 const { sequelize } = require('../../config/connectDB');
-const { where } = require('sequelize');
 
 module.exports = {
   getAllExam: async (req, res, next) => {
