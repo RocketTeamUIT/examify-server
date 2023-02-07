@@ -3,7 +3,7 @@ const { sequelize } = require('../config/connectDB');
 
 class Roles extends Model {
   static associate(models) {
-    Roles.hasMany(models.UserToRole, { foreignKey: 'roleId' });
+    Roles.belongsToMany(models.User, { through: models.UserToRole, foreignKey: 'roleId' });
   }
 }
 

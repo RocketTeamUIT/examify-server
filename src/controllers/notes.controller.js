@@ -7,7 +7,7 @@ const { where } = require('sequelize');
 module.exports = {
   getNote: async (req, res, next) => {
     try {
-      const userId = req?.payload?.userId || -1;
+      const userId = req?.payload?.user?.id || -1;
       const { id } = req.params;
       const note = await db.Note.findOne({
         attributes: {
@@ -30,7 +30,7 @@ module.exports = {
 
   getAllNoteInCourse: async (req, res, next) => {
     try {
-      const userId = req?.payload?.userId || -1;
+      const userId = req?.payload?.user?.id || -1;
       const { courseId } = req?.params;
       const notes = await db.Note.findAll({
         attributes: ['id', 'note', 'createdAt', 'updatedAt'],
@@ -62,7 +62,7 @@ module.exports = {
 
   getAllNoteInChapter: async (req, res, next) => {
     try {
-      const userId = req?.payload?.userId || -1;
+      const userId = req?.payload?.user?.id || -1;
       const { chapterId } = req?.params;
       const notes = await db.Note.findAll({
         attributes: ['id', 'note', 'createdAt', 'updatedAt'],
@@ -93,7 +93,7 @@ module.exports = {
 
   getAllNoteInUnit: async (req, res, next) => {
     try {
-      const userId = req?.payload?.userId || -1;
+      const userId = req?.payload?.user?.id || -1;
       const { unitId } = req?.params;
       const notes = await db.Note.findAll({
         attributes: ['id', 'note', 'createdAt', 'updatedAt'],
@@ -123,7 +123,7 @@ module.exports = {
 
   getAllNoteInLesson: async (req, res, next) => {
     try {
-      const userId = req?.payload?.userId || -1;
+      const userId = req?.payload?.user?.id || -1;
       const { lessonId } = req?.params;
       const notes = await db.Note.findAll({
         attributes: ['id', 'note', 'createdAt', 'updatedAt'],
@@ -146,7 +146,7 @@ module.exports = {
 
   createNote: async (req, res, next) => {
     try {
-      const userId = req?.payload?.userId || -1;
+      const userId = req?.payload?.user?.id || -1;
       const { note, lessonId } = req.body;
       const newNote = await db.Note.create({
         studentId: userId,
@@ -165,7 +165,7 @@ module.exports = {
 
   updateNote: async (req, res, next) => {
     try {
-      const userId = req?.payload?.userId || -1;
+      const userId = req?.payload?.user?.id || -1;
       const { id } = req.params;
       const { note } = req.body;
       await db.Note.update(
@@ -191,7 +191,7 @@ module.exports = {
 
   deleteNote: async (req, res, next) => {
     try {
-      const userId = req?.payload?.userId || -1;
+      const userId = req?.payload?.user?.id || -1;
       const { id } = req.params;
       await db.Note.destroy({
         where: {

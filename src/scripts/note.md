@@ -2,4 +2,4 @@
 
 <!-- function -> procedure -> database -->
 
-function -> procedure -> database.ddl -> trigger -> database.dml
+function -> procedure -> database.ddl -> trigger -> database.dml -> flashcard

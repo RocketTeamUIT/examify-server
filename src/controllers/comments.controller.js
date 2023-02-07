@@ -1,5 +1,3 @@
-const { Op, Sequelize } = require('sequelize');
-const db = require('../models/index');
 const connectDB = require('../config/connectDB');
 const {
   getAllCommentsBelongToCourse,
@@ -14,7 +12,7 @@ module.exports = {
     try {
       // Get userId from middleware check login
       let userId = -1;
-      if (req?.payload?.userId !== undefined) userId = req.payload.userId;
+      if (req?.payload?.user?.id !== undefined) userId = req.payload.user.id;
 
       // Get comment id from req.params
       const commentId = Number(req.params.commentId);
@@ -46,7 +44,7 @@ module.exports = {
 
       // Get userId from middleware check login
       let userId = -1;
-      if (req?.payload?.userId !== undefined) userId = req.payload.userId;
+      if (req?.payload?.user?.id !== undefined) userId = req.payload.user.id;
 
       // Get course id from req.params
       const courseId = Number(req.params.courseId);
@@ -74,7 +72,7 @@ module.exports = {
   userLike: async (req, res, next) => {
     try {
       // Get userId from access token
-      const { userId } = req.payload;
+      const { id: userId } = req.payload.user;
 
       // Get commentId from req.params
       const commentId = Number(req.params.commentId);
@@ -93,7 +91,7 @@ module.exports = {
   userUnlike: async (req, res, next) => {
     try {
       // Get userId from access token
-      const { userId } = req.payload;
+      const { id: userId } = req.payload.user;
 
       // Get commentId from req.params
       const commentId = Number(req.params.commentId);
@@ -112,7 +110,7 @@ module.exports = {
   createNewComment: async (req, res, next) => {
     try {
       // Get userId from access token
-      const { userId } = req.payload;
+      const { id: userId } = req.payload.user;
 
       // Get info from req.body
       const { courseId, content } = req.body;
@@ -133,7 +131,7 @@ module.exports = {
   updateContentComment: async (req, res, next) => {
     try {
       // Get userId from access token
-      const { userId } = req.payload;
+      const { id: userId } = req.payload.user;
 
       // Get commentId from path parameters
       const commentId = Number(req.params.commentId);
@@ -154,7 +152,7 @@ module.exports = {
   deleteComment: async (req, res, next) => {
     try {
       // Get userId from access token
-      const { userId } = req.payload;
+      const { id: userId } = req.payload.user;
 
       // Get commentId from path parameters
       const commentId = Number(req.params.commentId);

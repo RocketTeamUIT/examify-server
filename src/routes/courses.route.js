@@ -1,13 +1,19 @@
 const express = require('express');
 const router = express.Router();
 const courseController = require('../controllers/courses.controller');
-const { checkLogin, verifyAccessToken } = require('../utils/jwt_service');
+const { checkLogin, verifyAccessToken, verifyAdminAccessToken } = require('../utils/jwt_service');
 
 // [GET] /courses/search?key= &limit=
 router.get('/search', checkLogin, courseController.searchCourse);
 
 // [GET] /courses/popular?limit=    -> Get top courses popular
 router.get('/popular', checkLogin, courseController.getCoursePopular);
+
+// [GET] get overall statistics of courses
+router.get('/statistics', courseController.getStatistics);
+
+// Get detail statistics
+router.get('/statistics/:id', courseController.getCourseStatistics);
 
 // [POST] /courses/:id/enroll
 router.post('/:id/enroll', verifyAccessToken, courseController.enrrollCourse);
@@ -31,7 +37,7 @@ router.get('/', checkLogin, courseController.getAllCourses);
 router.post('/create', courseController.createNewCourse);
 
 // [DELETE] /courses/:id -> delete a course
-router.delete('/delete/:id', courseController.deleteCourse);
+router.delete('/delete/:id', verifyAccessToken, verifyAdminAccessToken, courseController.deleteCourse);
 
 // [PUT] /courses/:id -> update a course
 router.put('/update/:id', courseController.updateCourse);
