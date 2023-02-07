@@ -575,11 +575,11 @@ LANGUAGE plpgsql;
 
 
 -- Trigger update numeric order when update Question
-CREATE OR REPLACE TRIGGER numeric_order_question_update
-	AFTER UPDATE OF order_qn ON question 
-	FOR EACH ROW
-	WHEN (pg_trigger_depth() = 0)
-	EXECUTE PROCEDURE fn_num_order_question_update();
+-- CREATE OR REPLACE TRIGGER numeric_order_question_update
+-- 	AFTER UPDATE OF order_qn ON question 
+-- 	FOR EACH ROW
+-- 	WHEN (pg_trigger_depth() = 0)
+-- 	EXECUTE PROCEDURE fn_num_order_question_update();
 
 
 
