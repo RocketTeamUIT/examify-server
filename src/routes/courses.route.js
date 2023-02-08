@@ -37,7 +37,7 @@ router.get('/', checkLogin, courseController.getAllCourses);
 router.post('/create', courseController.createNewCourse);
 
 // [DELETE] /courses/:id -> delete a course
-router.delete('/delete/:id', verifyAccessToken, verifyAdminAccessToken, courseController.deleteCourse);
+router.delete('/delete/:id', verifyAccessToken, courseController.deleteCourse);
 
 // [PUT] /courses/:id -> update a course
 router.put('/update/:id', courseController.updateCourse);
