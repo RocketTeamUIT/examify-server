@@ -24,6 +24,7 @@ module.exports = {
             ],
           ],
         },
+        order: [['createdAt', 'asc']],
       });
 
       res.status(200).json({
