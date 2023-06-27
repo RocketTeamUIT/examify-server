@@ -462,6 +462,7 @@ module.exports = {
             ],
           ],
         },
+        order: [['total_chapter', 'desc']],
       });
 
       res.status(200).json({
